@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+git update-server-info
+if git config img2brl.src && [ -d "$(git config img2brl.src)" ]
+then cd "$(git config img2brl.src)"
+     git --git-dir="$(pwd)/.git" pull
+     make install
+fi
+exit 0
