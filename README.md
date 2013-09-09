@@ -53,7 +53,7 @@ this:
     local$ cmake .
 
 You can now do changes locally, and test them by locally running make, to
-see if the program still compiles.  If you decide to commit and push your
+see if the program still compiles.  If you decide to push your
 changes, they will automatically get compiled on the remote webserver, and an
 up-to-date binary (img2brl.cgi) will be installed into /home/user/img2brl.
 
