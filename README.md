@@ -14,14 +14,26 @@ or enter an URL to an image on the web.  If the image can be read by
 [ImageMagick](http://imagemagick.org/), it will be converted to Unicode Braille
 and can be touched in the browser.
 
-A live installation of this program can be found [here](http://img2brl.delysid.org/).
+A live installation of this program can be found
+[here](http://img2brl.delysid.org/).
 
 # Installation
 
 Since all the functionality provided is contained in a single compiled
-executable, installation can be very simple.  You need
-[CMake](http://cmake.org/) and a C++ compiler like [GCC](http://gcc.gnu.org/)
-or [Clang](http://clang.llvm.org/) to build the CGI program.
+executable, installation can be very simple.
+
+## Dependencies
+
+You need
+
+* [CMake](http://cmake.org/)
+* A C++ compiler like [GCC](http://gcc.gnu.org/) or
+  [Clang](http://clang.llvm.org/)
+* [cgicc](http://www.gnu.org/software/cgicc/)
+* [ImageMagick](http://imagemagick.org/)
+* [curl](http://curl.haxx.se/)
+
+## Compile
 
     $ git clone http://img2brl.delysid.org/ img2brl
     $ cd img2brl
