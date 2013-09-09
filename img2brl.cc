@@ -32,7 +32,7 @@
 #include <sys/utsname.h>
 
 static int
-write_to_buffer(char *data, size_t size, size_t nmemb, std::string *buffer)
+curl_append_to_string(char *data, size_t size, size_t nmemb, std::string *buffer)
 {
   if (not buffer) return 0;
 
@@ -86,8 +86,8 @@ static void print_form(Cgicc const &cgi, const_file_iterator file, form_iterator
        << cgicc::div()
        << label().set("for", img_file) << "Send an image file: " << label() << endl
        << file_input << endl
-       << cgicc::div()
-       << cgicc::div() << "or" << cgicc::div()
+       << cgicc::div() << endl
+       << cgicc::div() << "or" << cgicc::div() << endl
        << cgicc::div()
        << label().set("for", img_url) << "URL to image: " << label() << endl
        << url_input << endl
@@ -132,7 +132,7 @@ int main()
             if (curl_easy_setopt(conn, CURLOPT_USERAGENT, "img2brl.cgi/0.1 (http://img2brl.delysid.org/)") == CURLE_OK) {
               if (curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L) == CURLE_OK) {
                 if (curl_easy_setopt(conn, CURLOPT_MAXREDIRS, 3L) == CURLE_OK) {
-                  if (curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, write_to_buffer) == CURLE_OK) {
+                  if (curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, curl_append_to_string) == CURLE_OK) {
                     std::string buffer;
                     if (curl_easy_setopt(conn, CURLOPT_WRITEDATA, &buffer) == CURLE_OK) {
                       if (curl_easy_perform(conn) == CURLE_OK) {
@@ -177,17 +177,18 @@ int main()
          << cgicc::div() << endl;
 
     cout << cgicc::div().set("style", "text-align: center") << endl
-         << "Configured for " << cgi.getHost();  
+         << comment() << "Configured for " << cgi.getHost();  
     struct utsname info;
     if(uname(&info) != -1) {
       cout << ". Running on " << info.sysname;
       cout << ' ' << info.release << " (";
-      cout << info.nodename << ")." << endl;
+      cout << info.nodename << ").";
     }
+    cout << comment() << endl;
 
     // Information on this query
     clock::time_point end = clock::now();
-    cout << br() << "Total time for request = "
+    cout << "Total time for request was "
          << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
          << " us";
     cout << " (" << std::chrono::duration_cast<std::chrono::duration<double>>(end - start).count() << " s)";
