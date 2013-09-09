@@ -26,6 +26,7 @@
 #include <cgicc/Cgicc.h>
 #include <cgicc/HTTPHTMLHeader.h>
 #include <cgicc/HTMLClasses.h>
+#include <curl/curl.h>
 #include <cgicc/XHTMLDoctype.h>
 #include <Magick++/Blob.h>
 #include <Magick++/Image.h>
@@ -33,12 +34,42 @@
 #include <sys/utsname.h>
 #include <sys/time.h>
 
+static int
+writer(char *data, size_t size, size_t nmemb, std::string *writerData)
+{
+  if (writerData == NULL)
+    return 0;
+
+  writerData->append(data, size*nmemb);
+
+  return size * nmemb;
+}
+
 using namespace std;
 using namespace cgicc;
 
-static void printForm(Cgicc const &cgi)
+static void
+print_xhtml_header(std::string const &title)
+{
+  static char const *text_html_utf8 = "text/html; charset=UTF-8";
+
+  cout << HTTPContentHeader(text_html_utf8)
+       << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
+       << html().set("xmlns", "http://www.w3.org/1999/xhtml")
+                .set("lang", "en").set("dir", "ltr") << endl
+       << head() << endl
+       << cgicc::title() << title << cgicc::title() << endl
+       << meta().set("http-equiv", "Content-Type")
+                .set("content", text_html_utf8) << endl
+       << link().set("rel", "shortcut icon")
+                .set("href", "favicon.png") << endl
+       << head() << endl;
+}
+
+static void print_form(Cgicc const &cgi)
 {
   static char const *img_file = "img_file";
+  static char const *img_url = "img_url";
   cout << form().set("method", "post")
                 .set("action", cgi.getEnvironment().getScriptName())
                 .set("enctype", "multipart/form-data") << endl
@@ -49,6 +80,14 @@ static void printForm(Cgicc const &cgi)
                  .set("name", "img")
                  .set("accept", "image/*") << endl
        << cgicc::div()
+       << cgicc::div() << "or" << cgicc::div()
+       << cgicc::div()
+       << label().set("for", img_url) << "URL to image: " << label() << endl
+       << input().set("id", img_url)
+                 .set("type", "text")
+                 .set("name", "url") << endl
+       << cgicc::div()
+
        << cgicc::div().set("style", "text-align: center") << endl
        << input().set("type", "submit")
                  .set("name", "submit")
@@ -64,20 +103,8 @@ int main()
     gettimeofday(&start, NULL);
 
     Cgicc cgi;
-    static char const *text_html_utf8 = "text/html; charset=UTF-8";
 
-    cout << HTTPContentHeader(text_html_utf8)
-         << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
-         << html().set("xmlns", "http://www.w3.org/1999/xhtml")
-                  .set("lang", "en").set("dir", "ltr") << endl
-         << head() << endl
-         << title() << "Tactile Image Viewer" << title() << endl
-         << meta().set("http-equiv", "Content-Type")
-                  .set("content", text_html_utf8) << endl
-         << link().set("rel", "shortcut icon")
-                  .set("href", "favicon.png") << endl
-         << head() << endl;
-    
+    print_xhtml_header("Tactile Image Viewer");
     cout << body() << endl;
 
     const_file_iterator file = cgi.getFile("img");
@@ -91,7 +118,38 @@ int main()
       cout << pre() << endl;
     }
 
-    printForm(cgi);
+    form_iterator url = cgi.getElement("url");
+    if (url != cgi.getElements().end()) {
+      curl_global_init(CURL_GLOBAL_DEFAULT);
+      if (CURL *conn = curl_easy_init()) {
+        char error_buffer[CURL_ERROR_SIZE];
+        if (curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, error_buffer) == CURLE_OK) {
+          if (curl_easy_setopt(conn, CURLOPT_URL, url->getValue().c_str()) == CURLE_OK) {
+            if (curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L) == CURLE_OK) {
+              if (curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, writer) == CURLE_OK) {
+                std::string buffer;
+                if (curl_easy_setopt(conn, CURLOPT_WRITEDATA, &buffer) == CURLE_OK) {
+                  CURLcode code = curl_easy_perform(conn);
+                  curl_easy_cleanup(conn);
+                  if (code == CURLE_OK) {
+                    cout << pre() << endl
+                     //  << "Data Type: " << file->getDataType() << endl
+                         << "URL: " << url->getValue() << endl;
+                    Magick::Blob blob(buffer.data(), buffer.length());
+                    Magick::Image image(blob);
+                    image.write("ubrl:-");
+                    cout << pre() << endl;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    print_form(cgi);
+
     cout << hr() << endl;
 
     cout << cgicc::div().set("style", "text-align: center") << endl
@@ -134,27 +192,7 @@ int main()
     table::reset();	cgicc::div::reset(); 	p::reset(); 
     a::reset();		h2::reset(); 		colgroup::reset();
 
-    // Output the HTTP headers for an HTML document, and the HTML 4.0 DTD info
-    cout << HTTPHTMLHeader() << XHTMLDoctype(XHTMLDoctype::eStrict) << endl;
-    cout << html().set("lang","en").set("dir","ltr") << endl;
-
-    // Set up the page's header and title.
-    // I will put in lfs to ease reading of the produced HTML. 
-    cout << head() << endl;
-
-    // Output the style sheet portion of the header
-    cout << style() << comment() << endl;
-    cout << "body { color: black; background-color: white; }" << endl;
-    cout << "hr.half { width: 60%; align: center; }" << endl;
-    cout << "span.red, strong.red { color: red; }" << endl;
-    cout << "div.notice { border: solid thin; padding: 1em; margin: 1em 0; "
-	 << "background: #ddd; }" << endl;
-
-    cout << comment() << style() << endl;
-
-    cout << title("GNU cgicc exception") << endl;
-    cout << head() << endl;
-    
+    print_xhtml_header("exception");    
     cout << body() << endl;
     
     cout << h1() << "GNU cgi" << span("cc", set("class","red"))
