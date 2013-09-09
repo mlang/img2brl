@@ -168,7 +168,7 @@ int main()
 
     // End of document
     cout << cgicc::div() << endl;
-    cout << hr() << endl;
+    cout << hr().set("class","half") << endl;
     cout << body() << html() << endl;
     
     return EXIT_SUCCESS;
