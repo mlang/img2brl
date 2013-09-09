@@ -66,26 +66,35 @@ print_xhtml_header(std::string const &title)
        << head() << endl;
 }
 
-static void print_form(Cgicc const &cgi)
+static void print_form(Cgicc const &cgi, const_file_iterator file, form_iterator url)
 {
   static char const *img_file = "img_file";
   static char const *img_url = "img_url";
+
+  input file_input;
+  file_input.set("id", img_file);
+  file_input.set("type", "file");
+  file_input.set("name", "img");
+  file_input.set("accept", "image/*");
+  if (file != cgi.getFiles().end()) file_input.set("value", file->getFilename());
+
+  input url_input;
+  url_input.set("id", img_url);
+  url_input.set("type", "text");
+  url_input.set("name", "url");
+  if (url != cgi.getElements().end()) url_input.set("value", url->getValue());
+
   cout << form().set("method", "post")
                 .set("action", cgi.getEnvironment().getScriptName())
                 .set("enctype", "multipart/form-data") << endl
        << cgicc::div()
        << label().set("for", img_file) << "Send an image file: " << label() << endl
-       << input().set("id", img_file)
-                 .set("type", "file")
-                 .set("name", "img")
-                 .set("accept", "image/*") << endl
+       << file_input << endl
        << cgicc::div()
        << cgicc::div() << "or" << cgicc::div()
        << cgicc::div()
        << label().set("for", img_url) << "URL to image: " << label() << endl
-       << input().set("id", img_url)
-                 .set("type", "text")
-                 .set("name", "url") << endl
+       << url_input << endl
        << cgicc::div()
 
        << cgicc::div().set("style", "text-align: center") << endl
@@ -109,7 +118,7 @@ int main()
     const_file_iterator file = cgi.getFile("img");
     if (file != cgi.getFiles().end()) {
       cout << pre() << endl
-           << "Data Type: " << file->getDataType() << endl
+           << "Content Type: " << file->getDataType() << endl
            << "Filename: " << file->getFilename() << endl;
       Magick::Blob blob(file->getData().data(), file->getData().length());
       Magick::Image image(blob);
@@ -124,23 +133,30 @@ int main()
         char error_buffer[CURL_ERROR_SIZE];
         if (curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, error_buffer) == CURLE_OK) {
           if (curl_easy_setopt(conn, CURLOPT_URL, url->getValue().c_str()) == CURLE_OK) {
-            if (curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L) == CURLE_OK) {
-              if (curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, write_to_buffer) == CURLE_OK) {
-                std::string buffer;
-                if (curl_easy_setopt(conn, CURLOPT_WRITEDATA, &buffer) == CURLE_OK) {
-                  if (curl_easy_perform(conn) == CURLE_OK) {
-                    long http_response_code;
-                    if (curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_response_code) == CURLE_OK) {
-                      if (http_response_code == 200 and not buffer.empty()) {
-                        cout << pre() << endl
-                         //  << "Data Type: " << file->getDataType() << endl
-                             << "URL: " << url->getValue() << endl;
-                        Magick::Blob blob(buffer.data(), buffer.length());
-                        Magick::Image image(blob);
-                        image.write("ubrl:-");
-                        cout << pre() << endl;
-                      } else {
-                        cerr << error_buffer << endl;
+            if (curl_easy_setopt(conn, CURLOPT_USERAGENT, "img2brl.cgi/0.1 (http://img2brl.delysid.org/)") == CURLE_OK) {
+              if (curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L) == CURLE_OK) {
+                if (curl_easy_setopt(conn, CURLOPT_MAXREDIRS, 3L) == CURLE_OK) {
+                  if (curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, write_to_buffer) == CURLE_OK) {
+                    std::string buffer;
+                    if (curl_easy_setopt(conn, CURLOPT_WRITEDATA, &buffer) == CURLE_OK) {
+                      if (curl_easy_perform(conn) == CURLE_OK) {
+                        long http_response_code;
+                        if (curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_response_code) == CURLE_OK) {
+                          if (http_response_code == 200 and not buffer.empty()) {
+                            char *content_type;
+                            if (curl_easy_getinfo(conn, CURLINFO_CONTENT_TYPE, &content_type) == CURLE_OK) {
+                              cout << pre() << endl
+                                   << "Content Type: " << content_type << endl
+                                   << "URL: " << url->getValue() << endl;
+                              Magick::Blob blob(buffer.data(), buffer.length());
+                              Magick::Image image(blob);
+                              image.write("ubrl:-");
+                              cout << pre() << endl;
+                            } else {
+                              cerr << error_buffer << endl;
+                            }
+                          }
+                        }
                       }
                     }
                   }
@@ -153,7 +169,7 @@ int main()
       }
     }
 
-    print_form(cgi);
+    print_form(cgi, file, url);
 
     cout << hr() << endl;
 
