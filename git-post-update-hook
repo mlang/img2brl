@@ -5,7 +5,7 @@ set -e
 git update-server-info
 if git config img2brl.src && [ -d "$(git config img2brl.src)" ]
 then cd "$(git config img2brl.src)"
-     git --git-dir="$(pwd)/.git" pull
+     git --git-dir="$(pwd)/.git" pull --quiet
      make install
 fi
 exit 0
