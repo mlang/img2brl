@@ -38,7 +38,8 @@ git config img2brl.src in the bare repository, the
 [post-update hook](https://github.com/mlang/img2brl/blob/master/git-post-update-hook)
 will automatically build and install changes to your repository upon push.
 
-[img2brl@delysid](img2brl.delysid.org/) is approximately configured like this:
+[img2brl@delysid](http://img2brl.delysid.org/) is approximately configured like
+this:
 
     remote$ git clone --bare https://github.com/mlang/img2brl img2brl
     remote$ git clone img2brl img2brl.src
