@@ -26,8 +26,8 @@
 #include <cgicc/Cgicc.h>
 #include <cgicc/HTTPHTMLHeader.h>
 #include <cgicc/HTMLClasses.h>
-#include <curl/curl.h>
 #include <cgicc/XHTMLDoctype.h>
+#include <curl/curl.h>
 #include <Magick++/Blob.h>
 #include <Magick++/Image.h>
 
@@ -35,12 +35,11 @@
 #include <sys/time.h>
 
 static int
-writer(char *data, size_t size, size_t nmemb, std::string *writerData)
+write_to_buffer(char *data, size_t size, size_t nmemb, std::string *buffer)
 {
-  if (writerData == NULL)
-    return 0;
+  if (not buffer) return 0;
 
-  writerData->append(data, size*nmemb);
+  buffer->append(data, size*nmemb);
 
   return size * nmemb;
 }
@@ -126,25 +125,31 @@ int main()
         if (curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, error_buffer) == CURLE_OK) {
           if (curl_easy_setopt(conn, CURLOPT_URL, url->getValue().c_str()) == CURLE_OK) {
             if (curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L) == CURLE_OK) {
-              if (curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, writer) == CURLE_OK) {
+              if (curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, write_to_buffer) == CURLE_OK) {
                 std::string buffer;
                 if (curl_easy_setopt(conn, CURLOPT_WRITEDATA, &buffer) == CURLE_OK) {
-                  CURLcode code = curl_easy_perform(conn);
-                  curl_easy_cleanup(conn);
-                  if (code == CURLE_OK) {
-                    cout << pre() << endl
-                     //  << "Data Type: " << file->getDataType() << endl
-                         << "URL: " << url->getValue() << endl;
-                    Magick::Blob blob(buffer.data(), buffer.length());
-                    Magick::Image image(blob);
-                    image.write("ubrl:-");
-                    cout << pre() << endl;
+                  if (curl_easy_perform(conn) == CURLE_OK) {
+                    long http_response_code;
+                    if (curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_response_code) == CURLE_OK) {
+                      if (http_response_code == 200 and not buffer.empty()) {
+                        cout << pre() << endl
+                         //  << "Data Type: " << file->getDataType() << endl
+                             << "URL: " << url->getValue() << endl;
+                        Magick::Blob blob(buffer.data(), buffer.length());
+                        Magick::Image image(blob);
+                        image.write("ubrl:-");
+                        cout << pre() << endl;
+                      } else {
+                        cerr << error_buffer << endl;
+                      }
+                    }
                   }
                 }
               }
             }
           }
         }
+        curl_easy_cleanup(conn);
       }
     }
 
