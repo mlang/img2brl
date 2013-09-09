@@ -103,7 +103,11 @@ int main()
     printForm(cgi);
     cout << hr() << endl;
 
-    // Information on cgicc
+    cout << cgicc::div().set("style", "text-align: center") << endl
+         << a().set("href", "https://github.com/mlang/img2brl")
+         << "Source at GitHub"
+         << a() << endl
+         << cgicc::div() << endl;
     cout << cgicc::div().set("style", "text-align: center") << endl
          << "Configured for " << cgi.getHost();  
     struct utsname info;
@@ -130,7 +134,7 @@ int main()
   }
 
   // Did any errors occur?
-  catch(const std::exception& e) {
+  catch(exception const &e) {
     // Reset all the HTML elements that might have been used to 
     // their initial state so we get valid output
     html::reset(); 	head::reset(); 		body::reset();
