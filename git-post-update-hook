@@ -3,7 +3,7 @@
 set -e
 
 git update-server-info
-if git config img2brl.src && [ -d "$(git config img2brl.src)" ]
+if git config img2brl.src >/dev/null && [ -d "$(git config img2brl.src)" ]
 then cd "$(git config img2brl.src)"
      git --git-dir="$(pwd)/.git" pull --quiet
      make install
