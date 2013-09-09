@@ -27,37 +27,36 @@ or [Clang](http://clang.llvm.org/) to build the CGI program.
 You can now copy img2brl.cgi into your cgi-bin directory, and you should be
 ready to go.
 
-## Git bare repository
+## Running your own git-based fork
 
 To provide the source code repository at the same location as the CGI program,
 you can create a bare git repository at the location which is served by your
 web server.  If you then check out this bare repository at some other location,
 you can build and install the CGI program and related files into the git
-bare repository.  If you configure the location of your checkout via
+bare repository.  If you configure the location of your work tree via
 git config img2brl.src in the bare repository, you can use a post-update
 hook to automatically build and install changes to your repository upon push.
 
 [img2brl@delysid](img2brl.delysid.org/) is approximately configured like this:
 
-    local$ ssh remote
-    remote$ mkdir img2brl
-    remote$ cd img2brl
-    remote$ git init --bare
-    remote$ exit
-    local$ git remote add web remote:/home/user/img2brl
-    local$ git push -u web master
-    local$ ssh remote
-    remote$ mkdir img2brl.src
+    remote$ git clone --bare https://github.com/mlang/img2brl img2brl
+    remote$ git clone img2brl img2brl.src
     remote$ cd img2brl.src
-    remote$ git clone ../img2brl
-    remote$ cmake -DCMAKE_INSTALL_PREFIX=/home/user/img2brl -DCMAKE_BUILD_TYPE=RELEASE .
+    remote$ cmake -DCMAKE_INSTALL_PREFIX=../img2brl -DCMAKE_BUILD_TYPE=RELEASE .
     remote$ make install
-    remote$ cd ../img2brl
-    remote$ git config img2brl.src /home/user/img2brl.src
+    remote$ git --git-dir=../img2brl config img2brl.src $(pwd)
     remote$ exit
+    local$ git clone remote:/home/user/img2brl
+    local$ cd img2brl
+    local$ cmake .
 
 You can now do changes locally, and test them by locally running make, to
 see if the program still compiles.  If you decide to commit and push your
-changes, they will automatically get compiled on the remote server, and an
+changes, they will automatically get compiled on the remote web server, and an
 up-to-date binary (img2brl.cgi) will be installed into /home/user/img2brl/.
+
+All that is left now is to configure your web server to serve /home/user/img2brl/
+(the bare repository), which is now a mixture of a git bare repository and the
+CGI program img2brl.cgi.  You will likely need to enable CGI execution in
+that directory, and perhaps also have img2brl.cgi served as the index page.
 
