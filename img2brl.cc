@@ -16,6 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA 
  */
 
+#include <chrono>
 #include <new>
 #include <string>
 #include <stdexcept>
@@ -97,10 +98,9 @@ static void print_form(Cgicc const &cgi)
 
 int main()
 {
+  typedef std::chrono::steady_clock clock;
+  clock::time_point start = clock::now();
   try {
-    timeval start;
-    gettimeofday(&start, NULL);
-
     Cgicc cgi;
 
     print_xhtml_header("Tactile Image Viewer");
@@ -162,6 +162,7 @@ int main()
          << "Source at GitHub"
          << a() << endl
          << cgicc::div() << endl;
+
     cout << cgicc::div().set("style", "text-align: center") << endl
          << "Configured for " << cgi.getHost();  
     struct utsname info;
@@ -172,29 +173,23 @@ int main()
     }
 
     // Information on this query
-    timeval end;
-    gettimeofday(&end, NULL);
-    long us = ((end.tv_sec - start.tv_sec) * 1000000) + (end.tv_usec - start.tv_usec);
-
-    cout << br() << "Total time for request = " << us << " us";
-    cout << " (" << static_cast<double>(us/1000000.0) << " s)";
-
-    // End of document
+    clock::time_point end = clock::now();
+    cout << br() << "Total time for request = "
+         << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
+         << " us";
+    cout << " (" << std::chrono::duration_cast<std::chrono::duration<double>>(end - start).count() << " s)";
     cout << cgicc::div() << endl;
+
     cout << body() << html() << endl;
 
-    // No chance for failure in this example
     return EXIT_SUCCESS;
-  }
-
-  // Did any errors occur?
-  catch(exception const &e) {
+  } catch (exception const &e) {
     // Reset all the HTML elements that might have been used to 
     // their initial state so we get valid output
     html::reset(); 	head::reset(); 		body::reset();
     title::reset(); 	h1::reset(); 		h4::reset();
-    comment::reset(); 	td::reset(); 		tr::reset(); 
-    table::reset();	cgicc::div::reset(); 	p::reset(); 
+    comment::reset(); 	pre::reset(); 		tr::reset(); 
+    cgicc::div::reset(); 	p::reset(); 
     a::reset();		h2::reset(); 		colgroup::reset();
 
     print_xhtml_header("exception");    
