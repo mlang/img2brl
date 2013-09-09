@@ -1,9 +1,12 @@
 # A web service for converting arbitrary image data to braille representation
 
 img2brl is a web service to convert arbitrary image formats to a tactile
-representation based on unicode braille.  It can be used by a braille user
-to gather information about an image file without needing sighted assistance.
-A refreshable braille display or braille embosser will be required to make
+representation based on
+[Unicode braille](http://en.wikipedia.org/wiki/Unicode_braille).  It can be
+used by a braille user to gather information about an image file without needing
+sighted assistance.
+
+A refreshable braille display or braille embosser will be needed to make
 use of the output of this program.
 
 The idea is as simple as it can get: Provide an image file from your computer,
