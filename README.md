@@ -29,15 +29,20 @@ You need
 * [CMake](http://cmake.org/)
 * A C++ compiler like [GCC](http://gcc.gnu.org/) or
   [Clang](http://clang.llvm.org/)
-* [cgicc](http://www.gnu.org/software/cgicc/)
+* [GNU cgicc](http://www.gnu.org/software/cgicc/)
 * [ImageMagick](http://imagemagick.org/)
 * [curl](http://curl.haxx.se/)
 
-## Compile
+## Clone
 
     $ git clone http://img2brl.delysid.org/ img2brl
+
+## Compile
+
     $ cd img2brl
     $ cmake . && make
+
+## Run
 
 You can now copy img2brl.cgi into your cgi-bin directory, and you should be
 ready to go.
