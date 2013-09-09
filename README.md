@@ -50,7 +50,7 @@ hook to automatically build and install changes to your repository upon push.
     remote$ mkdir img2brl.src
     remote$ cd img2brl.src
     remote$ git clone ../img2brl
-    remote$ cmake -DCMAKE_INSTALL_PREFIX=/home/user -DCMAKE_BUILD_TYPE=RELEASE .
+    remote$ cmake -DCMAKE_INSTALL_PREFIX=/home/user/img2brl -DCMAKE_BUILD_TYPE=RELEASE .
     remote$ make install
     remote$ cd ../img2brl
     remote$ git config img2brl.src /home/user/img2brl.src
