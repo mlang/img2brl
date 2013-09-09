@@ -19,6 +19,7 @@
 
 #include <new>
 #include <string>
+#include <vector>
 #include <stdexcept>
 #include <iostream>
 #include <cstdlib>
