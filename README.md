@@ -58,19 +58,25 @@ changes, they will automatically get compiled on the remote webserver, and an
 up-to-date binary (img2brl.cgi) will be installed into /home/user/img2brl.
 
     local$ git push
-    Counting objects: 5, done.
+    Counting objects: 16, done.
     Delta compression using up to 4 threads.
-    Compressing objects: 100% (3/3), done.
-    Writing objects: 100% (3/3), 697 bytes | 0 bytes/s, done.
-    Total 3 (delta 2), reused 0 (delta 0)
+    Compressing objects: 100% (12/12), done.
+    Writing objects: 100% (12/12), 1.41 KiB | 0 bytes/s, done.
+    Total 12 (delta 7), reused 0 (delta 0)
+    remote: -- Configuring done
+    remote: -- Generating done
+    remote: -- Build files have been written to: /home/user/img2brl.src
+    remote: Scanning dependencies of target img2brl.cgi
+    remote: [100%] Building CXX object CMakeFiles/img2brl.cgi.dir/img2brl.cc.o
+    remote: Linking CXX executable img2brl.cgi
     remote: [100%] Built target img2brl.cgi
     remote: Install the project...
     remote: -- Install configuration: "RELEASE"
-    remote: -- Up-to-date: /home/user/img2brl/img2brl.cgi
+    remote: -- Installing: /home/user/img2brl/img2brl.cgi
     remote: -- Up-to-date: /home/user/img2brl/favicon.png
     remote: -- Up-to-date: /home/user/img2brl/hooks/post-update
     To user@remote:/home/user/img2brl
-       968e626..533f058  master -> master
+       1696b99..66316db  master -> master
 
 All that is left now is to configure your web server to serve /home/user/img2brl/
 (the bare repository), which is now a mixture of a git bare repository and the
