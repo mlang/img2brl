@@ -1,4 +1,3 @@
-/* -*-mode:c++; c-file-style: "gnu";-*- */
 /*
  *  Copyright (C) 2013 Mario Lang <mlang@delysid.org>
  *
