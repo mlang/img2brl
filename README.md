@@ -34,8 +34,9 @@ two git repositories on your webserver.  A bare repository which will also
 contain the CGI program later on, and a working tree which will be used
 to build the program.
 If you configure the location of your working tree via
-git config img2brl.src in the bare repository, a post-update
-hook will automatically build and install changes to your repository upon push.
+git config img2brl.src in the bare repository, the
+[post-update hook](https://github.com/mlang/img2brl/blob/master/git-post-update-hook)
+will automatically build and install changes to your repository upon push.
 
 [img2brl@delysid](img2brl.delysid.org/) is approximately configured like this:
 
