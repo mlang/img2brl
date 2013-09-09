@@ -29,13 +29,13 @@ ready to go.
 
 ## Running your own git-based fork
 
-To provide the source code repository at the same location as the CGI program,
-you can create a bare git repository at the location which is served by your
-web server.  If you then check out this bare repository at some other location,
-you can build and install the CGI program and related files into the git
-bare repository.  If you configure the location of your work tree via
-git config img2brl.src in the bare repository, you can use a post-update
-hook to automatically build and install changes to your repository upon push.
+To allow for automatic building of the CGI program upon git push, you need
+two git repositories on your webserver.  A bare repository which will also
+contain the CGI program later on, and a working tree which will be used
+to build the program.
+If you configure the location of your working tree via
+git config img2brl.src in the bare repository, a post-update
+hook will automatically build and install changes to your repository upon push.
 
 [img2brl@delysid](img2brl.delysid.org/) is approximately configured like this:
 
@@ -52,8 +52,8 @@ hook to automatically build and install changes to your repository upon push.
 
 You can now do changes locally, and test them by locally running make, to
 see if the program still compiles.  If you decide to commit and push your
-changes, they will automatically get compiled on the remote web server, and an
-up-to-date binary (img2brl.cgi) will be installed into /home/user/img2brl/.
+changes, they will automatically get compiled on the remote webserver, and an
+up-to-date binary (img2brl.cgi) will be installed into /home/user/img2brl.
 
     local$ git push
     Counting objects: 5, done.
@@ -61,7 +61,6 @@ up-to-date binary (img2brl.cgi) will be installed into /home/user/img2brl/.
     Compressing objects: 100% (3/3), done.
     Writing objects: 100% (3/3), 697 bytes | 0 bytes/s, done.
     Total 3 (delta 2), reused 0 (delta 0)
-    remote: /home/user/img2brl.src
     remote: [100%] Built target img2brl.cgi
     remote: Install the project...
     remote: -- Install configuration: "RELEASE"
