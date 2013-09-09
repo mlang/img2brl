@@ -174,8 +174,9 @@ int main()
     cout << hr() << endl;
 
     cout << cgicc::div().set("style", "text-align: center") << endl
+         << "Sourcecode? git clone http://img2brl.delysid.org/ or >"
          << a().set("href", "https://github.com/mlang/img2brl")
-         << "Source at GitHub"
+         << "github.com/mlang/img2brl"
          << a() << endl
          << cgicc::div() << endl;
 
