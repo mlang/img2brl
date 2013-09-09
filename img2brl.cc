@@ -47,10 +47,9 @@ static void printForm(Cgicc const &cgi)
        << "<label for=\"img_file\">Send an image file: </label>" << endl
        << "<input id=\"img_file\" type=\"file\" name=\"img\" accept=\"image/*\" />" << endl
        << cgicc::div()
-       << cgicc::div().set("style", "text-align: center") << "<p>"
+       << cgicc::div().set("style", "text-align: center")
        << "<input type=\"submit\" name=\"submit\" value=\"Translate to Braille\" />"
-       << "<input type=\"reset\" value=\"Nevermind\" />"
-       << "</p>" << cgicc::div() << endl
+       << cgicc::div() << endl
        << form() << endl;
 }
 
@@ -81,7 +80,7 @@ int main()
          << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
          << html().set("xmlns", "http://www.w3.org/1999/xhtml").set("lang", "en").set("dir", "ltr") << endl
          << head() << endl
-         << title() << "img2brl.delysid.org" << title() << endl
+         << title() << "Tactile Image Viewer" << title() << endl
          << meta().set("http-equiv", "Content-Type")
                   .set("content", "text/html; charset=UTF-8") << endl
          << link().set("rel", "shortcut icon").set("href", "favicon.png")
