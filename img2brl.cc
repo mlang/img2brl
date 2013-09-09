@@ -17,23 +17,19 @@
  */
 
 #include <chrono>
-#include <new>
 #include <string>
 #include <stdexcept>
 #include <iostream>
-#include <cstdlib>
 
-#include <cgicc/CgiDefs.h>
 #include <cgicc/Cgicc.h>
-#include <cgicc/HTTPHTMLHeader.h>
 #include <cgicc/HTMLClasses.h>
+#include <cgicc/HTTPContentHeader.h>
 #include <cgicc/XHTMLDoctype.h>
 #include <curl/curl.h>
 #include <Magick++/Blob.h>
 #include <Magick++/Image.h>
 
 #include <sys/utsname.h>
-#include <sys/time.h>
 
 static int
 write_to_buffer(char *data, size_t size, size_t nmemb, std::string *buffer)
