@@ -62,12 +62,6 @@ up-to-date binary (img2brl.cgi) will be installed into /home/user/img2brl/.
     Writing objects: 100% (3/3), 697 bytes | 0 bytes/s, done.
     Total 3 (delta 2), reused 0 (delta 0)
     remote: /home/user/img2brl.src
-    remote: From /home/user/img2brl
-    remote:    968e626..533f058  master     -> origin/master
-    remote: Updating 968e626..533f058
-    remote: Fast-forward
-    remote:  README.md |   31 +++++++++++++++----------------
-    remote:  1 file changed, 15 insertions(+), 16 deletions(-)
     remote: [100%] Built target img2brl.cgi
     remote: Install the project...
     remote: -- Install configuration: "RELEASE"
