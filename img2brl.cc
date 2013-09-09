@@ -40,53 +40,46 @@ using namespace cgicc;
 
 static void printForm(Cgicc const &cgi)
 {
+  static char const *img_file = "img_file";
   cout << form().set("method", "post")
                 .set("action", cgi.getEnvironment().getScriptName())
                 .set("enctype", "multipart/form-data") << endl
        << cgicc::div()
-       << "<label for=\"img_file\">Send an image file: </label>" << endl
-       << "<input id=\"img_file\" type=\"file\" name=\"img\" accept=\"image/*\" />" << endl
+       << label().set("for", img_file) << "Send an image file: " << label() << endl
+       << input().set("id", img_file)
+                 .set("type", "file")
+                 .set("name", "img")
+                 .set("accept", "image/*") << endl
        << cgicc::div()
-       << cgicc::div().set("style", "text-align: center")
-       << "<input type=\"submit\" name=\"submit\" value=\"Translate to Braille\" />"
+       << cgicc::div().set("style", "text-align: center") << endl
+       << input().set("type", "submit")
+                 .set("name", "submit")
+                 .set("value", "Translate to Braille") << endl
        << cgicc::div() << endl
        << form() << endl;
 }
 
-// Main Street, USA
 int main()
 {
   try {
     timeval start;
     gettimeofday(&start, NULL);
 
-    // Create a new Cgicc object containing all the CGI data
     Cgicc cgi;
+    static char const *text_html_utf8 = "text/html; charset=UTF-8";
 
-    // Redirect output, if desired
-    if(cgi.queryCheckbox("redirect")) {
-      const_file_iterator file = cgi.getFile("userfile");
-
-      // Only redirect a valid file
-      if(file != cgi.getFiles().end()) {
-	cout << HTTPContentHeader(file->getDataType());
-	file->writeToStream(cout);
-
-	return EXIT_SUCCESS;
-      }
-    }
-    
-    cout << HTTPContentHeader("text/html; charset=UTF-8")
+    cout << HTTPContentHeader(text_html_utf8)
          << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
-         << html().set("xmlns", "http://www.w3.org/1999/xhtml").set("lang", "en").set("dir", "ltr") << endl
+         << html().set("xmlns", "http://www.w3.org/1999/xhtml")
+                  .set("lang", "en").set("dir", "ltr") << endl
          << head() << endl
          << title() << "Tactile Image Viewer" << title() << endl
          << meta().set("http-equiv", "Content-Type")
-                  .set("content", "text/html; charset=UTF-8") << endl
-         << link().set("rel", "shortcut icon").set("href", "favicon.png")
+                  .set("content", text_html_utf8) << endl
+         << link().set("rel", "shortcut icon")
+                  .set("href", "favicon.png") << endl
          << head() << endl;
     
-    // Start the HTML body
     cout << body() << endl;
 
     const_file_iterator file = cgi.getFile("img");
