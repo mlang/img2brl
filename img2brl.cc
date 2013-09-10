@@ -123,9 +123,9 @@ print_form( cgicc::Cgicc const &cgi
        << cgicc::div()
        << label().set("for", img_url) << "URL to image: " << label() << endl
        << url_input << endl
-       << cgicc::div() << endl
+       << cgicc::div() << endl;
 
-       << cgicc::div() << endl
+  cout << cgicc::div() << endl
        << labeled_checkbox(cgi, "trim") << endl
        << labeled_checkbox(cgi, "normalize") << endl
        << labeled_checkbox(cgi, "negate") << endl
