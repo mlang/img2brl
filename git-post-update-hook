@@ -1,11 +1,34 @@
 #!/bin/sh
+#-------------------------------------------------------------------------------
+# A git post-update hook to automatically build and install changes to a (bare)
+# git repository.
+#-------------------------------------------------------------------------------
+# Copyright (C) 2013 Mario Lang <mlang@delysid.org>
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU Affero General Public License as published by the
+# Free Software Foundation; either version 3 of the License, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU LAffero General Public License
+# along with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 set -e
 
+# Update auxiliary info file to help dumb servers
 git update-server-info
+
+# Pull changes into working tree and rebuild
 if git config img2brl.src >/dev/null && [ -d "$(git config img2brl.src)" ]
 then cd "$(git config img2brl.src)"
      git --git-dir="$(pwd)/.git" pull --quiet
      make install
 fi
+
 exit 0
