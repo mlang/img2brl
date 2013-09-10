@@ -24,6 +24,7 @@ if(ZIP_EXECUTABLE)
   add_custom_target(firefox-extension ALL DEPENDS img2brl.xpi)
   add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/img2brl.xpi
                      COMMAND ${ZIP_EXECUTABLE} -r ${CMAKE_CURRENT_BINARY_DIR}/img2brl.xpi .
+                     DEPENDS xul/content/browserOverlay.xul
                      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/xul")
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/img2brl.xpi DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif()
