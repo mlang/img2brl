@@ -1,0 +1,5 @@
+content   img2brl                content/
+skin      img2brl  classic/1.0   skin/
+locale    img2brl  en-US         locale/en-US/
+
+overlay chrome://browser/content/browser.xul  chrome://img2brl/content/browserOverlay.xul

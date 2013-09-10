@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet type="text/css" href="chrome://global/skin/" ?>
+<?xml-stylesheet type="text/css"
+  href="chrome://img2brl/skin/browserOverlay.css" ?>
+
+<!DOCTYPE overlay SYSTEM
+  "chrome://img2brl/locale/browserOverlay.dtd">
+
+<overlay id="img2brl-browser-overlay"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript"
+    src="chrome://img2brl/content/img2brl.js" />
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="img2brl-string-bundle"
+      src="chrome://img2brl/locale/browserOverlay.properties" />
+  </stringbundleset>
+
+ <popup id="contentAreaContextMenu">
+        <menuitem id="img2brl-menu-item"
+                  insertafter="context-selectall"
+                  accesskey="B"
+                  class="menuitem-iconic"
+                  label="Braillify!"
+                  oncommand="toBraille(gContextMenu.target);"/>
+                             
+    </popup>
+</overlay>
