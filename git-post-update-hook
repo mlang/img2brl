@@ -1,7 +1,6 @@
 #!/bin/sh
 #-------------------------------------------------------------------------------
-# A git post-update hook to automatically build and install changes to a (bare)
-# git repository.
+# A git post-update hook to automatically build and install changes
 #-------------------------------------------------------------------------------
 # Copyright (C) 2013 Mario Lang <mlang@delysid.org>
 #

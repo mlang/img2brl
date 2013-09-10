@@ -11,20 +11,28 @@ add_definitions(-std=c++11)
 add_executable(img2brl.cgi img2brl.cc)
 target_link_libraries(img2brl.cgi ${CGICC_LIBRARIES} ${CURL_LIBRARIES}
                                   ${MAGICKPP_LIBRARIES})
+
 install(TARGETS img2brl.cgi DESTINATION "${CMAKE_INSTALL_PREFIX}")
 install(FILES favicon.png DESTINATION "${CMAKE_INSTALL_PREFIX}")
+
 find_package(Git)
 if(GIT_FOUND)
   install(PROGRAMS git-post-update-hook
           DESTINATION "${CMAKE_INSTALL_PREFIX}/hooks"
           RENAME post-update)
 endif()
+
 find_program(ZIP_EXECUTABLE zip)
 if(ZIP_EXECUTABLE)
   add_custom_target(firefox-extension ALL DEPENDS img2brl.xpi)
-  add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/img2brl.xpi
+  add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/img2brl.xpi"
                      COMMAND ${ZIP_EXECUTABLE} -r ${CMAKE_CURRENT_BINARY_DIR}/img2brl.xpi .
-                     DEPENDS xul/content/browserOverlay.xul
+                     DEPENDS xul/chrome.manifest xul/install.rdf
+                             xul/content/browserOverlay.xul
+                             xul/content/img2brl.js
+                             xul/content/img2brl.properties
+                             xul/locale/en-US/browserOverlay.dtd
                      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/xul")
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/img2brl.xpi DESTINATION "${CMAKE_INSTALL_PREFIX}")
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/img2brl.xpi
+          DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif()
