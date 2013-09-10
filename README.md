@@ -99,10 +99,10 @@ up-to-date binary (img2brl.cgi) will be installed into /home/user/img2brl.
     To user@remote:/home/user/img2brl
        1696b99..66316db  master -> master
 
-All that is left now is to configure your remote webserver to serve
+What is missing now is to configure your remote webserver to serve
 /home/user/img2brl at the URL of your choice.
-You will likely need to enable CGI execution in
-that directory, and perhaps also have img2brl.cgi served as the index page.
+You will likely need to enable CGI execution in that directory, and perhaps have
+img2brl.cgi served as the index page.
 
 ### Local testing
 
