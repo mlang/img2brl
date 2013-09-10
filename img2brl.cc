@@ -62,6 +62,17 @@ print_xhtml_header(std::string const &title)
        << head() << endl;
 }
 
+static cgicc::input
+checkbox( cgicc::Cgicc const &cgi
+        , std::string const &name, std::string const &id
+        )
+{
+  cgicc::input input;
+  input.set("type", "checkbox").set("name", name).set("id", id);
+  if (cgi.queryCheckbox(name)) input.set("checked", "checked");
+  return input;
+}
+
 static void
 print_form( cgicc::Cgicc const &cgi
           , cgicc::const_file_iterator file, cgicc::const_form_iterator url
@@ -83,24 +94,6 @@ print_form( cgicc::Cgicc const &cgi
   url_input.set("name", "url");
   if (url != cgi.getElements().end()) url_input.set("value", url->getValue());
 
-  input normalize_input;
-  normalize_input.set("id", "normalize_img");
-  normalize_input.set("type", "checkbox");
-  normalize_input.set("name", "normalize");
-  if (cgi.queryCheckbox("normalize")) normalize_input.set("checked", "checked");
-
-  input negate_input;
-  negate_input.set("id", "negate_img");
-  negate_input.set("type", "checkbox");
-  negate_input.set("name", "negate");
-  if (cgi.queryCheckbox("negate")) negate_input.set("checked", "checked");
-
-  input minify_input;
-  minify_input.set("id", "minify_img");
-  minify_input.set("type", "checkbox");
-  minify_input.set("name", "minify");
-  if (cgi.queryCheckbox("minify")) minify_input.set("checked", "checked");
-
   cout << form().set("method", "post")
                 .set("action", cgi.getEnvironment().getScriptName())
                 .set("enctype", "multipart/form-data") << endl
@@ -115,9 +108,12 @@ print_form( cgicc::Cgicc const &cgi
        << cgicc::div()
 
        << cgicc::div()
-       << normalize_input << label().set("for", "normalize_img") << "normalize" << label()
-       << negate_input << label().set("for", "negate_img") << "negate" << label()
-       << minify_input << label().set("for", "minify_img") << "minify" << label()
+       << checkbox(cgi, "normalize", "normalize_img")
+       << label().set("for", "normalize_img") << "normalize" << label()
+       << checkbox(cgi, "negate", "negate_img")
+       << label().set("for", "negate_img") << "negate" << label()
+       << checkbox(cgi, "minify", "minify_img")
+       << label().set("for", "minify_img") << "minify" << label()
        << cgicc::div()
 
        << cgicc::div().set("style", "text-align: center") << endl
