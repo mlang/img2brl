@@ -126,6 +126,7 @@ print_form( cgicc::Cgicc const &cgi
        << cgicc::div() << endl
 
        << cgicc::div() << endl
+       << labeled_checkbox(cgi, "trim") << endl
        << labeled_checkbox(cgi, "normalize") << endl
        << labeled_checkbox(cgi, "negate") << endl
        << labeled_checkbox(cgi, "minify") << endl
@@ -156,6 +157,7 @@ int main()
            << "Filename: " << file->getFilename() << endl;
       Magick::Blob blob(file->getData().data(), file->getData().length());
       Magick::Image image(blob);
+      if (cgi.queryCheckbox("trim")) image.trim();
       if (cgi.queryCheckbox("normalize")) image.normalize();
       if (cgi.queryCheckbox("negate")) image.negate(true);
       if (cgi.queryCheckbox("minify")) image.minify();
@@ -187,6 +189,7 @@ int main()
                                    << "URL: " << url->getValue() << endl;
                               Magick::Blob blob(buffer.data(), buffer.length());
                               Magick::Image image(blob);
+                              if (cgi.queryCheckbox("trim")) image.trim();
                               if (cgi.queryCheckbox("normalize")) image.normalize();
                               if (cgi.queryCheckbox("negate")) image.negate(true);
                               if (cgi.queryCheckbox("minify")) image.minify();
