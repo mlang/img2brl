@@ -127,9 +127,9 @@ print_form( cgicc::Cgicc const &cgi
 
   cout << cgicc::div() << endl
 //     << labeled_checkbox(cgi, "trim") << endl
-       << labeled_checkbox(cgi, "normalize") << endl
-       << labeled_checkbox(cgi, "negate") << endl
-       << labeled_checkbox(cgi, "minify") << endl
+//     << labeled_checkbox(cgi, "normalize") << endl
+//     << labeled_checkbox(cgi, "negate") << endl
+//     << labeled_checkbox(cgi, "minify") << endl
        << cgicc::div() << endl
 
        << cgicc::div().set("style", "text-align: center") << endl
