@@ -83,6 +83,12 @@ print_form( cgicc::Cgicc const &cgi
   url_input.set("name", "url");
   if (url != cgi.getElements().end()) url_input.set("value", url->getValue());
 
+  input normalize_input;
+  normalize_input.set("id", "normalize_img");
+  normalize_input.set("type", "checkbox");
+  normalize_input.set("name", "normalize");
+  if (cgi.queryCheckbox("normalize")) normalize_input.set("checked", "checked");
+
   input negate_input;
   negate_input.set("id", "negate_img");
   negate_input.set("type", "checkbox");
@@ -109,6 +115,7 @@ print_form( cgicc::Cgicc const &cgi
        << cgicc::div()
 
        << cgicc::div()
+       << normalize_input << label().set("for", "normalize_img") << "normalize" << label()
        << negate_input << label().set("for", "negate_img") << "negate" << label()
        << minify_input << label().set("for", "minify_img") << "minify" << label()
        << cgicc::div()
@@ -138,7 +145,8 @@ int main()
            << "Filename: " << file->getFilename() << endl;
       Magick::Blob blob(file->getData().data(), file->getData().length());
       Magick::Image image(blob);
-      if (cgi.queryCheckbox("negate")) image.negate(false);
+      if (cgi.queryCheckbox("normalize")) image.normalize();
+      if (cgi.queryCheckbox("negate")) image.negate(true);
       if (cgi.queryCheckbox("minify")) image.minify();
       image.write("ubrl:-");
       cout << pre() << endl;
@@ -168,7 +176,8 @@ int main()
                                    << "URL: " << url->getValue() << endl;
                               Magick::Blob blob(buffer.data(), buffer.length());
                               Magick::Image image(blob);
-                              if (cgi.queryCheckbox("negate")) image.negate(false);
+                              if (cgi.queryCheckbox("normalize")) image.normalize();
+                              if (cgi.queryCheckbox("negate")) image.negate(true);
                               if (cgi.queryCheckbox("minify")) image.minify();
                               image.write("ubrl:-");
                               cout << pre() << endl;
