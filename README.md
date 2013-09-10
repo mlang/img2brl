@@ -104,7 +104,7 @@ All that is left now is to configure your remote webserver to serve
 You will likely need to enable CGI execution in
 that directory, and perhaps also have img2brl.cgi served as the index page.
 
-## Local testing
+### Local testing
 
 If you want to minimize mistakes on your online site, it can be helpful to
 configure your local webserver to also serve an installation of img2brl.cgi.
