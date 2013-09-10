@@ -83,6 +83,12 @@ print_form( cgicc::Cgicc const &cgi
   url_input.set("name", "url");
   if (url != cgi.getElements().end()) url_input.set("value", url->getValue());
 
+  input minify_input;
+  minify_input.set("id", "minify?");
+  minify_input.set("type", "checkbox");
+  minify_input.set("name", "minify");
+  if (cgi.queryCheckbox("minify")) minify_input.set("checked", "checked");
+
   cout << form().set("method", "post")
                 .set("action", cgi.getEnvironment().getScriptName())
                 .set("enctype", "multipart/form-data") << endl
@@ -94,6 +100,10 @@ print_form( cgicc::Cgicc const &cgi
        << cgicc::div()
        << label().set("for", img_url) << "URL to image: " << label() << endl
        << url_input << endl
+       << cgicc::div()
+
+       << cgicc::div()
+       << minify_input << label().set("for", "minify?") << "Minify" << label()
        << cgicc::div()
 
        << cgicc::div().set("style", "text-align: center") << endl
@@ -121,6 +131,7 @@ int main()
            << "Filename: " << file->getFilename() << endl;
       Magick::Blob blob(file->getData().data(), file->getData().length());
       Magick::Image image(blob);
+      if (cgi.queryCheckbox("minify")) image.minify();
       image.write("ubrl:-");
       cout << pre() << endl;
     }
@@ -149,6 +160,7 @@ int main()
                                    << "URL: " << url->getValue() << endl;
                               Magick::Blob blob(buffer.data(), buffer.length());
                               Magick::Image image(blob);
+                              if (cgi.queryCheckbox("minify")) image.minify();
                               image.write("ubrl:-");
                               cout << pre() << endl;
                             } else {
