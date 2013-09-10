@@ -62,7 +62,10 @@ print_xhtml_header(std::string const &title)
        << head() << endl;
 }
 
-static void print_form(Cgicc const &cgi, const_file_iterator file, form_iterator url)
+static void
+print_form( cgicc::Cgicc const &cgi
+          , cgicc::const_file_iterator file, cgicc::const_form_iterator url
+          )
 {
   static char const *img_file = "img_file";
   static char const *img_url = "img_url";
@@ -122,7 +125,7 @@ int main()
       cout << pre() << endl;
     }
 
-    form_iterator url = cgi.getElement("url");
+    const_form_iterator url = cgi.getElement("url");
     if (url != cgi.getElements().end()) {
       curl_global_init(CURL_GLOBAL_DEFAULT);
       if (CURL *conn = curl_easy_init()) {
