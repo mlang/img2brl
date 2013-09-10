@@ -11,7 +11,7 @@ function toBraille(obj)
   }
 
   if (url != undefined) {
-    window.open("http://img2brl.delysid.org/?url="+url,'_blank');
+    window.open(document.getElementById("img2brl-urls").getFormattedString("url", [url]), '_blank');
   }
 }
 
