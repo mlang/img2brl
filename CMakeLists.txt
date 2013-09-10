@@ -13,6 +13,9 @@ target_link_libraries(img2brl.cgi ${CGICC_LIBRARIES} ${CURL_LIBRARIES}
                                   ${MAGICKPP_LIBRARIES})
 install(TARGETS img2brl.cgi DESTINATION "${CMAKE_INSTALL_PREFIX}")
 install(FILES favicon.png DESTINATION "${CMAKE_INSTALL_PREFIX}")
-install(PROGRAMS git-post-update-hook
-        DESTINATION "${CMAKE_INSTALL_PREFIX}/hooks"
-        RENAME post-update)
+find_package(Git)
+if(GIT_FOUND)
+  install(PROGRAMS git-post-update-hook
+          DESTINATION "${CMAKE_INSTALL_PREFIX}/hooks"
+          RENAME post-update)
+endif()
