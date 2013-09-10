@@ -73,6 +73,24 @@ checkbox( cgicc::Cgicc const &cgi
   return input;
 }
 
+class labeled_checkbox
+{
+  cgicc::Cgicc const &cgi;
+  std::string name;
+public:
+  labeled_checkbox(cgicc::Cgicc const &cgi, std::string const &name)
+  : cgi{cgi}, name{name} {}
+  friend std::ostream &
+  operator<<(std::ostream &stream, labeled_checkbox const &cb)
+  {
+    std::string id(cb.name);
+    id.append("_id");
+    stream << checkbox(cb.cgi, cb.name, id)
+           << label().set("for", id) << cb.name << label();
+    return stream;
+  }
+};
+
 static void
 print_form( cgicc::Cgicc const &cgi
           , cgicc::const_file_iterator file, cgicc::const_form_iterator url
@@ -105,16 +123,13 @@ print_form( cgicc::Cgicc const &cgi
        << cgicc::div()
        << label().set("for", img_url) << "URL to image: " << label() << endl
        << url_input << endl
-       << cgicc::div()
+       << cgicc::div() << endl
 
-       << cgicc::div()
-       << checkbox(cgi, "normalize", "normalize_img")
-       << label().set("for", "normalize_img") << "normalize" << label()
-       << checkbox(cgi, "negate", "negate_img")
-       << label().set("for", "negate_img") << "negate" << label()
-       << checkbox(cgi, "minify", "minify_img")
-       << label().set("for", "minify_img") << "minify" << label()
-       << cgicc::div()
+       << cgicc::div() << endl
+       << labeled_checkbox(cgi, "normalize") << endl
+       << labeled_checkbox(cgi, "negate") << endl
+       << labeled_checkbox(cgi, "minify") << endl
+       << cgicc::div() << endl
 
        << cgicc::div().set("style", "text-align: center") << endl
        << input().set("type", "submit")
