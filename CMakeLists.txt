@@ -17,7 +17,7 @@ install(FILES favicon.png DESTINATION "${CMAKE_INSTALL_PREFIX}")
 
 find_package(Git)
 if(GIT_FOUND)
-  install(PROGRAMS git-post-update-hook
+  install(PROGRAMS git-post-update.hook
           DESTINATION "${CMAKE_INSTALL_PREFIX}/hooks"
           RENAME post-update)
 endif()
