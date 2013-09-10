@@ -170,7 +170,7 @@ int main()
         char error_buffer[CURL_ERROR_SIZE];
         if (curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, error_buffer) == CURLE_OK) {
           if (curl_easy_setopt(conn, CURLOPT_URL, url->getValue().c_str()) == CURLE_OK) {
-            if (curl_easy_setopt(conn, CURLOPT_USERAGENT, "img2brl.cgi/0.1 (http://img2brl.delysid.org/)") == CURLE_OK) {
+            if (curl_easy_setopt(conn, CURLOPT_USERAGENT, cgi.getEnvironment().getUserAgent().c_str()) == CURLE_OK) {
               if (curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L) == CURLE_OK) {
                 if (curl_easy_setopt(conn, CURLOPT_MAXREDIRS, 3L) == CURLE_OK) {
                   if (curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, curl_append_to_string) == CURLE_OK) {
