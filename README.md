@@ -26,6 +26,7 @@ executable, installation can be very simple.
 
 You need
 
+* [Git](http://git-scm.com/)
 * [CMake](http://cmake.org/)
 * A C++ compiler like [GCC](http://gcc.gnu.org/) or
   [Clang](http://clang.llvm.org/)
@@ -98,8 +99,28 @@ up-to-date binary (img2brl.cgi) will be installed into /home/user/img2brl.
     To user@remote:/home/user/img2brl
        1696b99..66316db  master -> master
 
-All that is left now is to configure your web server to serve /home/user/img2brl/
-(the bare repository), which is now a mixture of a git bare repository and the
-CGI program img2brl.cgi.  You will likely need to enable CGI execution in
+All that is left now is to configure your remote webserver to serve
+/home/user/img2brl at the URL of your choice.
+You will likely need to enable CGI execution in
 that directory, and perhaps also have img2brl.cgi served as the index page.
+
+## Local testing
+
+If you want to minimize mistakes on your online site, it can be helpful to
+configure your local webserver to also serve an installation of img2brl.cgi.
+You do not need to setup a bare repository, since your remote webserver
+will already provide one.  You will likely want to provide CMAKE_INSTALL_PREFIX
+to cmake in your local work tree and have it point to a location
+which is served by your local webserver.  You can then very easily test
+changes by executing "make install" in your local work tree, and visiting your
+local webserver to observe the effect.
+
+    local$ cmake -DCMAKE_INSTALL_PREFIX=~/public_html/img2brl .
+    ...
+    local$ make install
+    local$ lynx http://localhost/~user
+
+If you are happy with a change (or maybe after "git rebase -i") you can run
+"git push" which will compile and install the current version on your remote
+webserver.
 
