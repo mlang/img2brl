@@ -135,8 +135,19 @@ print_form( cgicc::Cgicc const &cgi
        << checkbox(cgi, "trim", "trim_img") << label().set("for", "trim_img") << "trim" << label() << endl
        << checkbox(cgi, "normalize", "normalize_img") << label().set("for", "normalize_img") << "normalize" << label() << endl
        << checkbox(cgi, "negate", "negate_img") << label().set("for", "negate_img") << "negate" << label() << endl
-       << checkbox(cgi, "resize", "resize_img") << label().set("for", "resize_img") << "resize to max" << label() << input().set("type", "text").set("name", "cols").set("id", "cols_img").set("size", "4").set("value", columns) << ' ' << label().set("for", "cols_img") << "columns" << label()
+       << checkbox(cgi, "resize", "resize_img")
+       << label().set("for", "resize_img") << "resize to max" << label()
+       << input().set("type", "text")
+                 .set("name", "cols").set("id", "cols_img")
+                 .set("size", "4").set("value", columns)
+       << ' ' << label().set("for", "cols_img") << "columns" << label()
        << cgicc::div() << endl
+
+       << script().set("type", "application/javascript")
+       << "document.getElementById('resize_img').onchange = function() {" << endl
+       << "  document.getElementById('cols_img').disabled = !this.checked;" << endl
+       << "};" << endl
+       << script() << endl
 
        << cgicc::div().set("style", "text-align: center") << endl
        << input().set("type", "submit")
