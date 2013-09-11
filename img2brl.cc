@@ -170,6 +170,22 @@ int main()
 //      image.threshold(50.0);
         image.negate(true);
       }
+      if (cgi.queryCheckbox("resize")) {
+        const_form_iterator cols = cgi.getElement("cols");
+        if (cols != cgi.getElements().end()) {
+          std::string cols_str(cols->getValue());
+          if (not cols_str.empty()) {
+            Magick::Geometry g(0, 0);
+            char *end = NULL;
+            long int c = strtol(cols_str.c_str(), &end, 10);
+            if (*end == 0) {
+              g.width(c*2);
+              g.less(false); g.greater(true);
+              image.resize(g);
+            }
+          }
+        }
+      }
       image.write("ubrl:-");
       cout << pre() << endl;
     }
@@ -215,7 +231,7 @@ int main()
                                     long int c = strtol(cols_str.c_str(), &end, 10);
                                     if (*end == 0) {
                                       g.width(c*2);
-                                      g.less(false);
+                                      g.less(false); g.greater(true);
                                       image.resize(g);
                                     }
                                   }
