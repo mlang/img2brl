@@ -112,6 +112,10 @@ print_form( cgicc::Cgicc const &cgi
   url_input.set("name", "url");
   if (url != cgi.getElements().end()) url_input.set("value", url->getValue());
 
+  std::string columns("88");
+  if (cgi.getElement("cols") != cgi.getElements().end())
+    columns = cgi.getElement("cols")->getValue();
+
   cout << form().set("method", "post")
                 .set("action", cgi.getEnvironment().getScriptName())
                 .set("enctype", "multipart/form-data") << endl
@@ -129,7 +133,7 @@ print_form( cgicc::Cgicc const &cgi
        << checkbox(cgi, "trim", "trim_img") << label().set("for", "trim_img") << "trim" << label() << endl
        << checkbox(cgi, "normalize", "normalize_img") << label().set("for", "normalize_img") << "normalize" << label() << endl
        << checkbox(cgi, "negate", "negate_img") << label().set("for", "negate_img") << "negate" << label() << endl
-       << checkbox(cgi, "minify", "minify_img") << label().set("for", "minify_img") << "minify" << label() << endl
+       << checkbox(cgi, "resize", "resize_img") << label().set("for", "resize_img") << "resize to max" << label() << input().set("type", "text").set("name", "cols").set("id", "cols_img").set("size", "4").set("value", columns) << ' ' << label().set("for", "cols_img") << "columns" << label()
        << cgicc::div() << endl
 
        << cgicc::div().set("style", "text-align: center") << endl
@@ -160,7 +164,6 @@ int main()
       if (cgi.queryCheckbox("trim")) image.trim();
       if (cgi.queryCheckbox("normalize")) image.normalize();
       if (cgi.queryCheckbox("negate")) image.negate(true);
-      if (cgi.queryCheckbox("minify")) image.minify();
       image.write("ubrl:-");
       cout << pre() << endl;
     }
@@ -192,7 +195,22 @@ int main()
                               if (cgi.queryCheckbox("trim")) image.trim();
                               if (cgi.queryCheckbox("normalize")) image.normalize();
                               if (cgi.queryCheckbox("negate")) image.negate(true);
-                              if (cgi.queryCheckbox("minify")) image.minify();
+                              if (cgi.queryCheckbox("resize")) {
+                                const_form_iterator cols = cgi.getElement("cols");
+                                if (cols != cgi.getElements().end()) {
+                                  std::string cols_str(cols->getValue());
+                                  if (not cols_str.empty()) {
+                                    Magick::Geometry g(0, 0);
+                                    char *end = NULL;
+                                    long int c = strtol(cols_str.c_str(), &end, 10);
+                                    if (*end == 0) {
+                                      g.width(c*2);
+                                      g.less(false);
+                                      image.resize(g);
+                                    }
+                                  }
+                                }
+                              }
                               image.write("ubrl:-");
                               cout << pre() << endl;
                             } else {
