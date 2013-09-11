@@ -197,11 +197,10 @@ int main()
         if (cols != cgi.getElements().end()) {
           std::string cols_str(cols->getValue());
           if (not cols_str.empty()) {
-            Magick::Geometry g(0, 0);
             char *end = NULL;
-            long int c = strtol(cols_str.c_str(), &end, 10);
+            long int width = strtol(cols_str.c_str(), &end, 10) * 2;
             if (*end == 0) {
-              g.width(c*2);
+              Magick::Geometry g(width, 0);
               g.less(false); g.greater(true);
               image.resize(g);
             }
@@ -248,11 +247,10 @@ int main()
                                 if (cols != cgi.getElements().end()) {
                                   std::string cols_str(cols->getValue());
                                   if (not cols_str.empty()) {
-                                    Magick::Geometry g(0, 0);
                                     char *end = NULL;
-                                    long int c = strtol(cols_str.c_str(), &end, 10);
+                                    long int width = strtol(cols_str.c_str(), &end, 10) * 2;
                                     if (*end == 0) {
-                                      g.width(c*2);
+                                      Magick::Geometry g(width, 0);
                                       g.less(false); g.greater(true);
                                       image.resize(g);
                                     }
