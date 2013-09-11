@@ -118,6 +118,13 @@ print_form( cgicc::Cgicc const &cgi
   if (cgi.getElement("cols") != cgi.getElements().end())
     columns = cgi.getElement("cols")->getValue();
 
+  input columns_input;
+  columns_input.set("type", "text")
+               .set("name", "cols")
+               .set("id", "cols_img")
+               .set("size", "4").set("value", columns);
+  if (not cgi.queryCheckbox("resize")) columns_input.set("disabled", "disabled");
+
   cout << form().set("method", "post")
                 .set("action", cgi.getEnvironment().getScriptName())
                 .set("enctype", "multipart/form-data") << endl
@@ -137,9 +144,7 @@ print_form( cgicc::Cgicc const &cgi
        << checkbox(cgi, "negate", "negate_img") << label().set("for", "negate_img") << "negate" << label() << endl
        << checkbox(cgi, "resize", "resize_img")
        << label().set("for", "resize_img") << "resize to max" << label()
-       << input().set("type", "text")
-                 .set("name", "cols").set("id", "cols_img")
-                 .set("size", "4").set("value", columns)
+       << columns_input
        << ' ' << label().set("for", "cols_img") << "columns" << label()
        << cgicc::div() << endl
 
