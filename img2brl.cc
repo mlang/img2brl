@@ -123,7 +123,6 @@ print_form( cgicc::Cgicc const &cgi
                .set("name", "cols")
                .set("id", "cols_img")
                .set("size", "4").set("value", columns);
-  if (not cgi.queryCheckbox("resize")) columns_input.set("disabled", "disabled");
 
   cout << form().set("method", "post")
                 .set("action", cgi.getEnvironment().getScriptName())
@@ -149,6 +148,7 @@ print_form( cgicc::Cgicc const &cgi
        << cgicc::div() << endl
 
        << script().set("type", "application/javascript")
+       << "document.getElementById('cols_img').disabled = !document.getElementById('resize_img').checked;" << endl
        << "document.getElementById('resize_img').onchange = function() {" << endl
        << "  document.getElementById('cols_img').disabled = !this.checked;" << endl
        << "};" << endl
