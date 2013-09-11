@@ -31,6 +31,8 @@
 
 #include <sys/utsname.h>
 
+#include "config.h"
+
 static int
 curl_append_to_string(char *data, size_t size, size_t nmemb, std::string *buffer)
 {
@@ -249,6 +251,28 @@ int main()
          << a() << endl
          << cgicc::div() << endl;
 
+    cout << script().set("type", "application/javascript")
+         << "function install (aEvent) {" << endl
+         << "  for (var a = aEvent.target; a.href === undefined;) a = a.parentNode;" << endl
+         << "  var params = {" << endl
+         << "    'img2brl': { URL: aEvent.target.href," << endl
+         << "                 IconURL: aEvent.target.getAttribute('iconURL')," << endl
+         << "                 Hash: aEvent.target.getAttribute('hash')," << endl
+         << "                 toString: function () { return this.URL; }" << endl
+         << "               }" << endl
+         << "  };" << endl
+         << "  InstallTrigger.install(params);" << endl
+         << "  return false;" << endl
+         << "}" << endl
+         << script()  << endl
+         << cgicc::div() << endl
+         << a().set("href", "img2brl.xpi")
+               .set("iconURL", "favicon.png")
+               .set("hash", "sha512:"+std::string(IMG2BRL_XPI_SHA512))
+               .set("onclick", "return install(event);")
+         << "Install Firefox extension"
+         << a() << endl
+         << cgicc::div() << endl;
     cout << cgicc::div().set("style", "text-align: center") << endl
          << comment() << "Configured for " << cgi.getHost();  
     struct utsname info;
