@@ -168,6 +168,31 @@ print_form( cgicc::Cgicc const &cgi
        << form() << endl;
 }
 
+static void
+manipulate(cgicc::Cgicc const &cgi, Magick::Image &image) {
+  if (cgi.queryCheckbox("trim")) image.trim();
+  if (cgi.queryCheckbox("normalize")) image.normalize();
+  if (cgi.queryCheckbox("negate")) {
+//  image.threshold(50.0);
+    image.negate(true);
+  }
+  if (cgi.queryCheckbox("resize")) {
+    const_form_iterator cols = cgi.getElement("cols");
+    if (cols != cgi.getElements().end()) {
+      std::string cols_str(cols->getValue());
+      if (not cols_str.empty()) {
+        char *end = NULL;
+        long int width = strtol(cols_str.c_str(), &end, 10) * 2;
+        if (end and *end == 0) {
+          Magick::Geometry g(width, 0);
+          g.less(false); g.greater(true);
+          image.resize(g);
+        }
+      }
+    }
+  }
+}
+
 int main()
 {
   typedef std::chrono::steady_clock clock;
@@ -186,27 +211,7 @@ int main()
            << "Content Type: " << file->getDataType() << endl
            << "Format: " << image.format() << endl
            << "Filename: " << file->getFilename() << endl;
-      if (cgi.queryCheckbox("trim")) image.trim();
-      if (cgi.queryCheckbox("normalize")) image.normalize();
-      if (cgi.queryCheckbox("negate")) {
-//      image.threshold(50.0);
-        image.negate(true);
-      }
-      if (cgi.queryCheckbox("resize")) {
-        const_form_iterator cols = cgi.getElement("cols");
-        if (cols != cgi.getElements().end()) {
-          std::string cols_str(cols->getValue());
-          if (not cols_str.empty()) {
-            char *end = NULL;
-            long int width = strtol(cols_str.c_str(), &end, 10) * 2;
-            if (*end == 0) {
-              Magick::Geometry g(width, 0);
-              g.less(false); g.greater(true);
-              image.resize(g);
-            }
-          }
-        }
-      }
+      manipulate(cgi, image);
       image.write("ubrl:-");
       cout << pre() << endl;
     }
@@ -236,27 +241,7 @@ int main()
                                    << "Content Type: " << content_type << endl
                                    << "Format: " << image.format() << endl
                                    << "URL: " << url->getValue() << endl;
-                              if (cgi.queryCheckbox("trim")) image.trim();
-                              if (cgi.queryCheckbox("normalize")) image.normalize();
-                              if (cgi.queryCheckbox("negate")) {
-//                              image.threshold(50.0);
-                                image.negate(true);
-                              }
-                              if (cgi.queryCheckbox("resize")) {
-                                const_form_iterator cols = cgi.getElement("cols");
-                                if (cols != cgi.getElements().end()) {
-                                  std::string cols_str(cols->getValue());
-                                  if (not cols_str.empty()) {
-                                    char *end = NULL;
-                                    long int width = strtol(cols_str.c_str(), &end, 10) * 2;
-                                    if (*end == 0) {
-                                      Magick::Geometry g(width, 0);
-                                      g.less(false); g.greater(true);
-                                      image.resize(g);
-                                    }
-                                  }
-                                }
-                              }
+                              manipulate(cgi, image);
                               image.write("ubrl:-");
                               cout << pre() << endl;
                             } else {
