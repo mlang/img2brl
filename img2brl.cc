@@ -265,7 +265,7 @@ int main()
 
     cout << hr() << endl;
 
-#if defined(IMG2BRL_XPI_SHA512)
+#if defined(IMG2BRL_XPI_HASH)
     cout << script().set("type", "application/javascript")
          << "function install (aEvent) {" << endl
          << "  for (var a = aEvent.target; a.href === undefined;)" << endl
@@ -284,12 +284,12 @@ int main()
          << cgicc::div() << endl
          << a().set("href", "img2brl.xpi")
                .set("iconURL", "favicon.png")
-               .set("hash", "sha512:"+std::string(IMG2BRL_XPI_SHA512))
+               .set("hash", IMG2BRL_XPI_HASH)
                .set("onclick", "return install(event);")
          << "Install Firefox extension"
          << a() << endl
          << cgicc::div() << endl;
-#endif
+#endif //defined(IMG2BRL_XPI_HASH)
 
     cout << cgicc::div().set("class", "center") << endl
          << "Source code? git clone http://img2brl.delysid.org or go to "
