@@ -156,14 +156,18 @@ int main()
 
     const_file_iterator file = cgi.getFile("img");
     if (file != cgi.getFiles().end()) {
-      cout << pre() << endl
-           << "Content Type: " << file->getDataType() << endl
-           << "Filename: " << file->getFilename() << endl;
       Magick::Blob blob(file->getData().data(), file->getData().length());
       Magick::Image image(blob);
+      cout << pre() << endl
+           << "Content Type: " << file->getDataType() << endl
+           << "Format: " << image.format() << endl
+           << "Filename: " << file->getFilename() << endl;
       if (cgi.queryCheckbox("trim")) image.trim();
       if (cgi.queryCheckbox("normalize")) image.normalize();
-      if (cgi.queryCheckbox("negate")) image.negate(true);
+      if (cgi.queryCheckbox("negate")) {
+//      image.threshold(50.0);
+        image.negate(true);
+      }
       image.write("ubrl:-");
       cout << pre() << endl;
     }
@@ -187,14 +191,18 @@ int main()
                           if (http_response_code == 200 and not buffer.empty()) {
                             char *content_type;
                             if (curl_easy_getinfo(conn, CURLINFO_CONTENT_TYPE, &content_type) == CURLE_OK) {
-                              cout << pre() << endl
-                                   << "Content Type: " << content_type << endl
-                                   << "URL: " << url->getValue() << endl;
                               Magick::Blob blob(buffer.data(), buffer.length());
                               Magick::Image image(blob);
+                              cout << pre() << endl
+                                   << "Content Type: " << content_type << endl
+                                   << "Format: " << image.format() << endl
+                                   << "URL: " << url->getValue() << endl;
                               if (cgi.queryCheckbox("trim")) image.trim();
                               if (cgi.queryCheckbox("normalize")) image.normalize();
-                              if (cgi.queryCheckbox("negate")) image.negate(true);
+                              if (cgi.queryCheckbox("negate")) {
+//                              image.threshold(50.0);
+                                image.negate(true);
+                              }
                               if (cgi.queryCheckbox("resize")) {
                                 const_form_iterator cols = cgi.getElement("cols");
                                 if (cols != cgi.getElements().end()) {
