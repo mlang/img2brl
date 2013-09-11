@@ -276,16 +276,11 @@ int main()
 
     cout << hr() << endl;
 
-    cout << cgicc::div().set("style", "text-align: center") << endl
-         << "Sourcecode? git clone http://img2brl.delysid.org/ or >"
-         << a().set("href", "https://github.com/mlang/img2brl")
-         << "github.com/mlang/img2brl"
-         << a() << endl
-         << cgicc::div() << endl;
-
+#if defined(IMG2BRL_XPI_SHA512)
     cout << script().set("type", "application/javascript")
          << "function install (aEvent) {" << endl
-         << "  for (var a = aEvent.target; a.href === undefined;) a = a.parentNode;" << endl
+         << "  for (var a = aEvent.target; a.href === undefined;)" << endl
+         << "    a = a.parentNode;" << endl
          << "  var params = {" << endl
          << "    'img2brl': { URL: aEvent.target.href," << endl
          << "                 IconURL: aEvent.target.getAttribute('iconURL')," << endl
@@ -296,7 +291,7 @@ int main()
          << "  InstallTrigger.install(params);" << endl
          << "  return false;" << endl
          << "}" << endl
-         << script()  << endl
+         << script() << endl
          << cgicc::div() << endl
          << a().set("href", "img2brl.xpi")
                .set("iconURL", "favicon.png")
@@ -305,6 +300,15 @@ int main()
          << "Install Firefox extension"
          << a() << endl
          << cgicc::div() << endl;
+#endif
+
+    cout << cgicc::div().set("style", "text-align: center") << endl
+         << "Source code? git clone http://img2brl.delysid.org or go to "
+         << a().set("href", "https://github.com/mlang/img2brl")
+         << "github.com/mlang/img2brl"
+         << a() << endl
+         << cgicc::div() << endl;
+
     cout << cgicc::div().set("style", "text-align: center") << endl
          << comment() << "Configured for " << cgi.getHost();  
     struct utsname info;
