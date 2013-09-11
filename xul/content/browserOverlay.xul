@@ -11,7 +11,7 @@
   <stringbundleset id="stringbundleset">
     <stringbundle id="img2brl-string-bundle"
       src="chrome://img2brl/locale/browserOverlay.properties" />
-    <stringbundle id="img2brl-urls" src="img2brl.properties" />
+    <stringbundle id="img2brl-urls" src="chrome://img2brl/content/img2brl.properties" />
   </stringbundleset>
 
   <popup id="contentAreaContextMenu">
