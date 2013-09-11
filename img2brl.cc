@@ -61,6 +61,8 @@ print_xhtml_header(std::string const &title)
                 .set("content", text_html_utf8) << endl
        << link().set("rel", "shortcut icon")
                 .set("href", "favicon.png") << endl
+       << link().set("rel", "stylesheet").set("type", "text/css")
+                .set("href", "img2brl.css")
        << head() << endl;
 }
 
@@ -139,9 +141,12 @@ print_form( cgicc::Cgicc const &cgi
        << cgicc::div() << endl
 
        << cgicc::div() << endl
-       << checkbox(cgi, "trim", "trim_img") << label().set("for", "trim_img") << "trim" << label() << endl
-       << checkbox(cgi, "normalize", "normalize_img") << label().set("for", "normalize_img") << "normalize" << label() << endl
-       << checkbox(cgi, "negate", "negate_img") << label().set("for", "negate_img") << "negate" << label() << endl
+       << checkbox(cgi, "trim", "trim_img")
+       << label().set("for", "trim_img") << "trim" << label() << endl
+       << checkbox(cgi, "normalize", "normalize_img")
+       << label().set("for", "normalize_img") << "normalize" << label() << endl
+       << checkbox(cgi, "negate", "negate_img")
+       << label().set("for", "negate_img") << "negate" << label() << endl
        << checkbox(cgi, "resize", "resize_img")
        << label().set("for", "resize_img") << "resize to max" << label()
        << columns_input
@@ -155,7 +160,7 @@ print_form( cgicc::Cgicc const &cgi
        << "};" << endl
        << script() << endl
 
-       << cgicc::div().set("style", "text-align: center") << endl
+       << cgicc::div().set("class", "center") << endl
        << input().set("type", "submit")
                  .set("name", "submit")
                  .set("value", "Translate to Braille") << endl
@@ -303,14 +308,14 @@ int main()
          << cgicc::div() << endl;
 #endif
 
-    cout << cgicc::div().set("style", "text-align: center") << endl
+    cout << cgicc::div().set("class", "center") << endl
          << "Source code? git clone http://img2brl.delysid.org or go to "
          << a().set("href", "https://github.com/mlang/img2brl")
          << "github.com/mlang/img2brl"
          << a() << endl
          << cgicc::div() << endl;
 
-    cout << cgicc::div().set("style", "text-align: center") << endl
+    cout << cgicc::div().set("class", "center") << endl
          << comment() << "Configured for " << cgi.getHost();  
     struct utsname info;
     if(uname(&info) != -1) {

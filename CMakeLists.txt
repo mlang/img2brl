@@ -38,5 +38,6 @@ target_link_libraries(img2brl.cgi ${CGICC_LIBRARIES} ${CURL_LIBRARIES}
                                   ${MAGICKPP_LIBRARIES})
 
 install(TARGETS img2brl.cgi DESTINATION "${CMAKE_INSTALL_PREFIX}")
-install(FILES favicon.png DESTINATION "${CMAKE_INSTALL_PREFIX}")
+install(FILES favicon.png img2brl.css
+        DESTINATION "${CMAKE_INSTALL_PREFIX}")
 
