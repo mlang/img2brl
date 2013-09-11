@@ -1,6 +1,7 @@
 /CMakeCache.txt
 /cmake_install.cmake
 /CMakeFiles
+/config.h
 /Makefile
 /img2brl.cgi
 /img2brl.xpi

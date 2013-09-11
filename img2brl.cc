@@ -82,6 +82,7 @@ class labeled_checkbox
 public:
   labeled_checkbox(cgicc::Cgicc const &cgi, std::string const &name)
   : cgi{cgi}, name{name} {}
+
   friend std::ostream &
   operator<<(std::ostream &stream, labeled_checkbox const &cb)
   {
