@@ -207,7 +207,7 @@ int main()
     if (file != cgi.getFiles().end()) {
       Magick::Blob blob(file->getData().data(), file->getData().length());
       Magick::Image image(blob);
-      cout << pre() << endl
+      cout << pre().set("id", "result") << endl
            << "Content Type: " << file->getDataType() << endl
            << "Format: " << image.format() << endl
            << "Filename: " << file->getFilename() << endl;
@@ -237,7 +237,7 @@ int main()
                             if (curl_easy_getinfo(conn, CURLINFO_CONTENT_TYPE, &content_type) == CURLE_OK) {
                               Magick::Blob blob(buffer.data(), buffer.length());
                               Magick::Image image(blob);
-                              cout << pre() << endl
+                              cout << pre().set("id", "result") << endl
                                    << "Content Type: " << content_type << endl
                                    << "Format: " << image.format() << endl
                                    << "URL: " << url->getValue() << endl;
