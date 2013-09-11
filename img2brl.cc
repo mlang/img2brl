@@ -129,7 +129,7 @@ print_form( cgicc::Cgicc const &cgi
        << checkbox(cgi, "trim", "trim_img") << label().set("for", "trim_img") << "trim" << label() << endl
        << checkbox(cgi, "normalize", "normalize_img") << label().set("for", "normalize_img") << "normalize" << label() << endl
        << checkbox(cgi, "negate", "negate_img") << label().set("for", "negate_img") << "negate" << label() << endl
-//     << checkbox(cgi, "minify", "minify_img") << label().set("for", "minify_img") << "minify" << label() << endl
+       << checkbox(cgi, "minify", "minify_img") << label().set("for", "minify_img") << "minify" << label() << endl
        << cgicc::div() << endl
 
        << cgicc::div().set("style", "text-align: center") << endl
