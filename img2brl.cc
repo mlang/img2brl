@@ -123,13 +123,13 @@ print_form( cgicc::Cgicc const &cgi
        << cgicc::div()
        << label().set("for", img_url) << "URL to image: " << label() << endl
        << url_input << endl
-       << cgicc::div() << endl;
+       << cgicc::div() << endl
 
-  cout << cgicc::div() << endl
-//     << labeled_checkbox(cgi, "trim") << endl
-//     << labeled_checkbox(cgi, "normalize") << endl
-//     << labeled_checkbox(cgi, "negate") << endl
-//     << labeled_checkbox(cgi, "minify") << endl
+       << cgicc::div() << endl
+       << checkbox(cgi, "trim", "trim_img") << label().set("for", "trim_img") << "trim" << label() << endl
+       << checkbox(cgi, "normalize", "normalize_img") << label().set("for", "normalize_img") << "normalize" << label() << endl
+       << checkbox(cgi, "negate", "negate_img") << label().set("for", "negate_img") << "negate" << label() << endl
+//     << checkbox(cgi, "minify", "minify_img") << label().set("for", "minify_img") << "minify" << label() << endl
        << cgicc::div() << endl
 
        << cgicc::div().set("style", "text-align: center") << endl
