@@ -351,19 +351,29 @@ int main()
            << a() << endl
            << cgicc::div() << endl;
 
-      cout << comment() << "Configured for " << cgi.getHost();  
+      cout << cgicc::div().set("class", "center").set("id", "powered-by")
+           << "Powered by" << ' '
+           << BOOST_COMPILER << ',' << ' '
+           << "GNU&nbsp;cgicc" << "&nbsp;" << "version" << "&nbsp;"
+           << cgi.getVersion() << ',' << ' '
+           << "libcurl" << "&nbsp;" << "version" << "&nbsp;"
+           << LIBCURL_VERSION_MAJOR << '.'
+           << LIBCURL_VERSION_MINOR << '.'
+           << LIBCURL_VERSION_PATCH << ',' << ' '
+           << "Magick++" << "&nbsp;" << "version" << "&nbsp;"
+           << MAGICKPP_VERSION << ',' << ' '
+           << "Boost" << "&nbsp;" << "version" << "&nbsp;"
+           << BOOST_VERSION / 100000 << '.'
+           << BOOST_VERSION / 100 % 1000 << '.'
+           << BOOST_VERSION % 100;
       struct utsname info;
       if(uname(&info) != -1) {
-        cout << ". Running on " << info.sysname;
-        cout << ' ' << info.release << " (";
-        cout << info.nodename << ").";
+        cout << ' ' << "and" << ' '
+             << info.sysname << "&nbsp;" << "version" << "&nbsp;"
+             << info.release << ' ' << "running on" << ' '
+             << info.nodename << ' ' << '(' << cgi.getHost() << ')';
       }
-      cout << comment() << endl;
-      cout << comment() << BOOST_COMPILER << comment() << endl;
-      cout << comment() << "GNU cgicc" << ' ' << "version" << ' ' << cgi.getVersion() << comment() << endl;
-      cout << comment() << "libcurl" << ' ' << "version" << ' ' << LIBCURL_VERSION_MAJOR << '.' << LIBCURL_VERSION_MINOR << '.' << LIBCURL_VERSION_PATCH << comment() << endl;
-      cout << comment() << "ImageMagick" << ' ' << "version" << ' ' << MAGICKPP_VERSION << comment() << endl;
-      cout << comment() << "Boost" << ' ' << BOOST_VERSION / 100000 << '.' << BOOST_VERSION / 100 % 1000 << '.' << BOOST_VERSION % 100 << comment() << endl;
+      cout << '.' << cgicc::div() << endl;
 
       print_xhtml_footer(start);
     }
