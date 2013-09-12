@@ -32,6 +32,7 @@
 #include <sys/utsname.h>
 
 #include "config.h"
+#include "ubrl.h"
 
 static int
 curl_append_to_string(char *data, size_t size, size_t nmemb, std::string *buffer)
@@ -213,12 +214,17 @@ int main()
     if (file != cgi.getFiles().end()) {
       Magick::Blob blob(file->getData().data(), file->getData().length());
       Magick::Image image(blob);
-      if (mode == "html") cout << pre().set("id", "result") << endl;
-      cout << "Content Type: " << file->getDataType() << endl
-           << "Format: " << image.format() << endl
-           << "Filename: " << file->getFilename() << endl;
       manipulate(cgi, image);
-      image.write("ubrl:-");
+      ubrl tactile(image);
+      if (mode == "html") {
+        cout << pre().set("id", "result") << endl;
+        cout << "Content Type: " << file->getDataType() << endl
+             << "Format: " << image.format() << endl
+             << "Filename: " << file->getFilename() << endl
+             << "Width: " << tactile.width() << endl
+             << "Height: " << tactile.height() << endl;
+      }
+      cout << tactile.string();
       if (mode == "html") cout << pre() << endl;
     }
 
@@ -243,12 +249,17 @@ int main()
                             if (curl_easy_getinfo(conn, CURLINFO_CONTENT_TYPE, &content_type) == CURLE_OK) {
                               Magick::Blob blob(buffer.data(), buffer.length());
                               Magick::Image image(blob);
-                              if (mode == "html") cout << pre().set("id", "result") << endl;
-                              cout << "Content Type: " << content_type << endl
-                                   << "Format: " << image.format() << endl
-                                   << "URL: " << url->getValue() << endl;
                               manipulate(cgi, image);
-                              image.write("ubrl:-");
+                              ubrl tactile(image);
+                              if (mode == "html") {
+                                cout << pre().set("id", "result") << endl;
+                                cout << "Content Type: " << content_type << endl
+                                     << "Format: " << image.format() << endl
+                                     << "URL: " << url->getValue() << endl
+                                     << "Width: " << tactile.width() << endl
+                                     << "Height: " << tactile.height() << endl;
+                              }
+                              cout << tactile.string();
                               if (mode == "html") cout << pre() << endl;
                             } else {
                               cerr << error_buffer << endl;

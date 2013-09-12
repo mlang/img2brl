@@ -23,7 +23,7 @@ set -e
 # Update auxiliary info file to help dumb servers
 git update-server-info
 
-# Pull changes into working tree and rebuild
+# Pull changes into working tree and install cmake project back into bare repo
 if git config img2brl.src >/dev/null && [ -d "$(git config img2brl.src)" ]
 then cd "$(git config img2brl.src)"
      git --git-dir="$(pwd)/.git" pull --quiet
