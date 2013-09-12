@@ -194,10 +194,30 @@ manipulate(cgicc::Cgicc const &cgi, Magick::Image &image) {
   }
 }
 
+typedef std::chrono::steady_clock clock_type;
+
+static void
+print_xhtml_footer(clock_type::time_point const &start)
+{
+  cout << cgicc::div().set("class", "center") << endl;
+  clock_type::time_point end = clock_type::now();
+  cout << "Total time for request was "
+       << span().set("class", "timing").set("id", "microseconds")
+       << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
+       << span() << " us"
+       << " ("
+       << span().set("class", "timing").set("id", "seconds")
+       << std::chrono::duration_cast<std::chrono::duration<double>>(end - start).count()
+       << span() << " s)";
+  cout << cgicc::div() << endl;
+
+  cout << body() << endl
+       << html() << endl;
+}
+
 int main()
 {
-  typedef std::chrono::steady_clock clock;
-  clock::time_point start = clock::now();
+  clock_type::time_point start = clock_type::now();
   try {
     Cgicc cgi;
     std::string mode(cgi.getElement("mode") != cgi.getElements().end()?
@@ -231,22 +251,31 @@ int main()
     const_form_iterator url = cgi.getElement("url");
     if (url != cgi.getElements().end()) {
       curl_global_init(CURL_GLOBAL_DEFAULT);
-      if (CURL *conn = curl_easy_init()) {
+      if (CURL *curl = curl_easy_init()) {
         char error_buffer[CURL_ERROR_SIZE];
-        if (curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, error_buffer) == CURLE_OK) {
-          if (curl_easy_setopt(conn, CURLOPT_URL, url->getValue().c_str()) == CURLE_OK) {
-            if (curl_easy_setopt(conn, CURLOPT_USERAGENT, cgi.getEnvironment().getUserAgent().c_str()) == CURLE_OK) {
-              if (curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L) == CURLE_OK) {
-                if (curl_easy_setopt(conn, CURLOPT_MAXREDIRS, 3L) == CURLE_OK) {
-                  if (curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, curl_append_to_string) == CURLE_OK) {
+        if (curl_easy_setopt(curl, CURLOPT_ERRORBUFFER,
+                             error_buffer) == CURLE_OK) {
+          if (curl_easy_setopt(curl, CURLOPT_URL,
+                               url->getValue().c_str()) == CURLE_OK) {
+            if (curl_easy_setopt(curl, CURLOPT_USERAGENT,
+                                 cgi.getEnvironment().getUserAgent().c_str()) == CURLE_OK) {
+              if (curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION,
+                                   1L) == CURLE_OK) {
+                if (curl_easy_setopt(curl, CURLOPT_MAXREDIRS,
+                                     3L) == CURLE_OK) {
+                  if (curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION,
+                                       curl_append_to_string) == CURLE_OK) {
                     std::string buffer;
-                    if (curl_easy_setopt(conn, CURLOPT_WRITEDATA, &buffer) == CURLE_OK) {
-                      if (curl_easy_perform(conn) == CURLE_OK) {
+                    if (curl_easy_setopt(curl, CURLOPT_WRITEDATA,
+                                         &buffer) == CURLE_OK) {
+                      if (curl_easy_perform(curl) == CURLE_OK) {
                         long http_response_code;
-                        if (curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_response_code) == CURLE_OK) {
+                        if (curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE,
+                                              &http_response_code) == CURLE_OK) {
                           if (http_response_code == 200 and not buffer.empty()) {
                             char *content_type;
-                            if (curl_easy_getinfo(conn, CURLINFO_CONTENT_TYPE, &content_type) == CURLE_OK) {
+                            if (curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE,
+                                                  &content_type) == CURLE_OK) {
                               Magick::Blob blob(buffer.data(), buffer.length());
                               Magick::Image image(blob);
                               manipulate(cgi, image);
@@ -264,7 +293,11 @@ int main()
                             } else {
                               cerr << error_buffer << endl;
                             }
+                          } else {
+                            cerr << "HTTP " << http_response_code << url->getValue() << endl;
                           }
+                        } else {
+                          cerr << error_buffer << endl;
                         }
                       }
                     }
@@ -274,7 +307,7 @@ int main()
             }
           }
         }
-        curl_easy_cleanup(conn);
+        curl_easy_cleanup(curl);
       }
     }
 
@@ -310,14 +343,13 @@ int main()
 #endif //defined(IMG2BRL_XPI_HASH)
 
       cout << cgicc::div().set("class", "center") << endl
-           << "Source code? git clone http://img2brl.delysid.org or go to "
+           << "Source code? git clone http://img2brl.delysid.org or "
            << a().set("href", "https://github.com/mlang/img2brl")
            << "github.com/mlang/img2brl"
            << a() << endl
            << cgicc::div() << endl;
 
-      cout << cgicc::div().set("class", "center") << endl
-           << comment() << "Configured for " << cgi.getHost();  
+      cout << comment() << "Configured for " << cgi.getHost();  
       struct utsname info;
       if(uname(&info) != -1) {
         cout << ". Running on " << info.sysname;
@@ -326,15 +358,7 @@ int main()
       }
       cout << comment() << endl;
 
-      // Information on this query
-      clock::time_point end = clock::now();
-      cout << "Total time for request was "
-           << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
-           << " us";
-      cout << " (" << std::chrono::duration_cast<std::chrono::duration<double>>(end - start).count() << " s)";
-      cout << cgicc::div() << endl;
-
-      cout << body() << html() << endl;
+      print_xhtml_footer(start);
     }
 
     return EXIT_SUCCESS;
@@ -360,8 +384,8 @@ int main()
     // End of document
     cout << cgicc::div() << endl;
     cout << hr() << endl;
-    cout << body() << html() << endl;
-    
+    print_xhtml_footer(start);
+
     return EXIT_SUCCESS;
   }
 }
