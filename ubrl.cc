@@ -10,10 +10,10 @@
 #include <boost/spirit/include/qi_parse_attr.hpp>
 #include <boost/spirit/include/qi_uint.hpp>
 
-ubrl::ubrl(Magick::Image &image)
+ubrl::ubrl(Magick::Image const &image)
 {
   Magick::Blob blob;
-  image.write(&blob, "ubrl");
+  Magick::Image(image).write(&blob, "ubrl");
 
   using namespace boost::spirit::qi;
   char const *begin = static_cast<char const *>(blob.data());
