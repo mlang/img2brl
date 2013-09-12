@@ -28,6 +28,8 @@
 #include <curl/curl.h>
 #include <Magick++/Blob.h>
 #include <Magick++/Image.h>
+#include <boost/config.hpp>
+#include <boost/version.hpp>
 
 #include <sys/utsname.h>
 
@@ -60,9 +62,9 @@ print_xhtml_header(std::string const &title)
        << cgicc::title() << title << cgicc::title() << endl
        << meta().set("http-equiv", "Content-Type")
                 .set("content", text_html_utf8) << endl
-       << link().set("rel", "shortcut icon")
+       << cgicc::link().set("rel", "shortcut icon")
                 .set("href", "favicon.png") << endl
-       << link().set("rel", "stylesheet").set("type", "text/css")
+       << cgicc::link().set("rel", "stylesheet").set("type", "text/css")
                 .set("href", "img2brl.css")
        << head() << endl;
 }
@@ -357,6 +359,11 @@ int main()
         cout << info.nodename << ").";
       }
       cout << comment() << endl;
+      cout << comment() << BOOST_COMPILER << comment() << endl;
+      cout << comment() << "GNU cgicc" << ' ' << "version" << ' ' << cgi.getVersion() << comment() << endl;
+      cout << comment() << "libcurl" << ' ' << "version" << ' ' << LIBCURL_VERSION_MAJOR << '.' << LIBCURL_VERSION_MINOR << '.' << LIBCURL_VERSION_PATCH << comment() << endl;
+      cout << comment() << "ImageMagick" << ' ' << "version" << ' ' << MAGICKPP_VERSION << comment() << endl;
+      cout << comment() << "Boost" << ' ' << BOOST_VERSION / 100000 << '.' << BOOST_VERSION / 100 % 1000 << '.' << BOOST_VERSION % 100 << comment() << endl;
 
       print_xhtml_footer(start);
     }
