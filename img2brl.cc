@@ -199,21 +199,27 @@ int main()
   clock::time_point start = clock::now();
   try {
     Cgicc cgi;
+    std::string mode(cgi.getElement("mode") != cgi.getElements().end()?
+                     cgi.getElement("mode")->getValue(): "html");
 
-    print_xhtml_header("Tactile Image Viewer");
-    cout << body() << endl;
+    if (mode == "html") {
+      print_xhtml_header("Tactile Image Viewer");
+      cout << body() << endl;
+    } else if (mode == "text") {
+      cout << HTTPContentHeader("text/plain; charset=UTF-8");
+    }
 
     const_file_iterator file = cgi.getFile("img");
     if (file != cgi.getFiles().end()) {
       Magick::Blob blob(file->getData().data(), file->getData().length());
       Magick::Image image(blob);
-      cout << pre().set("id", "result") << endl
-           << "Content Type: " << file->getDataType() << endl
+      if (mode == "html") cout << pre().set("id", "result") << endl;
+      cout << "Content Type: " << file->getDataType() << endl
            << "Format: " << image.format() << endl
            << "Filename: " << file->getFilename() << endl;
       manipulate(cgi, image);
       image.write("ubrl:-");
-      cout << pre() << endl;
+      if (mode == "html") cout << pre() << endl;
     }
 
     const_form_iterator url = cgi.getElement("url");
@@ -237,13 +243,13 @@ int main()
                             if (curl_easy_getinfo(conn, CURLINFO_CONTENT_TYPE, &content_type) == CURLE_OK) {
                               Magick::Blob blob(buffer.data(), buffer.length());
                               Magick::Image image(blob);
-                              cout << pre().set("id", "result") << endl
-                                   << "Content Type: " << content_type << endl
+                              if (mode == "html") cout << pre().set("id", "result") << endl;
+                              cout << "Content Type: " << content_type << endl
                                    << "Format: " << image.format() << endl
                                    << "URL: " << url->getValue() << endl;
                               manipulate(cgi, image);
                               image.write("ubrl:-");
-                              cout << pre() << endl;
+                              if (mode == "html") cout << pre() << endl;
                             } else {
                               cerr << error_buffer << endl;
                             }
@@ -261,62 +267,64 @@ int main()
       }
     }
 
-    print_form(cgi, file, url);
+    if (mode == "html") {
+      print_form(cgi, file, url);
 
-    cout << hr() << endl;
+      cout << hr() << endl;
 
 #if defined(IMG2BRL_XPI_HASH)
-    cout << script().set("type", "application/javascript")
-         << "function install (aEvent) {" << endl
-         << "  for (var a = aEvent.target; a.href === undefined;)" << endl
-         << "    a = a.parentNode;" << endl
-         << "  var params = {" << endl
-         << "    'img2brl': { URL: aEvent.target.href," << endl
-         << "                 IconURL: aEvent.target.getAttribute('iconURL')," << endl
-         << "                 Hash: aEvent.target.getAttribute('hash')," << endl
-         << "                 toString: function () { return this.URL; }" << endl
-         << "               }" << endl
-         << "  };" << endl
-         << "  InstallTrigger.install(params);" << endl
-         << "  return false;" << endl
-         << "}" << endl
-         << script() << endl
-         << cgicc::div() << endl
-         << a().set("href", "img2brl.xpi")
-               .set("iconURL", "favicon.png")
-               .set("hash", IMG2BRL_XPI_HASH)
-               .set("onclick", "return install(event);")
-         << "Install Firefox extension"
-         << a() << endl
-         << cgicc::div() << endl;
+      cout << script().set("type", "application/javascript")
+           << "function install (aEvent) {" << endl
+           << "  for (var a = aEvent.target; a.href === undefined;)" << endl
+           << "    a = a.parentNode;" << endl
+           << "  var params = {" << endl
+           << "    'img2brl': { URL: aEvent.target.href," << endl
+           << "                 IconURL: aEvent.target.getAttribute('iconURL')," << endl
+           << "                 Hash: aEvent.target.getAttribute('hash')," << endl
+           << "                 toString: function () { return this.URL; }" << endl
+           << "               }" << endl
+           << "  };" << endl
+           << "  InstallTrigger.install(params);" << endl
+           << "  return false;" << endl
+           << "}" << endl
+           << script() << endl
+           << cgicc::div() << endl
+           << a().set("href", "img2brl.xpi")
+                 .set("iconURL", "favicon.png")
+                 .set("hash", IMG2BRL_XPI_HASH)
+                 .set("onclick", "return install(event);")
+           << "Install Firefox extension"
+           << a() << endl
+           << cgicc::div() << endl;
 #endif //defined(IMG2BRL_XPI_HASH)
 
-    cout << cgicc::div().set("class", "center") << endl
-         << "Source code? git clone http://img2brl.delysid.org or go to "
-         << a().set("href", "https://github.com/mlang/img2brl")
-         << "github.com/mlang/img2brl"
-         << a() << endl
-         << cgicc::div() << endl;
+      cout << cgicc::div().set("class", "center") << endl
+           << "Source code? git clone http://img2brl.delysid.org or go to "
+           << a().set("href", "https://github.com/mlang/img2brl")
+           << "github.com/mlang/img2brl"
+           << a() << endl
+           << cgicc::div() << endl;
 
-    cout << cgicc::div().set("class", "center") << endl
-         << comment() << "Configured for " << cgi.getHost();  
-    struct utsname info;
-    if(uname(&info) != -1) {
-      cout << ". Running on " << info.sysname;
-      cout << ' ' << info.release << " (";
-      cout << info.nodename << ").";
+      cout << cgicc::div().set("class", "center") << endl
+           << comment() << "Configured for " << cgi.getHost();  
+      struct utsname info;
+      if(uname(&info) != -1) {
+        cout << ". Running on " << info.sysname;
+        cout << ' ' << info.release << " (";
+        cout << info.nodename << ").";
+      }
+      cout << comment() << endl;
+
+      // Information on this query
+      clock::time_point end = clock::now();
+      cout << "Total time for request was "
+           << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
+           << " us";
+      cout << " (" << std::chrono::duration_cast<std::chrono::duration<double>>(end - start).count() << " s)";
+      cout << cgicc::div() << endl;
+
+      cout << body() << html() << endl;
     }
-    cout << comment() << endl;
-
-    // Information on this query
-    clock::time_point end = clock::now();
-    cout << "Total time for request was "
-         << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
-         << " us";
-    cout << " (" << std::chrono::duration_cast<std::chrono::duration<double>>(end - start).count() << " s)";
-    cout << cgicc::div() << endl;
-
-    cout << body() << html() << endl;
 
     return EXIT_SUCCESS;
   } catch (exception const &e) {
