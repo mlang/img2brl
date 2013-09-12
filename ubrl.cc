@@ -1,12 +1,12 @@
 #include "ubrl.h"
-#include <iostream>
 #include <boost/spirit/include/qi_char_.hpp>
 #include <boost/spirit/include/qi_eol.hpp>
 #include <boost/spirit/include/qi_eoi.hpp>
-#include <boost/spirit/include/qi_uint.hpp>
+#include <boost/spirit/include/qi_expect.hpp>
+#include <boost/spirit/include/qi_kleene.hpp>
 #include <boost/spirit/include/qi_lit.hpp>
-#include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_parse_attr.hpp>
+#include <boost/spirit/include/qi_uint.hpp>
 
 ubrl::ubrl(Magick::Image &image)
 {
