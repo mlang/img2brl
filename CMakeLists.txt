@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(img2brl CXX)
-find_package(Boost REQUIRED)
+find_package(Boost 1.49.0 REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_search_module(CGICC REQUIRED cgicc)
 pkg_search_module(CURL REQUIRED libcurl)
