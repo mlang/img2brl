@@ -222,7 +222,7 @@ int main()
              << "Format: " << image.format() << endl
              << "Filename: " << file->getFilename() << endl
              << "Width: " << tactile.width() << endl
-             << "Height: " << tactile.height() << endl;
+             << "Height: " << tactile.height() << endl << endl;
       }
       cout << tactile.string();
       if (mode == "html") cout << pre() << endl;
@@ -257,7 +257,7 @@ int main()
                                      << "Format: " << image.format() << endl
                                      << "URL: " << url->getValue() << endl
                                      << "Width: " << tactile.width() << endl
-                                     << "Height: " << tactile.height() << endl;
+                                     << "Height: " << tactile.height() << endl << endl;
                               }
                               cout << tactile.string();
                               if (mode == "html") cout << pre() << endl;
