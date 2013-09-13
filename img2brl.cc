@@ -380,29 +380,7 @@ int main()
 
     return EXIT_SUCCESS;
   } catch (exception const &e) {
-    // Reset all the HTML elements that might have been used to 
-    // their initial state so we get valid output
-    html::reset(); 	head::reset(); 		body::reset();
-    title::reset(); 	h1::reset(); 		h4::reset();
-    comment::reset(); 	pre::reset(); 		tr::reset(); 
-    cgicc::div::reset(); 	p::reset(); 
-    a::reset();		h2::reset(); 		colgroup::reset();
-
-    print_xhtml_header("exception");    
-    cout << body() << endl;
-    
-    cout << h1() << "GNU cgi" << span("cc", set("class","red"))
-	 << " caught an exception" << h1() << endl; 
-  
-    cout << cgicc::div().set("align","center").set("class","notice") << endl;
-
-    cout << h2(e.what()) << endl;
-
-    // End of document
-    cout << cgicc::div() << endl;
-    cout << hr() << endl;
-    print_xhtml_footer(start);
-
+    cerr << "C++ exception: " << e.what() << endl;
     return EXIT_SUCCESS;
   }
 }
