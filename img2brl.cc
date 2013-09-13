@@ -344,11 +344,11 @@ int main()
            << cgicc::div() << endl;
 #endif //defined(IMG2BRL_XPI_HASH)
 
+      code git_clone("git clone http://img2brl.delysid.org");
+      a github_link("github.com/mlang/img2brl");
+      github_link.set("href", "https://github.com/mlang/img2brl");
       cout << cgicc::div().set("class", "center") << endl
-           << "Source code? git clone http://img2brl.delysid.org or "
-           << a().set("href", "https://github.com/mlang/img2brl")
-           << "github.com/mlang/img2brl"
-           << a() << endl
+           << "Source code? " << git_clone << " or " << github_link << endl
            << cgicc::div() << endl;
 
       cout << cgicc::div().set("class", "center").set("id", "powered-by")
