@@ -241,16 +241,19 @@ print_image( std::string const &mode
       cout << "Width: " << tactile.width() << endl
 	   << "Height: " << tactile.height() << endl << endl;
     } else if (mode == "json") {
-      cout << "{";
+      cout << "{\"src\":{";
       for (std::pair<string, string> e: attrs) {
 	cout << "\"" << e.first << "\":\"" << e.second << "\",";
       }
       cout << "\"format\":\"" << image.format() << "\",";
       if (not image.label().empty())
 	cout << "\"label\":\"" << image.label() << "\",";
-      cout << "\"width\":\"" << tactile.width() << "\",";
-      cout << "\"height\":\"" << tactile.height() << "\",";
-      cout << endl
+      if (not image.comment().empty())
+	cout << "\"comment\":\"" << image.comment() << "\",";
+      cout << "\"width\":" << image.baseColumns() << ",";
+      cout << "\"height\":" << image.baseRows() << "},";
+      cout << "\"width\":" << tactile.width() << ",\"height\":" << tactile.height() << ','
+	   << endl
 	   << " \"braille\":\"";
     }
 
