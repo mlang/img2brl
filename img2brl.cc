@@ -28,6 +28,7 @@
 #include <curl/curl.h>
 #include <Magick++/Image.h>
 #include <boost/config.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/version.hpp>
 
 #include <sys/utsname.h>
@@ -158,31 +159,6 @@ print_form( cgicc::Cgicc const &cgi
        << form() << endl;
 }
 
-static void
-manipulate(cgicc::Cgicc const &cgi, Magick::Image &image) {
-  if (cgi.queryCheckbox("trim")) image.trim();
-  if (cgi.queryCheckbox("normalize")) image.normalize();
-  if (cgi.queryCheckbox("negate")) {
-//  image.threshold(50.0);
-    image.negate(true);
-  }
-  if (cgi.queryCheckbox("resize")) {
-    const_form_iterator cols = cgi.getElement("cols");
-    if (cols != cgi.getElements().end()) {
-      std::string cols_str(cols->getValue());
-      if (not cols_str.empty()) {
-        char *end = NULL;
-        long int width = strtol(cols_str.c_str(), &end, 10) * 2;
-        if (end and *end == 0) {
-          Magick::Geometry g(width, 0);
-          g.less(false); g.greater(true);
-          image.resize(g);
-        }
-      }
-    }
-  }
-}
-
 typedef std::chrono::steady_clock clock_type;
 
 static void
@@ -242,14 +218,41 @@ print_image( std::string const &mode
   try {
     Magick::Blob blob(src.get_data().data(), src.get_data().length());
     Magick::Image image(blob);
-    manipulate(cgi, image);
+    if (cgi.queryCheckbox("trim"))
+      image.trim();
+    if (cgi.queryCheckbox("normalize"))
+      image.normalize();
+    if (cgi.queryCheckbox("negate")) {
+      //  image.threshold(50.0);
+      image.negate(true);
+    }
+    if (cgi.queryCheckbox("resize")) {
+      const_form_iterator cols = cgi.getElement("cols");
+      if (cols != cgi.getElements().end()) {
+	try {
+	  Magick::Geometry geometry( boost::lexical_cast<std::size_t>
+				     (cols->getValue()) * 2
+				   , 0
+				   );
+	  if (geometry.width()) {
+	    geometry.less(false);
+	    geometry.greater(true);
+	    image.resize(geometry);
+	  }
+	} catch (boost::bad_lexical_cast const &e) {
+	}
+      }
+    }
+
     ubrl tactile(image);
+
     if (mode == "html") {
       cout << pre().set("id", "result") << endl;
       switch (src.get_type()) {
       case source::file: cout << "Filename: ";
       case source::url: cout << "Url: ";
-      } cout << src.get_identifier() << endl;
+      }
+      cout << src.get_identifier() << endl;
       cout << "Content type: " << src.get_content_type() << endl;
       cout << "Format: " << image.format() << endl;
       if (not image.label().empty())
