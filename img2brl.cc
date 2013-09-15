@@ -403,8 +403,8 @@ int main()
            << "    a = a.parentNode;" << endl
            << "  var params = {" << endl
            << "    'img2brl': { URL: aEvent.target.href," << endl
-           << "                 IconURL: aEvent.target.getAttribute('iconURL')," << endl
-           << "                 Hash: aEvent.target.getAttribute('hash')," << endl
+           << "                 IconURL: 'favicon.png'," << endl
+           << "                 Hash: '" << IMG2BRL_XPI_HASH << "'," << endl
            << "                 toString: function () { return this.URL; }" << endl
            << "               }" << endl
            << "  };" << endl
@@ -414,8 +414,6 @@ int main()
            << script() << endl
            << cgicc::div() << endl
            << a().set("href", "img2brl.xpi")
-                 .set("iconURL", "favicon.png")
-                 .set("hash", IMG2BRL_XPI_HASH)
                  .set("onclick", "return install(event);")
            << "Install Firefox extension"
            << a() << endl
