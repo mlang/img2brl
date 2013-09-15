@@ -20,7 +20,6 @@
 #include <string>
 #include <stdexcept>
 #include <iostream>
-#include <map>
 
 #include <cgicc/Cgicc.h>
 #include <cgicc/HTMLClasses.h>
@@ -51,23 +50,30 @@ using namespace std;
 using namespace cgicc;
 
 static void
-print_xhtml_header(std::string const &title)
+print_header(std::string const &mode, std::string const &title)
 {
-  static char const *text_html_utf8 = "text/html; charset=UTF-8";
+  if (mode == "html") {
+    static char const *text_html_utf8 = "text/html; charset=UTF-8";
 
-  cout << HTTPContentHeader(text_html_utf8)
-       << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
-       << html().set("xmlns", "http://www.w3.org/1999/xhtml")
-                .set("lang", "en").set("dir", "ltr") << endl
-       << head() << endl
-       << cgicc::title() << title << cgicc::title() << endl
-       << meta().set("http-equiv", "Content-Type")
-                .set("content", text_html_utf8) << endl
-       << cgicc::link().set("rel", "shortcut icon")
-                .set("href", "favicon.png") << endl
-       << cgicc::link().set("rel", "stylesheet").set("type", "text/css")
-                .set("href", "img2brl.css")
-       << head() << endl;
+    cout << HTTPContentHeader(text_html_utf8)
+	 << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
+	 << html().set("xmlns", "http://www.w3.org/1999/xhtml")
+                  .set("lang", "en").set("dir", "ltr") << endl
+	 << head() << endl
+	 << cgicc::title() << title << cgicc::title() << endl
+	 << meta().set("http-equiv", "Content-Type")
+                  .set("content", text_html_utf8) << endl
+	 << cgicc::link().set("rel", "shortcut icon")
+                         .set("href", "favicon.png") << endl
+	 << cgicc::link().set("rel", "stylesheet").set("type", "text/css")
+                         .set("href", "img2brl.css")
+	 << head() << endl;
+    cout << body() << endl;
+  } else if (mode == "json") {
+    cout << HTTPContentHeader("application/json; charset=UTF-8") << '{';
+  } else {
+    cout << HTTPContentHeader("text/plain; charset=UTF-8");
+  }
 }
 
 static cgicc::input
@@ -200,74 +206,132 @@ manipulate(cgicc::Cgicc const &cgi, Magick::Image &image) {
 typedef std::chrono::steady_clock clock_type;
 
 static void
-print_xhtml_footer(clock_type::time_point const &start)
+print_footer(std::string const &mode, clock_type::time_point const &start)
 {
-  cout << cgicc::div().set("class", "center") << endl;
   clock_type::time_point end = clock_type::now();
-  cout << "Total time for request was "
-       << span().set("class", "timing").set("id", "microseconds")
-       << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
-       << span() << " us"
-       << " ("
-       << span().set("class", "timing").set("id", "seconds")
-       << std::chrono::duration_cast<std::chrono::duration<double>>(end - start).count()
-       << span() << " s)";
-  cout << cgicc::div() << endl;
+  clock_type::duration duration = end - start;
+  if (mode == "html") {
+    cout << cgicc::div().set("class", "center") << endl;
+    cout << "Total time for request was "
+	 << span().set("class", "timing").set("id", "microseconds")
+	 << std::chrono::duration_cast<std::chrono::microseconds>(duration).count()
+	 << span() << " us"
+	 << " ("
+	 << span().set("class", "timing").set("id", "seconds")
+	 << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
+	 << span() << " s)";
+    cout << cgicc::div() << endl;
 
-  cout << body() << endl
-       << html() << endl;
+    cout << body() << endl
+	 << html() << endl;
+  } else if (mode == "json") {
+    cout << ",\"timing\":{\"seconds\":"
+	 << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
+	 << '}' << '}';
+  }
 }
+
+class source
+{
+public:
+  typedef enum { url, file } type;
+private:
+  type ty;
+  std::string identifier, content_type, data;
+public:
+  source( type ty
+	, std::string const &identifier
+        , std::string const &content_type
+        , std::string data
+        )
+  : ty{ty}, identifier{identifier}, content_type{content_type}, data{data}
+  {}
+public:
+  type get_type() const { return ty; };
+  std::string const &get_identifier() const { return identifier; }
+  std::string const &get_content_type() const { return content_type; }
+  std::string const &get_data() const { return data; }
+  bool empty() const { return data.empty(); }
+};
 
 static void
 print_image( std::string const &mode
            , cgicc::Cgicc const &cgi
-           , std::string const &data
-           , std::map<string, string> const &attrs
+           , source const &src
            )
 {
   try {
-    Magick::Blob blob(data.data(), data.length());
+    Magick::Blob blob(src.get_data().data(), src.get_data().length());
     Magick::Image image(blob);
     manipulate(cgi, image);
     ubrl tactile(image);
     if (mode == "html") {
       cout << pre().set("id", "result") << endl;
-      for (std::pair<string, string> e: attrs) {
-	cout << e.first << ": " << e.second << endl;
-      }
+      switch (src.get_type()) {
+      case source::file: cout << "Filename: ";
+      case source::url: cout << "Url: ";
+      } cout << src.get_identifier() << endl;
+      cout << "Content type: " << src.get_content_type() << endl;
       cout << "Format: " << image.format() << endl;
       if (not image.label().empty())
 	cout << "Label: " << image.label() << endl;
       cout << "Width: " << tactile.width() << endl
 	   << "Height: " << tactile.height() << endl << endl;
     } else if (mode == "json") {
-      cout << "{\"src\":{";
-      for (std::pair<string, string> e: attrs) {
-	cout << "\"" << e.first << "\":\"" << e.second << "\",";
+      cout << '"' << "src" << '"' << ':'
+	   << '{';
+      cout << '"';
+      switch (src.get_type()) {
+      case source::file: cout << "filename";
+      case source::url: cout << "url";
       }
-      cout << "\"format\":\"" << image.format() << "\",";
+      cout << '"'
+	   << ':'
+	   << '"' << src.get_identifier() << '"'
+	   << ','
+	   << '"' << "content-type" << '"'
+	   << ':'
+	   << '"' << src.get_content_type() << '"'
+	   << ','
+           << '"' << "format" << '"'
+	   << ':' << '"' << image.format() << '"'
+	   << ',';
       if (not image.label().empty())
-	cout << "\"label\":\"" << image.label() << "\",";
+	cout << '"' << "label" << '"' << ':' << '"' << image.label() << '"'
+	     << ',';
       if (not image.comment().empty())
-	cout << "\"comment\":\"" << image.comment() << "\",";
-      cout << "\"width\":" << image.baseColumns() << ",";
-      cout << "\"height\":" << image.baseRows() << "},";
-      cout << "\"width\":" << tactile.width() << ",\"height\":" << tactile.height() << ','
-	   << endl
-	   << " \"braille\":\"";
+	cout << '"' << "comment" << '"'
+	     << ':' << '"' << image.comment() << '"'
+	     << ',';
+      cout << '"' << "width" << '"' << ':' << image.baseColumns()
+	   << ","
+	   << '"' << "height" << '"' << ':' << image.baseRows()
+	   << '}'
+
+	   << ',';
+      cout << '"' << "width" << '"' << ':' << tactile.width()
+	   << ','
+	   << '"' << "height" << '"' << ':' << tactile.height()
+	   << ','
+	   << '"' << "braille" << '"' << ':' << '"';
     }
 
     cout << tactile.string();
 
     if (mode == "html") cout << pre() << endl;
-    else if (mode == "json") cout << "\"}";
+    else if (mode == "json") cout << '"';
   } catch (Magick::ErrorMissingDelegate const &missing_delegate_exception) {
     if (mode == "html") {
       cout << h1("Error: Image format not supported") << endl;
       cout << p(missing_delegate_exception.what()) << endl;
     } else if (mode == "json") {
-      cout << "{\"exception\":\"Magick::ErrorMissingDelegate\","
-	   << "\"message\":\"" << missing_delegate_exception.what() << "\"}";
+      cout << '"' << "exception" << '"'
+	   << ':'
+	   << '"' << "Magick::ErrorMissingDelegate" << '"'
+	   << ','
+	   << '"' << "message" << '"'
+	   << ':'
+	   << '"' << missing_delegate_exception.what() << '"';
     } else {
       cout << "Unsupported image format: "
 	   << missing_delegate_exception.what() << endl;
@@ -277,32 +341,24 @@ print_image( std::string const &mode
 
 int main()
 {
-  clock_type::time_point start = clock_type::now();
+  clock_type::time_point start_time = clock_type::now();
+
   try {
     Cgicc cgi;
     std::string mode(cgi.getElement("mode") != cgi.getElements().end()?
                      cgi.getElement("mode")->getValue(): "html");
 
-    if (mode == "html") {
-      print_xhtml_header("Tactile Image Viewer");
-      cout << body() << endl;
-    } else if (mode == "text") {
-      cout << HTTPContentHeader("text/plain; charset=UTF-8");
-    } else if (mode == "json") {
-      cout << HTTPContentHeader("application/json; charset=UTF-8");
-    }
+    print_header(mode, "Tactile Image Viewer");
 
     const_file_iterator file = cgi.getFile("img");
-    if (file != cgi.getFiles().end()) {
-      std::map<string, string> map;
-      map["filename"] = file->getFilename();
-      map["content-type"] = file->getDataType();
+    if (file != cgi.getFiles().end() and not file->getData().empty()) {
+      source src(source::file, file->getFilename(), file->getDataType(), file->getData());
 
-      print_image(mode, cgi, file->getData(), map);
+      print_image(mode, cgi, src);
     }
 
     const_form_iterator url = cgi.getElement("url");
-    if (url != cgi.getElements().end()) {
+    if (url != cgi.getElements().end() and not url->getValue().empty()) {
       curl_global_init(CURL_GLOBAL_DEFAULT);
       if (CURL *curl = curl_easy_init()) {
         char error_buffer[CURL_ERROR_SIZE];
@@ -329,11 +385,8 @@ int main()
                             char *content_type;
                             if (curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE,
                                                   &content_type) == CURLE_OK) {
-			      std::map<string, string> map;
-			      map["url"] = url->getValue();
-			      map["content-type"] = content_type;
-
-			      print_image(mode, cgi, buffer, map);
+			      source src(source::url, url->getValue(), content_type, buffer);
+			      print_image(mode, cgi, src);
                             } else {
                               cerr << error_buffer << endl;
                             }
@@ -410,16 +463,16 @@ int main()
            << BOOST_VERSION / 100 % 1000 << '.'
            << BOOST_VERSION % 100;
       struct utsname info;
-      if(uname(&info) != -1) {
+      if (uname(&info) != -1) {
         cout << ' ' << "and" << ' '
              << info.sysname << "&nbsp;" << "version" << "&nbsp;"
              << info.release << ' ' << "running on" << ' '
              << info.nodename << ' ' << '(' << cgi.getHost() << ')';
       }
       cout << '.' << cgicc::div() << endl;
-
-      print_xhtml_footer(start);
     }
+
+    print_footer(mode, start_time);
 
     return EXIT_SUCCESS;
   } catch (exception const &e) {
