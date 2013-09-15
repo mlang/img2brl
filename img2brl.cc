@@ -66,9 +66,9 @@ print_header(std::string const &mode, std::string const &title)
          << cgicc::link().set("rel", "shortcut icon")
                          .set("href", "favicon.png") << endl
          << cgicc::link().set("rel", "stylesheet").set("type", "text/css")
-                         .set("href", "img2brl.css")
-         << head() << endl;
-    cout << body() << endl;
+                         .set("href", "img2brl.css") << endl
+         << head() << endl
+         << body() << endl;
   } else if (mode == "json") {
     cout << HTTPContentHeader("application/json; charset=UTF-8") << '{';
   } else {
@@ -164,8 +164,7 @@ typedef std::chrono::steady_clock clock_type;
 static void
 print_footer(std::string const &mode, clock_type::time_point const &start)
 {
-  clock_type::time_point end = clock_type::now();
-  clock_type::duration duration = end - start;
+  clock_type::duration duration = clock_type::now() - start;
   if (mode == "html") {
     cout << cgicc::div().set("class", "center") << endl;
     cout << "Total time for request was "
@@ -175,35 +174,42 @@ print_footer(std::string const &mode, clock_type::time_point const &start)
          << " ("
          << span().set("class", "timing").set("id", "seconds")
          << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
-         << span() << " s)";
-    cout << cgicc::div() << endl;
-
-    cout << body() << endl
+         << span() << " s)"
+         << cgicc::div() << endl
+	 << body() << endl
          << html() << endl;
   } else if (mode == "json") {
-    cout << ",\"timing\":{\"seconds\":"
+    cout << ','
+	 << '"' << "runtime" << '"'
+	 << ':'
+	 << '{'
+	 << '"' << "seconds" << '"'
+	 << ':'
          << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
-         << '}' << '}';
+         << '}';
+
+    cout << '}';
   }
 }
 
 class source
 {
 public:
-  typedef enum { url, file } type;
+  enum type { url, file };
 private:
-  type ty;
-  std::string identifier, content_type, data;
+  enum type type;
+  std::string identifier, content_type;
+  std::string const &data;
 public:
-  source( type ty
+  source( enum type type
         , std::string const &identifier
         , std::string const &content_type
-        , std::string data
+        , std::string const &data
         )
-  : ty{ty}, identifier{identifier}, content_type{content_type}, data{data}
+  : type{type}, identifier{identifier}, content_type{content_type}, data{data}
   {}
 public:
-  type get_type() const { return ty; };
+  enum type get_type() const { return type; };
   std::string const &get_identifier() const { return identifier; }
   std::string const &get_content_type() const { return content_type; }
   std::string const &get_data() const { return data; }
