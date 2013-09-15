@@ -26,7 +26,6 @@
 #include <cgicc/HTTPContentHeader.h>
 #include <cgicc/XHTMLDoctype.h>
 #include <curl/curl.h>
-#include <Magick++/Blob.h>
 #include <Magick++/Image.h>
 #include <boost/config.hpp>
 #include <boost/version.hpp>
@@ -56,18 +55,18 @@ print_header(std::string const &mode, std::string const &title)
     static char const *text_html_utf8 = "text/html; charset=UTF-8";
 
     cout << HTTPContentHeader(text_html_utf8)
-	 << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
-	 << html().set("xmlns", "http://www.w3.org/1999/xhtml")
+         << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
+         << html().set("xmlns", "http://www.w3.org/1999/xhtml")
                   .set("lang", "en").set("dir", "ltr") << endl
-	 << head() << endl
-	 << cgicc::title() << title << cgicc::title() << endl
-	 << meta().set("http-equiv", "Content-Type")
+         << head() << endl
+         << cgicc::title() << title << cgicc::title() << endl
+         << meta().set("http-equiv", "Content-Type")
                   .set("content", text_html_utf8) << endl
-	 << cgicc::link().set("rel", "shortcut icon")
+         << cgicc::link().set("rel", "shortcut icon")
                          .set("href", "favicon.png") << endl
-	 << cgicc::link().set("rel", "stylesheet").set("type", "text/css")
+         << cgicc::link().set("rel", "stylesheet").set("type", "text/css")
                          .set("href", "img2brl.css")
-	 << head() << endl;
+         << head() << endl;
     cout << body() << endl;
   } else if (mode == "json") {
     cout << HTTPContentHeader("application/json; charset=UTF-8") << '{';
@@ -194,21 +193,21 @@ print_footer(std::string const &mode, clock_type::time_point const &start)
   if (mode == "html") {
     cout << cgicc::div().set("class", "center") << endl;
     cout << "Total time for request was "
-	 << span().set("class", "timing").set("id", "microseconds")
-	 << std::chrono::duration_cast<std::chrono::microseconds>(duration).count()
-	 << span() << " us"
-	 << " ("
-	 << span().set("class", "timing").set("id", "seconds")
-	 << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
-	 << span() << " s)";
+         << span().set("class", "timing").set("id", "microseconds")
+         << std::chrono::duration_cast<std::chrono::microseconds>(duration).count()
+         << span() << " us"
+         << " ("
+         << span().set("class", "timing").set("id", "seconds")
+         << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
+         << span() << " s)";
     cout << cgicc::div() << endl;
 
     cout << body() << endl
-	 << html() << endl;
+         << html() << endl;
   } else if (mode == "json") {
     cout << ",\"timing\":{\"seconds\":"
-	 << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
-	 << '}' << '}';
+         << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
+         << '}' << '}';
   }
 }
 
@@ -221,7 +220,7 @@ private:
   std::string identifier, content_type, data;
 public:
   source( type ty
-	, std::string const &identifier
+        , std::string const &identifier
         , std::string const &content_type
         , std::string data
         )
@@ -254,46 +253,46 @@ print_image( std::string const &mode
       cout << "Content type: " << src.get_content_type() << endl;
       cout << "Format: " << image.format() << endl;
       if (not image.label().empty())
-	cout << "Label: " << image.label() << endl;
+        cout << "Label: " << image.label() << endl;
       cout << "Width: " << tactile.width() << endl
-	   << "Height: " << tactile.height() << endl << endl;
+           << "Height: " << tactile.height() << endl << endl;
     } else if (mode == "json") {
       cout << '"' << "src" << '"' << ':'
-	   << '{';
+           << '{';
       cout << '"';
       switch (src.get_type()) {
       case source::file: cout << "filename";
       case source::url: cout << "url";
       }
       cout << '"'
-	   << ':'
-	   << '"' << src.get_identifier() << '"'
-	   << ','
-	   << '"' << "content-type" << '"'
-	   << ':'
-	   << '"' << src.get_content_type() << '"'
-	   << ','
+           << ':'
+           << '"' << src.get_identifier() << '"'
+           << ','
+           << '"' << "content-type" << '"'
+           << ':'
+           << '"' << src.get_content_type() << '"'
+           << ','
            << '"' << "format" << '"'
-	   << ':' << '"' << image.format() << '"'
-	   << ',';
+           << ':' << '"' << image.format() << '"'
+           << ',';
       if (not image.label().empty())
-	cout << '"' << "label" << '"' << ':' << '"' << image.label() << '"'
-	     << ',';
+        cout << '"' << "label" << '"' << ':' << '"' << image.label() << '"'
+             << ',';
       if (not image.comment().empty())
-	cout << '"' << "comment" << '"'
-	     << ':' << '"' << image.comment() << '"'
-	     << ',';
+        cout << '"' << "comment" << '"'
+             << ':' << '"' << image.comment() << '"'
+             << ',';
       cout << '"' << "width" << '"' << ':' << image.baseColumns()
-	   << ","
-	   << '"' << "height" << '"' << ':' << image.baseRows()
-	   << '}'
+           << ","
+           << '"' << "height" << '"' << ':' << image.baseRows()
+           << '}'
 
-	   << ',';
+           << ',';
       cout << '"' << "width" << '"' << ':' << tactile.width()
-	   << ','
-	   << '"' << "height" << '"' << ':' << tactile.height()
-	   << ','
-	   << '"' << "braille" << '"' << ':' << '"';
+           << ','
+           << '"' << "height" << '"' << ':' << tactile.height()
+           << ','
+           << '"' << "braille" << '"' << ':' << '"';
     }
 
     cout << tactile.string();
@@ -306,15 +305,15 @@ print_image( std::string const &mode
       cout << p(missing_delegate_exception.what()) << endl;
     } else if (mode == "json") {
       cout << '"' << "exception" << '"'
-	   << ':'
-	   << '"' << "Magick::ErrorMissingDelegate" << '"'
-	   << ','
-	   << '"' << "message" << '"'
-	   << ':'
-	   << '"' << missing_delegate_exception.what() << '"';
+           << ':'
+           << '"' << "Magick::ErrorMissingDelegate" << '"'
+           << ','
+           << '"' << "message" << '"'
+           << ':'
+           << '"' << missing_delegate_exception.what() << '"';
     } else {
       cout << "Unsupported image format: "
-	   << missing_delegate_exception.what() << endl;
+           << missing_delegate_exception.what() << endl;
     }
   }
 }
@@ -365,14 +364,14 @@ int main()
                             char *content_type;
                             if (curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE,
                                                   &content_type) == CURLE_OK) {
-			      source src(source::url, url->getValue(), content_type, buffer);
-			      print_image(mode, cgi, src);
+                              source src(source::url, url->getValue(), content_type, buffer);
+                              print_image(mode, cgi, src);
                             } else {
                               cerr << error_buffer << endl;
                             }
                           } else {
                             cerr << "HTTP " << http_response_code << ' '
-				 << url->getValue() << endl;
+                                 << url->getValue() << endl;
                           }
                         } else {
                           cerr << error_buffer << endl;
