@@ -24,10 +24,12 @@ ubrl::ubrl(Magick::Image const &image)
   lit_type lit;
   uint_type uint_;
 
+  if (not
   parse( begin, end
        , lit("Width: ") > uint_ > eol
            > "Height: " > uint_ > eol
            > eol
            > *char_ > eoi
-       , w, h, data);
+       , w, h, data))
+    throw std::runtime_error("ubrl parse failed");
 }
