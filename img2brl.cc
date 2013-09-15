@@ -299,7 +299,12 @@ int main()
                                      << "URL: " << url->getValue() << endl
                                      << "Width: " << tactile.width() << endl
                                      << "Height: " << tactile.height() << endl << endl;
-			      }
+                              } else if (mode == "json") {
+                                cout << "{\"url\":\"" << url->getValue()
+				     << "\",\"format\":\"" << image.format()
+				     << "\"," << endl
+                                     << " \"braille\":\"";
+                              }
                               cout << tactile.string();
                               if (mode == "html") cout << pre() << endl;
                               else if (mode == "json") cout << "\"}";
