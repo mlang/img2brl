@@ -7,7 +7,10 @@
 #include <boost/spirit/include/qi_expect.hpp>
 #include <boost/spirit/include/qi_kleene.hpp>
 #include <boost/spirit/include/qi_lit.hpp>
+#include <boost/spirit/include/qi_optional.hpp>
 #include <boost/spirit/include/qi_parse_attr.hpp>
+#include <boost/spirit/include/qi_rule.hpp>
+#include <boost/spirit/include/qi_sequence.hpp>
 #include <boost/spirit/include/qi_uint.hpp>
 
 ubrl::ubrl(Magick::Image const &image)
@@ -24,12 +27,14 @@ ubrl::ubrl(Magick::Image const &image)
   lit_type lit;
   uint_type uint_;
 
+  boost::optional<std::size_t> x, y;
+  rule<char const *, std::size_t()> x_offset = lit("X: ") > uint_ > eol;
+  rule<char const *, std::size_t()> y_offset = lit("Y: ") > uint_ > eol;
+  rule<char const *, std::size_t()> width = lit("Width: ") > uint_ > eol;
+  rule<char const *, std::size_t()> height = lit("Height: ") > uint_ > eol;
   if (not
   parse( begin, end
-       , lit("Width: ") > uint_ > eol
-           > "Height: " > uint_ > eol
-           > eol
-           > *char_ > eoi
-       , w, h, data))
-    throw std::runtime_error("ubrl parse failed");
+	 , -x_offset >> -y_offset >> width >> height >> eol >> *char_ > eoi
+	 , x, y, w, h, data))
+    throw std::runtime_error("ubrl parse failed"+std::string(begin, end));
 }
