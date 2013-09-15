@@ -381,6 +381,6 @@ int main()
     return EXIT_SUCCESS;
   } catch (exception const &e) {
     cerr << "C++ exception: " << e.what() << endl;
-    return EXIT_SUCCESS;
+    return EXIT_FAILURE;
   }
 }
