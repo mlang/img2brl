@@ -230,6 +230,8 @@ int main()
       cout << body() << endl;
     } else if (mode == "text") {
       cout << HTTPContentHeader("text/plain; charset=UTF-8");
+    } else if (mode == "json") {
+      cout << HTTPContentHeader("application/json; charset=UTF-8");
     }
 
     const_file_iterator file = cgi.getFile("img");
@@ -245,9 +247,17 @@ int main()
              << "Filename: " << file->getFilename() << endl
              << "Width: " << tactile.width() << endl
              << "Height: " << tactile.height() << endl << endl;
+      } else if (mode == "json") {
+	cout << "{\"filename\":\"" << file->getFilename()
+	     << "\",\"format\":\"" << image.format()
+	     << "\"," << endl
+	     << " \"braille\":\"";
       }
+
       cout << tactile.string();
+
       if (mode == "html") cout << pre() << endl;
+      else if (mode == "json") cout << "\"}";
     }
 
     const_form_iterator url = cgi.getElement("url");
@@ -289,9 +299,10 @@ int main()
                                      << "URL: " << url->getValue() << endl
                                      << "Width: " << tactile.width() << endl
                                      << "Height: " << tactile.height() << endl << endl;
-                              }
+			      }
                               cout << tactile.string();
                               if (mode == "html") cout << pre() << endl;
+                              else if (mode == "json") cout << "\"}";
                             } else {
                               cerr << error_buffer << endl;
                             }
