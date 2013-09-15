@@ -232,7 +232,6 @@ public:
   std::string const &get_identifier() const { return identifier; }
   std::string const &get_content_type() const { return content_type; }
   std::string const &get_data() const { return data; }
-  bool empty() const { return data.empty(); }
 };
 
 static void
