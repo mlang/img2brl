@@ -87,25 +87,6 @@ checkbox( cgicc::Cgicc const &cgi
   return input;
 }
 
-class labeled_checkbox
-{
-  cgicc::Cgicc const &cgi;
-  std::string name;
-public:
-  labeled_checkbox(cgicc::Cgicc const &cgi, std::string const &name)
-  : cgi{cgi}, name{name} {}
-
-  friend std::ostream &
-  operator<<(std::ostream &stream, labeled_checkbox const &cb)
-  {
-    std::string id(cb.name);
-    id.append("_id");
-    stream << checkbox(cb.cgi, cb.name, id)
-           << label().set("for", id) << cb.name << label();
-    return stream;
-  }
-};
-
 static void
 print_form( cgicc::Cgicc const &cgi
           , cgicc::const_file_iterator file, cgicc::const_form_iterator url
