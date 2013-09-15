@@ -20,6 +20,7 @@
 #include <string>
 #include <stdexcept>
 #include <iostream>
+#include <map>
 
 #include <cgicc/Cgicc.h>
 #include <cgicc/HTMLClasses.h>
@@ -217,6 +218,60 @@ print_xhtml_footer(clock_type::time_point const &start)
        << html() << endl;
 }
 
+static void
+print_image( std::string const &mode
+           , cgicc::Cgicc const &cgi
+           , std::string const &data
+           , std::map<string, string> const &attrs
+           )
+{
+  try {
+    Magick::Blob blob(data.data(), data.length());
+    Magick::Image image(blob);
+    manipulate(cgi, image);
+    ubrl tactile(image);
+    if (mode == "html") {
+      cout << pre().set("id", "result") << endl;
+      for (std::pair<string, string> e: attrs) {
+	cout << e.first << ": " << e.second << endl;
+      }
+      cout << "Format: " << image.format() << endl;
+      if (not image.label().empty())
+	cout << "Label: " << image.label() << endl;
+      cout << "Width: " << tactile.width() << endl
+	   << "Height: " << tactile.height() << endl << endl;
+    } else if (mode == "json") {
+      cout << "{";
+      for (std::pair<string, string> e: attrs) {
+	cout << "\"" << e.first << "\":\"" << e.second << "\",";
+      }
+      cout << "\"format\":\"" << image.format() << "\",";
+      if (not image.label().empty())
+	cout << "\"label\":\"" << image.label() << "\",";
+      cout << "\"width\":\"" << tactile.width() << "\",";
+      cout << "\"height\":\"" << tactile.height() << "\",";
+      cout << endl
+	   << " \"braille\":\"";
+    }
+
+    cout << tactile.string();
+
+    if (mode == "html") cout << pre() << endl;
+    else if (mode == "json") cout << "\"}";
+  } catch (Magick::ErrorMissingDelegate const &missing_delegate_exception) {
+    if (mode == "html") {
+      cout << h1("Error: Image format not supported") << endl;
+      cout << p(missing_delegate_exception.what()) << endl;
+    } else if (mode == "json") {
+      cout << "{\"exception\":\"Magick::ErrorMissingDelegate\","
+	   << "\"message\":\"" << missing_delegate_exception.what() << "\"}";
+    } else {
+      cout << "Unsupported image format: "
+	   << missing_delegate_exception.what() << endl;
+    }
+  }
+}
+
 int main()
 {
   clock_type::time_point start = clock_type::now();
@@ -236,28 +291,11 @@ int main()
 
     const_file_iterator file = cgi.getFile("img");
     if (file != cgi.getFiles().end()) {
-      Magick::Blob blob(file->getData().data(), file->getData().length());
-      Magick::Image image(blob);
-      manipulate(cgi, image);
-      ubrl tactile(image);
-      if (mode == "html") {
-        cout << pre().set("id", "result") << endl;
-        cout << "Content Type: " << file->getDataType() << endl
-             << "Format: " << image.format() << endl
-             << "Filename: " << file->getFilename() << endl
-             << "Width: " << tactile.width() << endl
-             << "Height: " << tactile.height() << endl << endl;
-      } else if (mode == "json") {
-	cout << "{\"filename\":\"" << file->getFilename()
-	     << "\",\"format\":\"" << image.format()
-	     << "\"," << endl
-	     << " \"braille\":\"";
-      }
+      std::map<string, string> map;
+      map["filename"] = file->getFilename();
+      map["content-type"] = file->getDataType();
 
-      cout << tactile.string();
-
-      if (mode == "html") cout << pre() << endl;
-      else if (mode == "json") cout << "\"}";
+      print_image(mode, cgi, file->getData(), map);
     }
 
     const_form_iterator url = cgi.getElement("url");
@@ -288,31 +326,17 @@ int main()
                             char *content_type;
                             if (curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE,
                                                   &content_type) == CURLE_OK) {
-                              Magick::Blob blob(buffer.data(), buffer.length());
-                              Magick::Image image(blob);
-                              manipulate(cgi, image);
-                              ubrl tactile(image);
-                              if (mode == "html") {
-                                cout << pre().set("id", "result") << endl;
-                                cout << "Content Type: " << content_type << endl
-                                     << "Format: " << image.format() << endl
-                                     << "URL: " << url->getValue() << endl
-                                     << "Width: " << tactile.width() << endl
-                                     << "Height: " << tactile.height() << endl << endl;
-                              } else if (mode == "json") {
-                                cout << "{\"url\":\"" << url->getValue()
-				     << "\",\"format\":\"" << image.format()
-				     << "\"," << endl
-                                     << " \"braille\":\"";
-                              }
-                              cout << tactile.string();
-                              if (mode == "html") cout << pre() << endl;
-                              else if (mode == "json") cout << "\"}";
+			      std::map<string, string> map;
+			      map["url"] = url->getValue();
+			      map["content-type"] = content_type;
+
+			      print_image(mode, cgi, buffer, map);
                             } else {
                               cerr << error_buffer << endl;
                             }
                           } else {
-                            cerr << "HTTP " << http_response_code << url->getValue() << endl;
+                            cerr << "HTTP " << http_response_code << ' '
+				 << url->getValue() << endl;
                           }
                         } else {
                           cerr << error_buffer << endl;
