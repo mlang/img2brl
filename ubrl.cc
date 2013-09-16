@@ -27,14 +27,16 @@ ubrl::ubrl(Magick::Image const &image)
   lit_type lit;
   uint_type uint_;
 
+  boost::optional<std::string> title;
   boost::optional<std::size_t> x, y;
+  rule<char const *, std::string()> label = lit("Title: ") > *~char_('\n') > eol;
   rule<char const *, std::size_t()> x_offset = lit("X: ") > uint_ > eol;
   rule<char const *, std::size_t()> y_offset = lit("Y: ") > uint_ > eol;
   rule<char const *, std::size_t()> width = lit("Width: ") > uint_ > eol;
   rule<char const *, std::size_t()> height = lit("Height: ") > uint_ > eol;
   if (not
   parse( begin, end
-	 , -x_offset >> -y_offset >> width >> height >> eol >> *char_ > eoi
-	 , x, y, w, h, data))
+	 , -label >> -x_offset >> -y_offset >> width >> height >> eol >> *char_ > eoi
+	 , title, x, y, w, h, data))
     throw std::runtime_error("ubrl parse failed"+std::string(begin, end));
 }
