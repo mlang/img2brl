@@ -124,3 +124,65 @@ If you are happy with a change (or maybe after "git rebase -i") you can run
 "git push" which will compile and install the current version on your remote
 webserver.
 
+# API
+
+## Output formats
+
+img2brl can produce output in various formats:
+
+* mode=html: XHTML 1.0, the default.
+* mode=json: JSON for easy parseability.
+* mode=text: text/plain utf-8 encoded unicode braille.  This format omits all
+  metadata and will only present the requested image in unicode braille text.
+
+## Parameters
+
+The following GET and POST request parameters can be used:
+
+* img: An image file, uploaded via multipart/form-data.
+* url: The URL of the image data to process.
+* mode: One of html, json or text.
+* trim=on: Trim edges with the same color as the background automatically.
+* resize=on: Enable resizing to a maximum, see cols=.
+* cols=INTEGER: If resize=on was provided, ensure that the braille output is at
+  maximum INTEGER columns wide.
+
+## Examples
+
+Upload a file and present its unicode braille representation as text:
+
+    curl --silent --form mode=text --form img=@favicon.png http://img2brl.delysid.org/
+
+Request the Unicode braille representation of img2brl's favicon for processing with JSON:
+
+    curl --silent --data mode=json --data url=http://img2brl.delysid.org/favicon.png http://img2brl.delysid.org/
+
+Request plain Unicode braille representation of a design from [tactileview.com](http://tactileview.com/) trimmed and with at most 40 columns width (80 dots):
+
+    curl --silent --data mode=text --data url=http://tactileview.com/pbimages/koekkoeksklok_middle2366.png --data resize=on --data cols=40 http://img2brl.delysid.org/
+
+Parse JSON output with Emacs Lisp:
+
+    (with-temp-buffer
+      (url-insert-file-contents
+       (concat "http://img2brl.delysid.org/"
+               "?url=http://img2brl.delysid.org/favicon.png"
+               "&mode=json"))
+      (json-read))
+
+produces the following output:
+
+    ((runtime
+      (seconds . 0.224454))
+     (braille . "⡏⠉⠉⠉⠉⠉⠉⢹\n⡇⢨⡅⠮⢩⡆⣤⢸\n⡇⢸⡇⣔⢧⡀⣤⢸\n⣇⣀⣀⣀⣀⣀⣀⣸\n")
+     (height . 16)
+     (width . 16)
+     (src
+      (height . 16)
+      (width . 16)
+      (comment . "Created with GIMP")
+      (format . "Portable Network Graphics")
+      (content-type . "image/png")
+      (url . "http://img2brl.delysid.org/favicon.png")))
+
+
