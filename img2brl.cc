@@ -428,10 +428,13 @@ int main()
 #endif //defined(IMG2BRL_XPI_HASH)
 
       code git_clone("git clone http://img2brl.delysid.org");
+      a api_link("API");
+      api_link.set("href", "https://github.com/mlang/img2brl/#api");
       a github_link("github.com/mlang/img2brl");
       github_link.set("href", "https://github.com/mlang/img2brl");
       cout << cgicc::div().set("class", "center") << endl
-           << "Source code? " << git_clone << " or " << github_link << endl
+           << "There is an " << api_link << ". "
+	   << "Source code? " << git_clone << " or " << github_link << endl
            << cgicc::div() << endl;
 
       cout << cgicc::div().set("class", "center").set("id", "powered-by")
