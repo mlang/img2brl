@@ -26,7 +26,7 @@
 #include <cgicc/HTTPContentHeader.h>
 #include <cgicc/XHTMLDoctype.h>
 #include <curl/curl.h>
-#include <Magick++/Image.h>
+#include <Magick++/Include.h>
 #include <boost/config.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/version.hpp>
@@ -74,6 +74,27 @@ print_header(std::string const &mode, std::string const &title)
   } else {
     cout << HTTPContentHeader("text/plain; charset=UTF-8");
   }
+}
+
+static void
+print_supported_image_formats()
+{
+  std::size_t formats;
+  MagickCore::ExceptionInfo *exception = MagickCore::AcquireExceptionInfo();
+  if (MagickCore::MagickInfo const **info = MagickCore::GetMagickInfoList("*", &formats, exception)) {
+    std::cout << cgicc::dl().set("id", "supported-image-formats") << std::endl;
+    for (std::size_t i = 0; i < formats; ++i) {
+      if (info[i]->stealth == MagickCore::MagickFalse and
+          info[i]->blob_support == MagickCore::MagickTrue and
+          info[i]->decoder and info[i]->magick) {
+        std::cout << cgicc::dt(info[i]->name)
+                  << cgicc::dd(info[i]->description) << std::endl;
+      }
+    }
+    std::cout << cgicc::dl() << std::endl;
+    MagickCore::RelinquishMagickMemory(info);
+  }
+  MagickCore::DestroyExceptionInfo(exception);
 }
 
 static cgicc::input
@@ -340,14 +361,13 @@ int main()
     print_header(mode, "Tactile Image Viewer");
 
     const_file_iterator file = cgi.getFile("img");
+    const_form_iterator url = cgi.getElement("url");
+
     if (file != cgi.getFiles().end() and not file->getData().empty()) {
       source src(source::file, file->getFilename(), file->getDataType(), file->getData());
 
       print_image(mode, cgi, src);
-    }
-
-    const_form_iterator url = cgi.getElement("url");
-    if (url != cgi.getElements().end() and not url->getValue().empty()) {
+    } else if (url != cgi.getElements().end() and not url->getValue().empty()) {
       curl_global_init(CURL_GLOBAL_DEFAULT);
       if (CURL *curl = curl_easy_init()) {
         char error_buffer[CURL_ERROR_SIZE];
@@ -396,9 +416,20 @@ int main()
         }
         curl_easy_cleanup(curl);
       }
+    } else if (cgi.getElement("show") != cgi.getElements().end() and cgi.getElement("show")->getValue() == "formats") {
+      if (mode == "html") {
+        cout << h1("Supported image formats") << endl;
+        print_supported_image_formats();
+      }
+    } else {
+      if (mode == "html") {
+        cout << h1("img2brl &mdash; Convert images to Braille") << endl
+             << p() << "Translate images from various " << a("formats").set("href", "?show=formats") << " to " << a("Unicode braille").set("href", "http://en.wikipedia.org/wiki/Unicode_braille") << endl;
+      }
     }
 
     if (mode == "html") {
+      cout << hr() << endl;
       print_form(cgi, file, url);
 
       cout << hr() << endl;
