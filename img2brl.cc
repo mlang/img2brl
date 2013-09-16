@@ -198,8 +198,9 @@ public:
   enum type { url, file };
 private:
   enum type type;
-  std::string identifier, content_type;
-  std::string const &data;
+  std::string const identifier;
+  std::string const content_type;
+  std::string const data;
 public:
   source( enum type type
         , std::string const &identifier
