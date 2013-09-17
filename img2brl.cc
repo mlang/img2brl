@@ -423,8 +423,14 @@ int main()
       }
     } else {
       if (mode == "html") {
+        a formats("formats");
+        formats.set("href", "?show=formats");
+         a unicode_braille("Unicode braille");
+         unicode_braille.set("href",
+                             "http://en.wikipedia.org/wiki/Unicode_braille");
         cout << h1("img2brl &mdash; Convert images to Braille") << endl
-             << p() << "Translate images from various " << a("formats").set("href", "?show=formats") << " to " << a("Unicode braille").set("href", "http://en.wikipedia.org/wiki/Unicode_braille") << endl;
+             << p() << "Translate images from various " << formats
+                    << " to " << unicode_braille << '.' << p() << endl;
       }
     }
 
