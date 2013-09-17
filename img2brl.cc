@@ -187,7 +187,7 @@ print_footer(std::string const &mode, clock_type::time_point const &start)
 {
   clock_type::duration duration = clock_type::now() - start;
   if (mode == "html") {
-    cout << cgicc::div().set("class", "center") << endl;
+    cout << cgicc::div().set("class", "center").set("id", "footer") << endl;
     cout << "Total time for request was "
          << span().set("class", "timing").set("id", "microseconds")
          << std::chrono::duration_cast<std::chrono::microseconds>(duration).count()
