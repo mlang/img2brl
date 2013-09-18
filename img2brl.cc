@@ -440,7 +440,6 @@ int main()
 
       cout << hr() << endl;
 
-#if defined(IMG2BRL_XPI_HASH)
       cout << script().set("type", "application/javascript")
            << "function install (aEvent) {" << endl
            << "  for (var a = aEvent.target; a.href === undefined;)" << endl
@@ -448,7 +447,6 @@ int main()
            << "  var params = {" << endl
            << "    'img2brl': { URL: aEvent.target.href," << endl
            << "                 IconURL: 'favicon.png'," << endl
-           << "                 Hash: '" << IMG2BRL_XPI_HASH << "'," << endl
            << "                 toString: function () { return this.URL; }" << endl
            << "               }" << endl
            << "  };" << endl
@@ -462,7 +460,6 @@ int main()
            << "Install Firefox extension"
            << a() << endl
            << cgicc::div() << endl;
-#endif //defined(IMG2BRL_XPI_HASH)
 
       code git_clone("git clone http://img2brl.delysid.org");
       a api_link("API");
