@@ -17,6 +17,7 @@
  */
 
 #include <chrono>
+#include <map>
 #include <string>
 #include <stdexcept>
 #include <iostream>
@@ -49,30 +50,37 @@ curl_append_to_string(char *data, size_t size, size_t nmemb, std::string *buffer
 using namespace std;
 using namespace cgicc;
 
-static void
-print_header(std::string const &mode, std::string const &title)
-{
-  if (mode == "html") {
-    static char const *text_html_utf8 = "text/html; charset=UTF-8";
+enum class output_mode { html, json, text };
 
-    cout << HTTPContentHeader(text_html_utf8)
-         << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
-         << html().set("xmlns", "http://www.w3.org/1999/xhtml")
-                  .set("lang", "en").set("dir", "ltr") << endl
-         << head() << endl
-         << cgicc::title() << title << cgicc::title() << endl
-         << meta().set("http-equiv", "Content-Type")
-                  .set("content", text_html_utf8) << endl
-         << cgicc::link().set("rel", "shortcut icon")
-                         .set("href", "favicon.png") << endl
-         << cgicc::link().set("rel", "stylesheet").set("type", "text/css")
-                         .set("href", "img2brl.css") << endl
-         << head() << endl
-         << body() << endl;
-  } else if (mode == "json") {
-    cout << HTTPContentHeader("application/json; charset=UTF-8") << '{';
-  } else {
-    cout << HTTPContentHeader("text/plain; charset=UTF-8");
+static void
+print_header(output_mode mode, std::string const &title)
+{
+  static char const *text_html_utf8 = "text/html; charset=UTF-8";
+  switch (mode) {
+    case output_mode::html:
+      cout << HTTPContentHeader(text_html_utf8)
+           << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
+           << html().set("xmlns", "http://www.w3.org/1999/xhtml")
+                    .set("lang", "en").set("dir", "ltr") << endl
+           << head() << endl
+           << cgicc::title() << title << cgicc::title() << endl
+           << meta().set("http-equiv", "Content-Type")
+                    .set("content", text_html_utf8) << endl
+           << cgicc::link().set("rel", "shortcut icon")
+                           .set("href", "favicon.png") << endl
+           << cgicc::link().set("rel", "stylesheet").set("type", "text/css")
+                           .set("href", "img2brl.css") << endl
+           << head() << endl
+           << body() << endl;
+      break;
+
+    case output_mode::json:
+      cout << HTTPContentHeader("application/json; charset=UTF-8") << '{';
+      break;
+
+    case output_mode::text:
+      cout << HTTPContentHeader("text/plain; charset=UTF-8");
+      break;
   }
 }
 
@@ -183,10 +191,10 @@ print_form( cgicc::Cgicc const &cgi
 typedef std::chrono::steady_clock clock_type;
 
 static void
-print_footer(std::string const &mode, clock_type::time_point const &start)
+print_footer(output_mode mode, clock_type::time_point const &start)
 {
   clock_type::duration duration = clock_type::now() - start;
-  if (mode == "html") {
+  if (mode == output_mode::html) {
     cout << cgicc::div().set("class", "center").set("id", "footer") << endl;
     cout << "Total time for request was "
          << span().set("class", "timing").set("id", "microseconds")
@@ -199,7 +207,7 @@ print_footer(std::string const &mode, clock_type::time_point const &start)
          << cgicc::div() << endl
 	 << body() << endl
          << html() << endl;
-  } else if (mode == "json") {
+  } else if (mode == output_mode::json) {
     cout << ','
 	 << '"' << "runtime" << '"'
 	 << ':'
@@ -238,7 +246,7 @@ public:
 };
 
 static void
-print_image( std::string const &mode
+print_image( output_mode mode
            , cgicc::Cgicc const &cgi
            , source const &src
            )
@@ -274,7 +282,7 @@ print_image( std::string const &mode
 
     ubrl tactile(image);
 
-    if (mode == "html") {
+    if (mode == output_mode::html) {
       cout << pre().set("id", "result") << endl;
       switch (src.get_type()) {
       case source::file: cout << "Filename: ";
@@ -287,7 +295,7 @@ print_image( std::string const &mode
         cout << "Label: " << image.label() << endl;
       cout << "Width: " << tactile.width() << endl
            << "Height: " << tactile.height() << endl << endl;
-    } else if (mode == "json") {
+    } else if (mode == output_mode::json) {
       cout << '"' << "src" << '"' << ':'
            << '{';
       cout << '"';
@@ -328,23 +336,29 @@ print_image( std::string const &mode
 
     cout << tactile.string();
 
-    if (mode == "html") cout << pre() << endl;
-    else if (mode == "json") cout << '"';
+    switch (mode) {
+      case output_mode::html: cout << pre() << endl; break;
+      case output_mode::json: cout << '"'; break;
+      default: break;
+    }
   } catch (Magick::ErrorMissingDelegate const &missing_delegate_exception) {
-    if (mode == "html") {
-      cout << h1("Error: Image format not supported") << endl;
-      cout << p(missing_delegate_exception.what()) << endl;
-    } else if (mode == "json") {
-      cout << '"' << "exception" << '"'
-           << ':'
-           << '"' << "Magick::ErrorMissingDelegate" << '"'
-           << ','
-           << '"' << "message" << '"'
-           << ':'
-           << '"' << missing_delegate_exception.what() << '"';
-    } else {
-      cout << "Unsupported image format: "
-           << missing_delegate_exception.what() << endl;
+    switch (mode) {
+      case output_mode::html:
+        cout << h1("Error: Image format not supported") << endl
+             << p(missing_delegate_exception.what()) << endl;
+        break;
+      case output_mode::json:
+        cout << '"' << "exception" << '"'
+             << ':'
+             << '"' << "Magick::ErrorMissingDelegate" << '"'
+             << ','
+             << '"' << "message" << '"'
+             << ':'
+             << '"' << missing_delegate_exception.what() << '"';
+        break;
+      case output_mode::text:
+        cout << "Unsupported image format: "
+             << missing_delegate_exception.what() << endl;
     }
   }
 }
@@ -355,8 +369,18 @@ int main()
 
   try {
     Cgicc cgi;
-    std::string mode(cgi.getElement("mode") != cgi.getElements().end()?
-                     cgi.getElement("mode")->getValue(): "html");
+
+    output_mode mode(output_mode::html);
+    if (cgi.getElement("mode") != cgi.getElements().end()) {
+      std::map<std::string, output_mode> modes = {
+        { "html", output_mode::html },
+        { "json", output_mode::json },
+        { "text", output_mode::text }
+      };
+      try {
+        mode = modes.at(cgi.getElement("mode")->getValue());
+      } catch (std::out_of_range const &e) {}
+    }
 
     print_header(mode, "Tactile Image Viewer");
 
@@ -417,24 +441,24 @@ int main()
         curl_easy_cleanup(curl);
       }
     } else if (cgi.getElement("show") != cgi.getElements().end() and cgi.getElement("show")->getValue() == "formats") {
-      if (mode == "html") {
+      if (mode == output_mode::html) {
         cout << h1("Supported image formats") << endl;
         print_supported_image_formats();
       }
     } else {
-      if (mode == "html") {
+      if (mode == output_mode::html) {
         a formats("formats");
         formats.set("href", "?show=formats");
-         a unicode_braille("Unicode braille");
-         unicode_braille.set("href",
-                             "http://en.wikipedia.org/wiki/Unicode_braille");
+        a unicode_braille("Unicode braille");
+        unicode_braille.set("href",
+                            "http://en.wikipedia.org/wiki/Unicode_braille");
         cout << h1("img2brl &mdash; Convert images to Braille") << endl
              << p() << "Translate images from various " << formats
                     << " to " << unicode_braille << '.' << p() << endl;
       }
     }
 
-    if (mode == "html") {
+    if (mode == output_mode::html) {
       cout << hr() << endl;
       print_form(cgi, file, url);
 
