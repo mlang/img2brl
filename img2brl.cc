@@ -285,8 +285,8 @@ print_image( output_mode mode
     if (mode == output_mode::html) {
       cout << pre().set("id", "result") << endl;
       switch (src.get_type()) {
-      case source::file: cout << "Filename: ";
-      case source::url: cout << "Url: ";
+        case source::file: cout << "Filename: "; break;
+        case source::url: cout << "Url: "; break;
       }
       cout << src.get_identifier() << endl;
       cout << "Content type: " << src.get_content_type() << endl;
