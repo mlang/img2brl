@@ -116,10 +116,11 @@ checkbox( cgicc::Cgicc const &cgi
 }
 
 static void
-print_form( cgicc::Cgicc const &cgi
-          , cgicc::const_file_iterator file, cgicc::const_form_iterator url
-          )
+print_form(cgicc::Cgicc const &cgi)
 {
+  cgicc::const_file_iterator file(cgi.getFile("img"));
+  cgicc::const_form_iterator url(cgi.getElement("url"));
+
   static char const *img_file = "img_file";
   static char const *img_url = "img_url";
 
@@ -223,13 +224,14 @@ print_footer(output_mode mode, clock_type::time_point const &start)
 class source
 {
 public:
-  enum type { url, file };
+  enum type { unknown, url, file };
 private:
   enum type type;
-  std::string const identifier;
-  std::string const content_type;
-  std::string const data;
+  std::string identifier;
+  std::string content_type;
+  std::string data;
 public:
+  source(): type{unknown} {}
   source( enum type type
         , std::string const &identifier
         , std::string const &content_type
@@ -242,6 +244,13 @@ public:
   std::string const &get_identifier() const { return identifier; }
   std::string const &get_content_type() const { return content_type; }
   std::string const &get_data() const { return data; }
+};
+
+class http_error : public std::runtime_error
+{
+public:
+  long code;
+  http_error(long code): std::runtime_error("HTTP error"), code{code} {}
 };
 
 static void
@@ -365,13 +374,11 @@ print_image( output_mode mode
 int main()
 {
   clock_type::time_point start_time = clock_type::now();
+  output_mode mode(output_mode::html);
+  Cgicc cgi;
 
   try {
     cerr << nounitbuf;
-
-    Cgicc cgi;
-
-    output_mode mode(output_mode::html);
     if (cgi.getElement("mode") != cgi.getElements().end()) {
       std::map<std::string, output_mode> const modes = {
         { "html", output_mode::html },
@@ -386,15 +393,12 @@ int main()
       }
     }
 
-    print_header(mode, "Tactile Image Viewer");
-
     const_file_iterator file = cgi.getFile("img");
     const_form_iterator url = cgi.getElement("url");
+    source data;
 
     if (file != cgi.getFiles().end() and not file->getData().empty()) {
-      source src(source::file, file->getFilename(), file->getDataType(), file->getData());
-
-      print_image(mode, cgi, src);
+      data = source(source::file, file->getFilename(), file->getDataType(), file->getData());
     } else if (url != cgi.getElements().end() and not url->getValue().empty()) {
       curl_global_init(CURL_GLOBAL_DEFAULT);
       if (CURL *curl = curl_easy_init()) {
@@ -414,6 +418,7 @@ int main()
                     std::string buffer;
                     if (curl_easy_setopt(curl, CURLOPT_WRITEDATA,
                                          &buffer) == CURLE_OK) {
+//                    if (curl_easy_setopt(curl, CURLOPT_FAILONERROR, true) == CURLE_OK) {
                       if (curl_easy_perform(curl) == CURLE_OK) {
                         long http_response_code;
                         if (curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE,
@@ -422,16 +427,12 @@ int main()
                             char *content_type;
                             if (curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE,
                                                   &content_type) == CURLE_OK) {
-                              source src(source::url, url->getValue(), content_type, buffer);
-                              print_image(mode, cgi, src);
+                              data = source(source::url, url->getValue(), content_type, buffer);
                             } else {
                               cerr << error_buffer << endl;
                             }
                           } else {
-                            stringstream error;
-                            error << "HTTP " << http_response_code << ' '
-                                  << url->getValue() << endl;
-                            cerr << error.str();
+                            throw http_error(http_response_code);
                           }
                         } else {
                           cerr << error_buffer << endl;
@@ -446,11 +447,19 @@ int main()
         }
         curl_easy_cleanup(curl);
       }
-    } else if (cgi.getElement("show") != cgi.getElements().end() and cgi.getElement("show")->getValue() == "formats") {
+    }
+
+    print_header(mode, "Tactile Image Viewer");
+
+    if (cgi.getElement("show") != cgi.getElements().end() and cgi.getElement("show")->getValue() == "formats") {
       if (mode == output_mode::html) {
         cout << h1("Supported image formats") << endl;
         print_supported_image_formats();
       }
+    }
+
+    if (not data.get_data().empty()) {
+      print_image(mode, cgi, data);
     } else {
       if (mode == output_mode::html) {
         a formats("formats");
@@ -466,7 +475,7 @@ int main()
 
     if (mode == output_mode::html) {
       cout << hr() << endl;
-      print_form(cgi, file, url);
+      print_form(cgi);
 
       cout << hr() << endl;
 
@@ -529,6 +538,16 @@ int main()
     print_footer(mode, start_time);
 
     return EXIT_SUCCESS;
+  } catch (http_error const &e) {
+    std::map<long, std::string> messages = { { 404, "Not Found" } };
+    cout << "Status: " << e.code << ' ' << messages.at(e.code) << endl;
+    print_header(mode, "Error while fetching URL");
+
+    cout << h1("An error occured while fetching URL");
+
+    print_form(cgi);
+
+    print_footer(mode, start_time);
   } catch (exception const &e) {
     cerr << "C++ exception: " << e.what() << endl;
     return EXIT_FAILURE;
