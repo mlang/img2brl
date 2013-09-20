@@ -377,7 +377,7 @@ int main()
   output_mode mode(output_mode::html);
   Cgicc cgi;
 
-  cerr << "Accept-Language: " << std::getenv("ACCEPT_LANGUAGE") << std::endl;
+  cerr << "Accept-Language: " << std::getenv("HTTP_ACCEPT_LANGUAGE") << std::endl;
   try {
     cerr << nounitbuf;
     if (cgi.getElement("mode") != cgi.getElements().end()) {
