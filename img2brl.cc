@@ -374,14 +374,17 @@ int main()
 
     output_mode mode(output_mode::html);
     if (cgi.getElement("mode") != cgi.getElements().end()) {
-      std::map<std::string, output_mode> modes = {
+      std::map<std::string, output_mode> const modes = {
         { "html", output_mode::html },
         { "json", output_mode::json },
         { "text", output_mode::text }
       };
       try {
         mode = modes.at(cgi.getElement("mode")->getValue());
-      } catch (std::out_of_range const &e) {}
+      } catch (std::out_of_range const &e) {
+        cerr << "Invalid mode '" << cgi.getElement("mode")->getValue()
+             << "' specified, falling back to html." << endl;
+      }
     }
 
     print_header(mode, "Tactile Image Viewer");
