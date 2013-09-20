@@ -93,7 +93,6 @@ print_supported_image_formats()
     std::cout << cgicc::dl().set("id", "supported-image-formats") << std::endl;
     for (std::size_t i = 0; i < formats; ++i) {
       if (info[i]->stealth == MagickCore::MagickFalse and
-          info[i]->blob_support == MagickCore::MagickTrue and
           info[i]->decoder and info[i]->magick) {
         std::cout << cgicc::dt(info[i]->name)
                   << cgicc::dd(info[i]->description) << std::endl;
