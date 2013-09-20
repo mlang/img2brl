@@ -367,6 +367,9 @@ int main()
   clock_type::time_point start_time = clock_type::now();
 
   try {
+    cerr << nounitbuf;
+
+
     Cgicc cgi;
 
     output_mode mode(output_mode::html);
