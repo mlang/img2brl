@@ -431,7 +431,7 @@ int main()
                             stringstream error;
                             error << "HTTP " << http_response_code << ' '
                                   << url->getValue() << endl;
-                            cerr << error;
+                            cerr << error.str();
                           }
                         } else {
                           cerr << error_buffer << endl;
