@@ -369,7 +369,6 @@ int main()
   try {
     cerr << nounitbuf;
 
-
     Cgicc cgi;
 
     output_mode mode(output_mode::html);
@@ -429,8 +428,10 @@ int main()
                               cerr << error_buffer << endl;
                             }
                           } else {
-                            cerr << "HTTP " << http_response_code << ' '
-                                 << url->getValue() << endl;
+                            stringstream error;
+                            error << "HTTP " << http_response_code << ' '
+                                  << url->getValue() << endl;
+                            cerr << error;
                           }
                         } else {
                           cerr << error_buffer << endl;
