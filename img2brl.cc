@@ -539,13 +539,24 @@ int main()
 
     return EXIT_SUCCESS;
   } catch (http_error const &e) {
-    std::map<long, std::string> messages = { { 404, "Not Found" } };
+    // See http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+    std::map<long, std::string> messages = {
+      { 400, "Bad Request" },
+      { 401, "Unauthorized" },
+      { 402, "Payment Required" },
+      { 403, "Forbidden" },
+      { 404, "Not Found" },
+      { 405, "Method Not Allowed" }
+    };
     cout << "Status: " << e.code << ' ' << messages.at(e.code) << endl;
     print_header(mode, "Error while fetching URL");
 
-    cout << h1("An error occured while fetching URL");
+    if (mode == output_mode::html) {
+      cout << h1("An error occured while fetching URL") << endl
+           << p("Please try again with a different URL.") << endl;
 
-    print_form(cgi);
+      print_form(cgi);
+    }
 
     print_footer(mode, start_time);
   } catch (exception const &e) {
