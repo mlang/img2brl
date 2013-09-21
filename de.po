@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 20:23+0200\n"
+"POT-Creation-Date: 2013-09-21 21:23+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: img2brl.cc:536
+msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
+msgstr "Erstellt mit {1}, {2}, {3}, {4}, {5} und präsentiert mit {6} auf {7} ({8})."
 
 #: img2brl.cc:162
 msgid "Send an image file: "
@@ -76,6 +80,10 @@ msgstr "verkleinern auf"
 #: img2brl.cc:173
 msgid "trim"
 msgstr "trimmen"
+
+#: img2brl.cc:538 img2brl.cc:540 img2brl.cc:545 img2brl.cc:548 img2brl.cc:553
+msgid "version"
+msgstr "Version"
 
 #: img2brl.cc:179
 msgid "{1} max {2} {3}"

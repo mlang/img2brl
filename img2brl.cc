@@ -530,29 +530,30 @@ int main()
               % git_clone % github_link
            << cgicc::div() << endl;
 
-      cout << cgicc::div().set("class", "center").set("id", "powered-by").set("lang", "en")
-           << "Powered by" << ' '
-           << BOOST_COMPILER << ',' << ' '
-           << "GNU&nbsp;cgicc" << "&nbsp;" << "version" << "&nbsp;"
-           << cgi.getVersion() << ',' << ' '
-           << "libcurl" << "&nbsp;" << "version" << "&nbsp;"
-           << LIBCURL_VERSION_MAJOR << '.'
-           << LIBCURL_VERSION_MINOR << '.'
-           << LIBCURL_VERSION_PATCH << ',' << ' '
-           << "Magick++" << "&nbsp;" << "version" << "&nbsp;"
-           << MAGICKPP_VERSION << ',' << ' '
-           << "Boost" << "&nbsp;" << "version" << "&nbsp;"
-           << BOOST_VERSION / 100000 << '.'
-           << BOOST_VERSION / 100 % 1000 << '.'
-           << BOOST_VERSION % 100;
       struct utsname info;
-      if (uname(&info) != -1) {
-        cout << ' ' << "and" << ' '
-             << info.sysname << "&nbsp;" << "version" << "&nbsp;"
-             << info.release << ' ' << "running on" << ' '
-             << info.nodename << ' ' << '(' << cgi.getHost() << ')';
-      }
-      cout << '.' << cgicc::div() << endl;
+      if (uname(&info) != -1)
+	cout << cgicc::div().set("class", "center").set("id", "powered-by") << endl
+	     << (format(translate("Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."))
+		 % BOOST_COMPILER
+		 % (format("GNU&nbsp;cgicc&nbsp;{1}&nbsp;{2}") % translate("version") % cgi.getVersion())
+		 % (format("libcurl&nbsp;{1}&nbsp;{2}.{3}.{4}")
+		    % translate("version")
+		    % LIBCURL_VERSION_MAJOR
+		    % LIBCURL_VERSION_MINOR
+		    % LIBCURL_VERSION_PATCH)
+		 % (format("Magick++&nbsp;{1}&nbsp;{2}")
+		    % translate("version")
+		    % MAGICKPP_VERSION)
+		 % (format("Boost&nbsp;{1}&nbsp;{2}.{3}.{4}")
+		    % translate("version")
+		    % (BOOST_VERSION / 100000)
+		    % (BOOST_VERSION / 100 % 1000)
+		    % (BOOST_VERSION % 100))
+		 % (format("{1}&nbsp;{2}&nbsp;{3}")
+		    % info.sysname % translate("version") % info.release)
+		 % info.nodename
+		 % cgi.getHost())
+	     << cgicc::div() << endl;
     }
 
     print_footer(mode, start_time);
