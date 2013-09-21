@@ -285,7 +285,7 @@ int main()
     try {
       accept_language client(value);
       if (client.accepts_language("de")) {
-        locale::global(locale_gen("de"));
+        locale::global(locale_gen("de.UTF-8"));
       }
     } catch (std::runtime_error const &e) {
       msg << e.what() << endl;
