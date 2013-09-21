@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 21:59+0200\n"
+"POT-Creation-Date: 2013-09-21 22:09+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: img2brl.cc:167
+msgid "Enter URL to image: "
+msgstr "URL zum Bild eingeben: "
 
 #: img2brl.cc:521
 msgid "Install Firefox Add-on"
@@ -53,10 +57,6 @@ msgstr "Übersetzt Bilder verschiedenster {1} in {2}."
 #: img2brl.cc:195
 msgid "Translate to Braille"
 msgstr "In Braille übersetzen"
-
-#: img2brl.cc:167
-msgid "URL to image: "
-msgstr "URL zum Bild: "
 
 #: img2brl.cc:182
 msgid "columns"

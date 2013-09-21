@@ -164,7 +164,7 @@ print_form(cgicc::Cgicc const &cgi)
        << cgicc::div() << endl
        << cgicc::div() << translate("or") << cgicc::div() << endl
        << cgicc::div()
-       << label(translate("URL to image: ")).set("for", img_url) << endl
+       << label(translate("Enter URL to image: ")).set("for", img_url) << endl
        << url_input << endl
        << cgicc::div() << endl
 
