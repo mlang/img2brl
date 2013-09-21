@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 18:35+0200\n"
+"POT-Creation-Date: 2013-09-21 18:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,18 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: img2brl.cc:375
+#: img2brl.cc:377
 msgid "Supported image formats"
 msgstr ""
 
-#: img2brl.cc:496
+#: img2brl.cc:498
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr ""
 
-#: img2brl.cc:497
+#: img2brl.cc:499
 msgid "Translate images from various {1} to {2}."
 msgstr ""
 
-#: img2brl.cc:498
+#: img2brl.cc:500
 msgid "formats"
 msgstr ""

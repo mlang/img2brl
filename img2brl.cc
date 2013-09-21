@@ -61,7 +61,7 @@ using namespace cgicc;
 enum class output_mode { html, json, text };
 
 static void
-print_header(output_mode mode, std::string const &title)
+print_header(output_mode mode, std::string const &title, std::string const &lang)
 {
   static char const *text_html_utf8 = "text/html; charset=UTF-8";
   switch (mode) {
@@ -69,7 +69,7 @@ print_header(output_mode mode, std::string const &title)
       cout << HTTPContentHeader(text_html_utf8)
            << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
            << html().set("xmlns", "http://www.w3.org/1999/xhtml")
-                    .set("lang", "en").set("dir", "ltr") << endl
+                    .set("lang", lang).set("dir", "ltr") << endl
            << head() << endl
            << cgicc::title() << title << cgicc::title() << endl
            << meta().set("http-equiv", "Content-Type")
@@ -277,6 +277,7 @@ int main()
   locale_gen.add_messages_domain("img2brl");
 
   output_mode mode{output_mode::html};
+  std::string html_lang = "en";
   Cgicc cgi;
 
   if (char *value = std::getenv("HTTP_ACCEPT_LANGUAGE")) {
@@ -286,6 +287,7 @@ int main()
       accept_language client(value);
       if (client.accepts_language("de")) {
         locale::global(locale_gen("de.UTF-8"));
+        html_lang = "de";
       }
     } catch (std::runtime_error const &e) {
       msg << e.what() << endl;
@@ -368,7 +370,7 @@ int main()
       curl_global_cleanup();
     }
 
-    print_header(mode, "Tactile Image Viewer");
+    print_header(mode, "Tactile Image Viewer", html_lang);
 
     if (cgi.getElement("show") != cgi.getElements().end() and cgi.getElement("show")->getValue() == "formats") {
       if (mode == output_mode::html) {
@@ -574,7 +576,7 @@ int main()
       { 405, "Method Not Allowed" }
     };
     cout << "Status: " << e.code << ' ' << messages.at(e.code) << endl;
-    print_header(mode, "Error while fetching URL");
+    print_header(mode, "Error while fetching URL", html_lang);
 
     if (mode == output_mode::html) {
       cout << h1("An error occured while fetching URL") << endl
