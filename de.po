@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 21:54+0200\n"
+"POT-Creation-Date: 2013-09-21 21:59+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Install Firefox Add-on"
 msgstr "Firefox-Erweiterung installieren"
 
-#: img2brl.cc:536
+#: img2brl.cc:537
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr ""
 "Erstellt mit {1}, {2}, {3}, {4}, {5} und präsentiert mit {6} auf {7} ({8})."
@@ -30,7 +30,7 @@ msgstr ""
 msgid "Send an image file: "
 msgstr "Sende eine Bilddatei: "
 
-#: img2brl.cc:529
+#: img2brl.cc:530
 msgid "Source code? {1} or {2}."
 msgstr "Quellcode? {1} oder {2}."
 
@@ -60,7 +60,7 @@ msgstr "URL zum Bild: "
 
 #: img2brl.cc:182
 msgid "columns"
-msgstr "Spalten"
+msgstr "Zeichen"
 
 #: img2brl.cc:492
 msgid "formats"
@@ -72,7 +72,7 @@ msgstr "img2brl &mdash; Bilder tastbar machen"
 
 #: img2brl.cc:177
 msgid "invert"
-msgstr ""
+msgstr "invertieren"
 
 #: img2brl.cc:175
 msgid "normalize"
@@ -90,7 +90,7 @@ msgstr "verkleinern auf"
 msgid "trim"
 msgstr "trimmen"
 
-#: img2brl.cc:538 img2brl.cc:540 img2brl.cc:545 img2brl.cc:548 img2brl.cc:553
+#: img2brl.cc:539 img2brl.cc:541 img2brl.cc:546 img2brl.cc:549 img2brl.cc:554
 msgid "version"
 msgstr "Version"
 

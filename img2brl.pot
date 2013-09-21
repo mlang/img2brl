@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 21:54+0200\n"
+"POT-Creation-Date: 2013-09-21 21:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,14 +85,14 @@ msgstr ""
 msgid "There is an {1}."
 msgstr ""
 
-#: img2brl.cc:529
+#: img2brl.cc:530
 msgid "Source code? {1} or {2}."
 msgstr ""
 
-#: img2brl.cc:536
+#: img2brl.cc:537
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr ""
 
-#: img2brl.cc:538 img2brl.cc:540 img2brl.cc:545 img2brl.cc:548 img2brl.cc:553
+#: img2brl.cc:539 img2brl.cc:541 img2brl.cc:546 img2brl.cc:549 img2brl.cc:554
 msgid "version"
 msgstr ""

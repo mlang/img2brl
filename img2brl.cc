@@ -526,6 +526,7 @@ int main()
       github_link.set("href", "https://github.com/mlang/img2brl");
       cout << cgicc::div().set("class", "center") << endl
            << format(translate("There is an {1}.")) % api_link
+           << ' '
            << format(translate("Source code? {1} or {2}."))
               % git_clone % github_link
            << cgicc::div() << endl;
