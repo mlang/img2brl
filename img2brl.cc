@@ -487,6 +487,7 @@ int main()
         a unicode_braille("Unicode braille");
         unicode_braille.set("href",
                             "http://en.wikipedia.org/wiki/Unicode_braille");
+        unicode_braille.set("lang", "en");
         cout << h1(translate("img2brl &mdash; Convert images to Braille")) << endl
              << p() << format(translate("Translate images from various {1} to {2}.")) 
                        % a(translate("formats")).set("class", "internal").set("href", "?show=formats")
