@@ -48,7 +48,7 @@ endif()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 include_directories("{CMAKE_CURRENT_BINARY_DIR}")
-add_executable(img2brl.cgi img2brl.cc ubrl.cc ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+add_executable(img2brl.cgi img2brl.cc accept_language.cc ubrl.cc ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 target_link_libraries(img2brl.cgi ${Boost_LIBRARIES} ${CGICC_LIBRARIES}
                                   ${CURL_LIBRARIES} ${MAGICKPP_LIBRARIES})
 

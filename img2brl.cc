@@ -17,10 +17,10 @@
  */
 
 #include <chrono>
+#include <iostream>
 #include <map>
 #include <string>
 #include <stdexcept>
-#include <iostream>
 
 #include <cgicc/Cgicc.h>
 #include <cgicc/HTMLClasses.h>
@@ -36,6 +36,7 @@
 #include <sys/utsname.h>
 
 #include "config.h"
+#include "accept_language.h"
 #include "ubrl.h"
 
 using namespace boost::locale;
@@ -274,13 +275,24 @@ int main()
   boost::locale::generator locale_gen;
   locale_gen.add_messages_path(".");
   locale_gen.add_messages_domain("img2brl");
-  locale::global(locale_gen("en"));
-  cout.imbue(locale());
 
   output_mode mode{output_mode::html};
   Cgicc cgi;
 
-  cerr << "Accept-Language: " << std::getenv("HTTP_ACCEPT_LANGUAGE") << std::endl;
+  if (char *value = std::getenv("HTTP_ACCEPT_LANGUAGE")) {
+    std::stringstream msg;
+    msg << "Accept-Language: " << value << endl;
+    try {
+      accept_language client(value);
+      if (client.accepts_language("de")) {
+        locale::global(locale_gen("de"));
+      }
+    } catch (std::runtime_error const &e) {
+      msg << e.what() << endl;
+    }
+    cerr << msg.str();
+  }
+  cout.imbue(locale());
   try {
     cerr << nounitbuf;
     if (cgi.getElement("mode") != cgi.getElements().end()) {
