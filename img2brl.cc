@@ -208,7 +208,7 @@ print_footer(output_mode mode, clock_type::time_point const &start)
          << format(translate("Processing time was {3} {4} ({1} {2})"))
             % span((format("{1}") % std::chrono::duration_cast<std::chrono::microseconds>(duration).count()).str()).set("class", "timing").set("id", "microseconds")
             % translate("microseconds")
-            % span((format("{1,num,p=1}") % std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()).str()).set("class", "timing").set("id", "seconds")
+            % span((format("{1,p=2}") % std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()).str()).set("class", "timing").set("id", "seconds")
             % translate("seconds")
          << cgicc::div() << endl
 	 << body() << endl
