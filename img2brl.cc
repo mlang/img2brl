@@ -172,7 +172,7 @@ print_form(cgicc::Cgicc const &cgi)
        << checkbox(cgi, "trim", "trim_img") << endl
        << label(translate("trim")).set("for", "trim_img") << endl
        << checkbox(cgi, "normalize", "normalize_img") << endl
-       << label(translate("normalize")).set("for", "normalize_img") << endl
+       << label(translate("increase contrast")).set("for", "normalize_img") << endl
        << checkbox(cgi, "negate", "negate_img") << endl
        << label(translate("invert")).set("for", "negate_img") << endl
        << checkbox(cgi, "resize", "resize_img") << endl

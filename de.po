@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 22:09+0200\n"
+"POT-Creation-Date: 2013-09-21 22:16+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -70,13 +70,13 @@ msgstr "Formate"
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr "img2brl &mdash; Bilder tastbar machen"
 
+#: img2brl.cc:175
+msgid "increase contrast"
+msgstr "Kontrast erhöhen"
+
 #: img2brl.cc:177
 msgid "invert"
 msgstr "invertieren"
-
-#: img2brl.cc:175
-msgid "normalize"
-msgstr "normalisieren"
 
 #: img2brl.cc:165
 msgid "or"
