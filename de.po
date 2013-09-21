@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 21:23+0200\n"
+"POT-Creation-Date: 2013-09-21 21:54+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -17,9 +17,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: img2brl.cc:521
+msgid "Install Firefox Add-on"
+msgstr "Firefox-Erweiterung installieren"
+
 #: img2brl.cc:536
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
-msgstr "Erstellt mit {1}, {2}, {3}, {4}, {5} und präsentiert mit {6} auf {7} ({8})."
+msgstr ""
+"Erstellt mit {1}, {2}, {3}, {4}, {5} und präsentiert mit {6} auf {7} ({8})."
 
 #: img2brl.cc:162
 msgid "Send an image file: "
@@ -32,6 +37,10 @@ msgstr "Quellcode? {1} oder {2}."
 #: img2brl.cc:369
 msgid "Supported image formats"
 msgstr "Unterstützte Bildformate"
+
+#: img2brl.cc:365
+msgid "Tactile Image Viewer"
+msgstr "Taktiler Bildbetrachter"
 
 #: img2brl.cc:528
 msgid "There is an {1}."
@@ -62,8 +71,8 @@ msgid "img2brl &mdash; Convert images to Braille"
 msgstr "img2brl &mdash; Bilder tastbar machen"
 
 #: img2brl.cc:177
-msgid "negate"
-msgstr "negativ"
+msgid "invert"
+msgstr ""
 
 #: img2brl.cc:175
 msgid "normalize"

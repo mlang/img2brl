@@ -174,7 +174,7 @@ print_form(cgicc::Cgicc const &cgi)
        << checkbox(cgi, "normalize", "normalize_img") << endl
        << label(translate("normalize")).set("for", "normalize_img") << endl
        << checkbox(cgi, "negate", "negate_img") << endl
-       << label(translate("negate")).set("for", "negate_img") << endl
+       << label(translate("invert")).set("for", "negate_img") << endl
        << checkbox(cgi, "resize", "resize_img") << endl
        << format(translate("{1} max {2} {3}"))
           % label(translate("resize to")).set("for", "resize_img")
@@ -362,7 +362,7 @@ int main()
       curl_global_cleanup();
     }
 
-    print_header(mode, "Tactile Image Viewer", html_lang);
+    print_header(mode, translate("Tactile Image Viewer"), html_lang);
 
     if (cgi.getElement("show") != cgi.getElements().end() and cgi.getElement("show")->getValue() == "formats") {
       if (mode == output_mode::html) {
@@ -518,7 +518,7 @@ int main()
            << cgicc::div() << endl
            << a().set("href", "img2brl.xpi")
                  .set("onclick", "return install(event);")
-           << "Install Firefox extension"
+           << translate("Install Firefox Add-on")
            << a() << endl
            << cgicc::div() << endl;
 
