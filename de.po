@@ -23,7 +23,7 @@ msgstr "Unterstützte Bildformate"
 
 #: img2brl.cc:499
 msgid "Translate images from various {1} to {2}."
-msgstr ""
+msgstr "Übersetzt Bilder in verschiedensten {1} nach {2}."
 
 #: img2brl.cc:500
 msgid "formats"
@@ -31,4 +31,4 @@ msgstr "Formaten"
 
 #: img2brl.cc:498
 msgid "img2brl &mdash; Convert images to Braille"
-msgstr ""
+msgstr "img2brl &mdash; Bilder tastbar machen"
