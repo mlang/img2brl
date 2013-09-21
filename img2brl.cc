@@ -42,7 +42,7 @@
 using namespace boost::locale;
 using namespace cgicc;
 
-static code git_clone{"git clone http://img2brl.delysid.org"};
+static code git_clone{"git <span lang=\"en\">clone</span> http://img2brl.delysid.org"};
 static a api_link{a{"API"}.set("href", "https://github.com/mlang/img2brl/#api")};
 
 static int
@@ -159,26 +159,27 @@ print_form(cgicc::Cgicc const &cgi)
                 .set("action", cgi.getEnvironment().getScriptName())
                 .set("enctype", "multipart/form-data") << endl
        << cgicc::div()
-       << label().set("for", img_file) << translate("Send an image file: ") << label() << endl
+       << label(translate("Send an image file: ")).set("for", img_file) << endl
        << file_input << endl
        << cgicc::div() << endl
        << cgicc::div() << translate("or") << cgicc::div() << endl
        << cgicc::div()
-       << label().set("for", img_url) << translate("URL to image: ") << label() << endl
+       << label(translate("URL to image: ")).set("for", img_url) << endl
        << url_input << endl
        << cgicc::div() << endl
 
        << cgicc::div() << endl
-       << checkbox(cgi, "trim", "trim_img")
-       << label().set("for", "trim_img") << translate("trim") << label() << endl
-       << checkbox(cgi, "normalize", "normalize_img")
-       << label().set("for", "normalize_img") << translate("normalize") << label() << endl
-       << checkbox(cgi, "negate", "negate_img")
-       << label().set("for", "negate_img") << translate("negate") << label() << endl
-       << checkbox(cgi, "resize", "resize_img")
-       << label().set("for", "resize_img") << translate("resize to max") << label()
-       << columns_input
-       << ' ' << label().set("for", "cols_img") << translate("columns") << label()
+       << checkbox(cgi, "trim", "trim_img") << endl
+       << label(translate("trim")).set("for", "trim_img") << endl
+       << checkbox(cgi, "normalize", "normalize_img") << endl
+       << label(translate("normalize")).set("for", "normalize_img") << endl
+       << checkbox(cgi, "negate", "negate_img") << endl
+       << label(translate("negate")).set("for", "negate_img") << endl
+       << checkbox(cgi, "resize", "resize_img") << endl
+       << format(translate("{1} max {2} {3}"))
+          % label(translate("resize to")).set("for", "resize_img")
+          % columns_input
+          % label(translate("columns")).set("for", "cols_img")
        << cgicc::div() << endl
 
        << script().set("type", "application/javascript")
@@ -261,14 +262,6 @@ public:
   http_error(long code): std::runtime_error("HTTP error"), code{code} {}
 };
 
-static void
-print_image( output_mode mode
-           , cgicc::Cgicc const &cgi
-           , source const &src
-           )
-{
-}
-
 int main()
 {
   clock_type::time_point start_time = clock_type::now();
@@ -296,7 +289,6 @@ int main()
   }
   cout.imbue(locale());
   try {
-    cerr << nounitbuf;
     if (cgi.getElement("mode") != cgi.getElements().end()) {
       std::map<std::string, output_mode> const modes = {
         { "html", output_mode::html },
@@ -533,8 +525,9 @@ int main()
       a github_link("github.com/mlang/img2brl");
       github_link.set("href", "https://github.com/mlang/img2brl");
       cout << cgicc::div().set("class", "center") << endl
-           << "There is an " << api_link << ". "
-	   << "Source code? " << git_clone << " or " << github_link << endl
+           << format(translate("There is an {1}.")) % api_link
+           << format(translate("Source code? {1} or {2}."))
+              % git_clone % github_link
            << cgicc::div() << endl;
 
       cout << cgicc::div().set("class", "center").set("id", "powered-by")

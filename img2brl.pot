@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 18:52+0200\n"
+"POT-Creation-Date: 2013-09-21 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,29 +42,41 @@ msgid "negate"
 msgstr ""
 
 #: img2brl.cc:179
-msgid "resize to max"
+msgid "{1} max {2} {3}"
 msgstr ""
 
-#: img2brl.cc:181
+#: img2brl.cc:180
+msgid "resize to"
+msgstr ""
+
+#: img2brl.cc:182
 msgid "columns"
 msgstr ""
 
-#: img2brl.cc:194
+#: img2brl.cc:195
 msgid "Translate to Braille"
 msgstr ""
 
-#: img2brl.cc:377
+#: img2brl.cc:369
 msgid "Supported image formats"
 msgstr ""
 
-#: img2brl.cc:498
+#: img2brl.cc:490
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr ""
 
-#: img2brl.cc:499
+#: img2brl.cc:491
 msgid "Translate images from various {1} to {2}."
 msgstr ""
 
-#: img2brl.cc:500
+#: img2brl.cc:492
 msgid "formats"
+msgstr ""
+
+#: img2brl.cc:528
+msgid "There is an {1}."
+msgstr ""
+
+#: img2brl.cc:529
+msgid "Source code? {1} or {2}."
 msgstr ""
