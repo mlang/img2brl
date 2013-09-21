@@ -208,11 +208,11 @@ print_footer(output_mode mode, clock_type::time_point const &start)
     cout << "Total time for request was "
          << span().set("class", "timing").set("id", "microseconds")
          << std::chrono::duration_cast<std::chrono::microseconds>(duration).count()
-         << span() << " us"
+         << span() << abbr("us").set("title", "microseconds")
          << " ("
          << span().set("class", "timing").set("id", "seconds")
          << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
-         << span() << " s)"
+         << span() << abbr("s").set("title", "seconds") << ")"
          << cgicc::div() << endl
 	 << body() << endl
          << html() << endl;
@@ -530,7 +530,7 @@ int main()
               % git_clone % github_link
            << cgicc::div() << endl;
 
-      cout << cgicc::div().set("class", "center").set("id", "powered-by")
+      cout << cgicc::div().set("class", "center").set("id", "powered-by").set("lang", "en")
            << "Powered by" << ' '
            << BOOST_COMPILER << ',' << ' '
            << "GNU&nbsp;cgicc" << "&nbsp;" << "version" << "&nbsp;"
