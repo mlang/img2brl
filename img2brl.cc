@@ -98,7 +98,7 @@ print_supported_image_formats()
   std::size_t formats;
   MagickCore::ExceptionInfo *exception = MagickCore::AcquireExceptionInfo();
   if (MagickCore::MagickInfo const **info = MagickCore::GetMagickInfoList("*", &formats, exception)) {
-    std::cout << cgicc::dl().set("id", "supported-image-formats") << std::endl;
+    std::cout << cgicc::dl().set("id", "supported-image-formats").set("lang", "en") << std::endl;
     for (std::size_t i = 0; i < formats; ++i) {
       if (info[i]->stealth == MagickCore::MagickFalse and
           info[i]->decoder and info[i]->magick) {
