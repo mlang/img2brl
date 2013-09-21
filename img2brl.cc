@@ -141,7 +141,7 @@ print_form(cgicc::Cgicc const &cgi)
 
   input url_input;
   url_input.set("id", img_url);
-  url_input.set("type", "text");
+  url_input.set("type", "url");
   url_input.set("name", "url");
   if (url != cgi.getElements().end()) url_input.set("value", url->getValue());
 
