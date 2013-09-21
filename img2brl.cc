@@ -102,7 +102,7 @@ print_supported_image_formats()
     for (std::size_t i = 0; i < formats; ++i) {
       if (info[i]->stealth == MagickCore::MagickFalse and
           info[i]->decoder and info[i]->magick) {
-        std::cout << cgicc::dt(info[i]->name)
+        std::cout << cgicc::dt(cgicc::abbr(info[i]->name))
                   << cgicc::dd(info[i]->description) << std::endl;
       }
     }
