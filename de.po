@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 23:12+0200\n"
+"POT-Creation-Date: 2013-09-21 23:41+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid "Enter URL to image: "
 msgstr "URL zum Bild eingeben: "
 
-#: img2brl.cc:519
+#: img2brl.cc:525
 msgid "Install Firefox Add-on"
 msgstr "Firefox-Erweiterung installieren"
 
-#: img2brl.cc:535
+#: img2brl.cc:541
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr ""
 "Erstellt mit {1}, {2}, {3}, {4}, {5} und präsentiert mit {6} auf {7} ({8})."
@@ -38,23 +38,23 @@ msgstr "Die Verarbeitungszeit betrug {3} {4} ({1} {2})"
 msgid "Send an image file: "
 msgstr "Sende eine Bilddatei: "
 
-#: img2brl.cc:528
+#: img2brl.cc:534
 msgid "Source code? {1} or {2}."
 msgstr "Quellcode? {1} oder {2}."
 
-#: img2brl.cc:366
+#: img2brl.cc:372
 msgid "Supported image formats"
 msgstr "Unterstützte Bildformate"
 
-#: img2brl.cc:362
+#: img2brl.cc:368
 msgid "Tactile Image Viewer"
 msgstr "Taktiler Bildbetrachter"
 
-#: img2brl.cc:526
+#: img2brl.cc:532
 msgid "There is an {1}."
 msgstr "Es gibt eine {1}."
 
-#: img2brl.cc:489
+#: img2brl.cc:495
 msgid "Translate images from various {1} to {2}."
 msgstr "Übersetzt Bilder verschiedenster {1} in {2}."
 
@@ -66,11 +66,11 @@ msgstr "In Braille übersetzen"
 msgid "columns"
 msgstr "Zeichen"
 
-#: img2brl.cc:490
+#: img2brl.cc:496
 msgid "formats"
 msgstr "Formate"
 
-#: img2brl.cc:488
+#: img2brl.cc:494
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr "img2brl &mdash; Bilder tastbar machen"
 
@@ -82,7 +82,7 @@ msgstr "Kontrast erhöhen"
 msgid "invert"
 msgstr "invertieren"
 
-#: img2brl.cc:210
+#: img2brl.cc:213
 msgid "microseconds"
 msgstr "Mikrosekunden"
 
@@ -94,7 +94,7 @@ msgstr "oder"
 msgid "resize to"
 msgstr "verkleinern auf"
 
-#: img2brl.cc:212
+#: img2brl.cc:218
 msgid "seconds"
 msgstr "Sekunden"
 
@@ -102,7 +102,7 @@ msgstr "Sekunden"
 msgid "trim edges"
 msgstr "Ränder trimmen"
 
-#: img2brl.cc:537 img2brl.cc:539 img2brl.cc:544 img2brl.cc:547 img2brl.cc:552
+#: img2brl.cc:543 img2brl.cc:545 img2brl.cc:550 img2brl.cc:553 img2brl.cc:558
 msgid "version"
 msgstr "Version"
 
