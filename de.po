@@ -43,7 +43,7 @@ msgstr "Übersetzt Bilder verschiedenster {1} in {2}."
 
 #: img2brl.cc:195
 msgid "Translate to Braille"
-msgstr "Nach Braille übersetzen"
+msgstr "In Braille übersetzen"
 
 #: img2brl.cc:167
 msgid "URL to image: "
