@@ -1,7 +1,20 @@
 cmake_minimum_required(VERSION 2.8)
 project(img2brl CXX)
 
-find_package(Boost 1.49.0 REQUIRED)
+find_package(Boost 1.49.0 REQUIRED COMPONENTS locale)
+find_package(Gettext)
+if(GETTEXT_FOUND)
+  gettext_process_pot_file(${CMAKE_PROJECT_NAME}.pot ALL
+                           INSTALL_DESTINATION "${CMAKE_INSTALL_PREFIX}"
+                           LANGUAGES de)
+  add_custom_command(OUTPUT ${CMAKE_PROJECT_NAME}.pot
+                     COMMAND xgettext -o ${CMAKE_PROJECT_NAME}.pot
+                             -k -ktranslate
+                             --package-name=${CMAKE_PROJECT_NAME}
+                             --package-version=0.1
+                             img2brl.cc
+                     DEPENDS img2brl.cc)
+endif(GETTEXT_FOUND)
 find_package(PkgConfig REQUIRED)
 
 pkg_search_module(CGICC REQUIRED cgicc)
@@ -36,8 +49,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 include_directories("{CMAKE_CURRENT_BINARY_DIR}")
 add_executable(img2brl.cgi img2brl.cc ubrl.cc ${CMAKE_CURRENT_BINARY_DIR}/config.h)
-target_link_libraries(img2brl.cgi ${CGICC_LIBRARIES} ${CURL_LIBRARIES}
-                                  ${MAGICKPP_LIBRARIES})
+target_link_libraries(img2brl.cgi ${Boost_LIBRARIES} ${CGICC_LIBRARIES}
+                                  ${CURL_LIBRARIES} ${MAGICKPP_LIBRARIES})
 
 install(TARGETS img2brl.cgi DESTINATION "${CMAKE_INSTALL_PREFIX}")
 install(FILES favicon.png img2brl.css

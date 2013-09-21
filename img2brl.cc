@@ -29,6 +29,7 @@
 #include <curl/curl.h>
 #include <Magick++/Include.h>
 #include <boost/config.hpp>
+#include <boost/locale.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/version.hpp>
 
@@ -36,6 +37,12 @@
 
 #include "config.h"
 #include "ubrl.h"
+
+using namespace boost::locale;
+using namespace cgicc;
+
+static code git_clone{"git clone http://img2brl.delysid.org"};
+static a api_link{a{"API"}.set("href", "https://github.com/mlang/img2brl/#api")};
 
 static int
 curl_append_to_string(char *data, size_t size, size_t nmemb, std::string *buffer)
@@ -259,122 +266,18 @@ print_image( output_mode mode
            , source const &src
            )
 {
-  try {
-    Magick::Blob blob(src.get_data().data(), src.get_data().length());
-    Magick::Image image(blob);
-    if (cgi.queryCheckbox("trim"))
-      image.trim();
-    if (cgi.queryCheckbox("normalize"))
-      image.normalize();
-    if (cgi.queryCheckbox("negate")) {
-      //  image.threshold(50.0);
-      image.negate(true);
-    }
-    if (cgi.queryCheckbox("resize")) {
-      const_form_iterator cols = cgi.getElement("cols");
-      if (cols != cgi.getElements().end()) {
-	try {
-	  Magick::Geometry geometry( boost::lexical_cast<std::size_t>
-				     (cols->getValue()) * 2
-				   , 0
-				   );
-	  if (geometry.width()) {
-	    geometry.less(false);
-	    geometry.greater(true);
-	    image.resize(geometry);
-	  }
-	} catch (boost::bad_lexical_cast const &e) {
-	}
-      }
-    }
-
-    ubrl tactile(image);
-
-    if (mode == output_mode::html) {
-      cout << pre().set("id", "result") << endl;
-      switch (src.get_type()) {
-        case source::file: cout << "Filename: "; break;
-        case source::url: cout << "Url: "; break;
-      }
-      cout << src.get_identifier() << endl;
-      cout << "Content type: " << src.get_content_type() << endl;
-      cout << "Format: " << image.format() << endl;
-      if (not image.label().empty())
-        cout << "Label: " << image.label() << endl;
-      cout << "Width: " << tactile.width() << endl
-           << "Height: " << tactile.height() << endl << endl;
-    } else if (mode == output_mode::json) {
-      cout << '"' << "src" << '"' << ':'
-           << '{';
-      cout << '"';
-      switch (src.get_type()) {
-      case source::file: cout << "filename";
-      case source::url: cout << "url";
-      }
-      cout << '"'
-           << ':'
-           << '"' << src.get_identifier() << '"'
-           << ','
-           << '"' << "content-type" << '"'
-           << ':'
-           << '"' << src.get_content_type() << '"'
-           << ','
-           << '"' << "format" << '"'
-           << ':' << '"' << image.format() << '"'
-           << ',';
-      if (not image.label().empty())
-        cout << '"' << "label" << '"' << ':' << '"' << image.label() << '"'
-             << ',';
-      if (not image.comment().empty())
-        cout << '"' << "comment" << '"'
-             << ':' << '"' << image.comment() << '"'
-             << ',';
-      cout << '"' << "width" << '"' << ':' << image.baseColumns()
-           << ","
-           << '"' << "height" << '"' << ':' << image.baseRows()
-           << '}'
-
-           << ',';
-      cout << '"' << "width" << '"' << ':' << tactile.width()
-           << ','
-           << '"' << "height" << '"' << ':' << tactile.height()
-           << ','
-           << '"' << "braille" << '"' << ':' << '"';
-    }
-
-    cout << tactile.string();
-
-    switch (mode) {
-      case output_mode::html: cout << pre() << endl; break;
-      case output_mode::json: cout << '"'; break;
-      default: break;
-    }
-  } catch (Magick::ErrorMissingDelegate const &missing_delegate_exception) {
-    switch (mode) {
-      case output_mode::html:
-        cout << h1("Error: Image format not supported") << endl
-             << p(missing_delegate_exception.what()) << endl;
-        break;
-      case output_mode::json:
-        cout << '"' << "exception" << '"'
-             << ':'
-             << '"' << "Magick::ErrorMissingDelegate" << '"'
-             << ','
-             << '"' << "message" << '"'
-             << ':'
-             << '"' << missing_delegate_exception.what() << '"';
-        break;
-      case output_mode::text:
-        cout << "Unsupported image format: "
-             << missing_delegate_exception.what() << endl;
-    }
-  }
 }
 
 int main()
 {
   clock_type::time_point start_time = clock_type::now();
-  output_mode mode(output_mode::html);
+  boost::locale::generator locale_gen;
+  locale_gen.add_messages_path(".");
+  locale_gen.add_messages_domain("img2brl");
+  locale::global(locale_gen("en"));
+  cout.imbue(locale());
+
+  output_mode mode{output_mode::html};
   Cgicc cgi;
 
   cerr << "Accept-Language: " << std::getenv("HTTP_ACCEPT_LANGUAGE") << std::endl;
@@ -387,7 +290,7 @@ int main()
         { "text", output_mode::text }
       };
       try {
-        mode = modes.at(cgi.getElement("mode")->getValue());
+        mode = modes.at(cgi("mode"));
       } catch (std::out_of_range const &e) {
         cerr << "Invalid mode '" << cgi.getElement("mode")->getValue()
              << "' specified, falling back to html." << endl;
@@ -438,6 +341,8 @@ int main()
                         } else {
                           cerr << error_buffer << endl;
                         }
+                      } else {
+                        cerr << error_buffer << endl;
                       }
                     }
                   }
@@ -448,29 +353,139 @@ int main()
         }
         curl_easy_cleanup(curl);
       }
+      curl_global_cleanup();
     }
 
     print_header(mode, "Tactile Image Viewer");
 
     if (cgi.getElement("show") != cgi.getElements().end() and cgi.getElement("show")->getValue() == "formats") {
       if (mode == output_mode::html) {
-        cout << h1("Supported image formats") << endl;
+        cout << h1(boost::locale::translate("Supported image formats")) << endl;
         print_supported_image_formats();
       }
     }
 
     if (not data.get_data().empty()) {
-      print_image(mode, cgi, data);
+      try {
+	Magick::Blob blob(data.get_data().data(), data.get_data().length());
+	Magick::Image image(blob);
+	if (cgi.queryCheckbox("trim")) image.trim();
+	if (cgi.queryCheckbox("normalize")) image.normalize();
+	if (cgi.queryCheckbox("negate")) {
+	  //  image.threshold(50.0);
+	  image.negate(true);
+	}
+	if (cgi.queryCheckbox("resize")) {
+	  const_form_iterator cols = cgi.getElement("cols");
+	  if (cols != cgi.getElements().end()) {
+	    try {
+	      Magick::Geometry geometry( boost::lexical_cast<std::size_t>
+					 (cols->getValue()) * 2
+					 , 0
+					 );
+	      if (geometry.width()) {
+		geometry.less(false);
+		geometry.greater(true);
+		image.resize(geometry);
+	      }
+	    } catch (boost::bad_lexical_cast const &e) {
+	    }
+	  }
+	}
+
+	ubrl tactile(image);
+
+	if (mode == output_mode::html) {
+	  cout << pre().set("id", "result") << endl;
+	  switch (data.get_type()) {
+	  case source::file: cout << "Filename: "; break;
+	  case source::url: cout << "Url: "; break;
+	  }
+	  cout << data.get_identifier() << endl;
+	  cout << "Content type: " << data.get_content_type() << endl;
+	  cout << "Format: " << image.format() << endl;
+	  if (not image.label().empty())
+	    cout << "Label: " << image.label() << endl;
+	  cout << "Width: " << tactile.width() << endl
+	       << "Height: " << tactile.height() << endl << endl;
+	} else if (mode == output_mode::json) {
+	  cout << '"' << "src" << '"' << ':'
+	       << '{';
+	  cout << '"';
+	  switch (data.get_type()) {
+	  case source::file: cout << "filename";
+	  case source::url: cout << "url";
+	  }
+	  cout << '"'
+	       << ':'
+	       << '"' << data.get_identifier() << '"'
+	       << ','
+	       << '"' << "content-type" << '"'
+	       << ':'
+	       << '"' << data.get_content_type() << '"'
+	       << ','
+	       << '"' << "format" << '"'
+	       << ':' << '"' << image.format() << '"'
+	       << ',';
+	  if (not image.label().empty())
+	    cout << '"' << "label" << '"' << ':' << '"' << image.label() << '"'
+		 << ',';
+	  if (not image.comment().empty())
+	    cout << '"' << "comment" << '"'
+		 << ':' << '"' << image.comment() << '"'
+		 << ',';
+	  cout << '"' << "width" << '"' << ':' << image.baseColumns()
+	       << ","
+	       << '"' << "height" << '"' << ':' << image.baseRows()
+	       << '}'
+
+	       << ',';
+	  cout << '"' << "width" << '"' << ':' << tactile.width()
+	       << ','
+	       << '"' << "height" << '"' << ':' << tactile.height()
+	       << ','
+	       << '"' << "braille" << '"' << ':' << '"';
+	}
+
+	cout << tactile.string();
+
+	switch (mode) {
+	case output_mode::html: cout << pre() << endl; break;
+	case output_mode::json: cout << '"'; break;
+	default: break;
+	}
+      } catch (Magick::ErrorMissingDelegate const &missing_delegate_exception) {
+	switch (mode) {
+	case output_mode::html:
+	  cout << h1("Error: Image format not supported") << endl
+	       << p(missing_delegate_exception.what()) << endl;
+	  break;
+	case output_mode::json:
+	  cout << '"' << "exception" << '"'
+	       << ':'
+	       << '"' << "Magick::ErrorMissingDelegate" << '"'
+	       << ','
+	       << '"' << "message" << '"'
+	       << ':'
+	       << '"' << missing_delegate_exception.what() << '"';
+	  break;
+	case output_mode::text:
+	  cout << "Unsupported image format: "
+	       << missing_delegate_exception.what() << endl;
+	}
+      }
     } else {
       if (mode == output_mode::html) {
-        a formats("formats");
-        formats.set("href", "?show=formats");
+        a formats{a{gettext("formats")}.set("class", "internal")
+			      .set("href", "?show=formats")};
         a unicode_braille("Unicode braille");
         unicode_braille.set("href",
                             "http://en.wikipedia.org/wiki/Unicode_braille");
-        cout << h1("img2brl &mdash; Convert images to Braille") << endl
-             << p() << "Translate images from various " << formats
-                    << " to " << unicode_braille << '.' << p() << endl;
+        cout << h1(translate("img2brl &mdash; Convert images to Braille")) << endl
+             << p() << format(translate("Translate images from various {1} to {2}.")) 
+                       % a(translate("formats")).set("class", "internal").set("href", "?show=formats")
+                       % unicode_braille
+             << p() << endl;
       }
     }
 
@@ -501,9 +516,6 @@ int main()
            << a() << endl
            << cgicc::div() << endl;
 
-      code git_clone("git clone http://img2brl.delysid.org");
-      a api_link("API");
-      api_link.set("href", "https://github.com/mlang/img2brl/#api");
       a github_link("github.com/mlang/img2brl");
       github_link.set("href", "https://github.com/mlang/img2brl");
       cout << cgicc::div().set("class", "center") << endl
@@ -561,7 +573,7 @@ int main()
 
     print_footer(mode, start_time);
   } catch (exception const &e) {
-    cerr << "C++ exception: " << e.what() << endl;
+    cerr << e.what() << endl;
     return EXIT_FAILURE;
   }
 }
