@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 22:16+0200\n"
+"POT-Creation-Date: 2013-09-21 22:26+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -87,8 +87,8 @@ msgid "resize to"
 msgstr "verkleinern auf"
 
 #: img2brl.cc:173
-msgid "trim"
-msgstr "trimmen"
+msgid "trim edges"
+msgstr "Ränder trimmen"
 
 #: img2brl.cc:539 img2brl.cc:541 img2brl.cc:546 img2brl.cc:549 img2brl.cc:554
 msgid "version"
