@@ -204,15 +204,12 @@ print_footer(output_mode mode, clock_type::time_point const &start)
 {
   clock_type::duration duration = clock_type::now() - start;
   if (mode == output_mode::html) {
-    cout << cgicc::div().set("class", "center").set("id", "footer") << endl;
-    cout << "Total time for request was "
-         << span().set("class", "timing").set("id", "microseconds")
-         << std::chrono::duration_cast<std::chrono::microseconds>(duration).count()
-         << span() << abbr("us").set("title", "microseconds")
-         << " ("
-         << span().set("class", "timing").set("id", "seconds")
-         << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
-         << span() << abbr("s").set("title", "seconds") << ")"
+    cout << cgicc::div().set("class", "center").set("id", "footer") << endl
+         << format(translate("Processing time was {3}{4} ({1}{2})"))
+            % span((format("{1}") % std::chrono::duration_cast<std::chrono::microseconds>(duration).count()).str()).set("class", "timing").set("id", "microseconds")
+            % abbr("us").set("title", translate("microseconds"))
+            % span((format("{1}") % std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()).str()).set("class", "timing").set("id", "seconds")
+            % abbr("s").set("title", translate("seconds"))
          << cgicc::div() << endl
 	 << body() << endl
          << html() << endl;

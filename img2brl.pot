@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 22:31+0200\n"
+"POT-Creation-Date: 2013-09-21 23:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,42 +57,54 @@ msgstr ""
 msgid "Translate to Braille"
 msgstr ""
 
-#: img2brl.cc:365
+#: img2brl.cc:208
+msgid "Processing time was {3}{4} ({1}{2})"
+msgstr ""
+
+#: img2brl.cc:210
+msgid "microseconds"
+msgstr ""
+
+#: img2brl.cc:212
+msgid "seconds"
+msgstr ""
+
+#: img2brl.cc:362
 msgid "Tactile Image Viewer"
 msgstr ""
 
-#: img2brl.cc:369
+#: img2brl.cc:366
 msgid "Supported image formats"
 msgstr ""
 
-#: img2brl.cc:491
+#: img2brl.cc:488
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr ""
 
-#: img2brl.cc:492
+#: img2brl.cc:489
 msgid "Translate images from various {1} to {2}."
 msgstr ""
 
-#: img2brl.cc:493
+#: img2brl.cc:490
 msgid "formats"
 msgstr ""
 
-#: img2brl.cc:522
+#: img2brl.cc:519
 msgid "Install Firefox Add-on"
 msgstr ""
 
-#: img2brl.cc:529
+#: img2brl.cc:526
 msgid "There is an {1}."
 msgstr ""
 
-#: img2brl.cc:531
+#: img2brl.cc:528
 msgid "Source code? {1} or {2}."
 msgstr ""
 
-#: img2brl.cc:538
+#: img2brl.cc:535
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr ""
 
-#: img2brl.cc:540 img2brl.cc:542 img2brl.cc:547 img2brl.cc:550 img2brl.cc:555
+#: img2brl.cc:537 img2brl.cc:539 img2brl.cc:544 img2brl.cc:547 img2brl.cc:552
 msgid "version"
 msgstr ""
