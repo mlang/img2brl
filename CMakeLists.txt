@@ -58,7 +58,7 @@ install(FILES favicon.png img2brl.css
 
 add_executable(${CMAKE_PROJECT_NAME}_test test.cc accept_language.cc)
 enable_testing()
-foreach(test_name accept_language_1 accept_language_2 accept_language_3)
+foreach(test_name accept_language_1 accept_language_2 accept_language_3 accept_language_4 accept_language_5)
   add_test(NAME ${test_name}
            COMMAND ${CMAKE_PROJECT_NAME}_test --run_test=${test_name})
 endforeach(test_name)
