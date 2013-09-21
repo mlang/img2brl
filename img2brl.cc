@@ -159,26 +159,26 @@ print_form(cgicc::Cgicc const &cgi)
                 .set("action", cgi.getEnvironment().getScriptName())
                 .set("enctype", "multipart/form-data") << endl
        << cgicc::div()
-       << label().set("for", img_file) << "Send an image file: " << label() << endl
+       << label().set("for", img_file) << translate("Send an image file: ") << label() << endl
        << file_input << endl
        << cgicc::div() << endl
-       << cgicc::div() << "or" << cgicc::div() << endl
+       << cgicc::div() << translate("or") << cgicc::div() << endl
        << cgicc::div()
-       << label().set("for", img_url) << "URL to image: " << label() << endl
+       << label().set("for", img_url) << translate("URL to image: ") << label() << endl
        << url_input << endl
        << cgicc::div() << endl
 
        << cgicc::div() << endl
        << checkbox(cgi, "trim", "trim_img")
-       << label().set("for", "trim_img") << "trim" << label() << endl
+       << label().set("for", "trim_img") << translate("trim") << label() << endl
        << checkbox(cgi, "normalize", "normalize_img")
-       << label().set("for", "normalize_img") << "normalize" << label() << endl
+       << label().set("for", "normalize_img") << translate("normalize") << label() << endl
        << checkbox(cgi, "negate", "negate_img")
-       << label().set("for", "negate_img") << "negate" << label() << endl
+       << label().set("for", "negate_img") << translate("negate") << label() << endl
        << checkbox(cgi, "resize", "resize_img")
-       << label().set("for", "resize_img") << "resize to max" << label()
+       << label().set("for", "resize_img") << translate("resize to max") << label()
        << columns_input
-       << ' ' << label().set("for", "cols_img") << "columns" << label()
+       << ' ' << label().set("for", "cols_img") << translate("columns") << label()
        << cgicc::div() << endl
 
        << script().set("type", "application/javascript")
@@ -191,7 +191,7 @@ print_form(cgicc::Cgicc const &cgi)
        << cgicc::div().set("class", "center") << endl
        << input().set("type", "submit")
                  .set("name", "submit")
-                 .set("value", "Translate to Braille") << endl
+                 .set("value", translate("Translate to Braille")) << endl
        << cgicc::div() << endl
        << form() << endl;
 }

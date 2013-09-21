@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 18:41+0200\n"
+"POT-Creation-Date: 2013-09-21 18:52+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: img2brl.cc:162
+msgid "Send an image file: "
+msgstr "Sende eine Bilddatei: "
+
 #: img2brl.cc:377
 msgid "Supported image formats"
 msgstr "Unterstützte Bildformate"
@@ -25,6 +29,18 @@ msgstr "Unterstützte Bildformate"
 msgid "Translate images from various {1} to {2}."
 msgstr "Übersetzt Bilder in verschiedensten {1} nach {2}."
 
+#: img2brl.cc:194
+msgid "Translate to Braille"
+msgstr "Nach Braille übersetzen"
+
+#: img2brl.cc:167
+msgid "URL to image: "
+msgstr "URL zum Bild: "
+
+#: img2brl.cc:181
+msgid "columns"
+msgstr "Spalten"
+
 #: img2brl.cc:500
 msgid "formats"
 msgstr "Formaten"
@@ -32,3 +48,23 @@ msgstr "Formaten"
 #: img2brl.cc:498
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr "img2brl &mdash; Bilder tastbar machen"
+
+#: img2brl.cc:177
+msgid "negate"
+msgstr "negativ"
+
+#: img2brl.cc:175
+msgid "normalize"
+msgstr "normalisieren"
+
+#: img2brl.cc:165
+msgid "or"
+msgstr "oder"
+
+#: img2brl.cc:179
+msgid "resize to max"
+msgstr "verkleinern auf maximal"
+
+#: img2brl.cc:173
+msgid "trim"
+msgstr "trimmen"
