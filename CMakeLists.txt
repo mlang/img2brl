@@ -2,25 +2,29 @@ cmake_minimum_required(VERSION 2.8)
 project(img2brl CXX)
 
 find_package(Boost 1.49.0 REQUIRED COMPONENTS locale)
+
 find_package(Gettext)
 if(GETTEXT_FOUND)
-  set(${CMAKE_PROJECT_NAME}_LANGUAGES de)
+  set(${CMAKE_PROJECT_NAME}_TRANSLATIONS de)
+  set(${CMAKE_PROJECT_NAME}_LANGUAGES en ${${CMAKE_PROJECT_NAME}_TRANSLATIONS})
   set(${CMAKE_PROJECT_NAME}_gmo_files)
-  foreach(lang ${${CMAKE_PROJECT_NAME}_LANGUAGES})
+  foreach(lang ${${CMAKE_PROJECT_NAME}_TRANSLATIONS})
     add_custom_command(OUTPUT ${lang}.gmo
                        COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} -o ${lang}.gmo ${CMAKE_CURRENT_SOURCE_DIR}/${lang}.po
-                       DEPENDS ${lang}.po
-    )
-    install(FILES ${lang}.gmo DESTINATION ${CMAKE_INSTALL_PREFIX}/${lang}/LC_MESSAGES RENAME ${CMAKE_PROJECT_NAME}.mo)
+                       DEPENDS ${lang}.po)
+    install(FILES ${lang}.gmo
+            DESTINATION locale/${lang}/LC_MESSAGES
+            RENAME ${CMAKE_PROJECT_NAME}.mo)
     list(APPEND ${CMAKE_PROJECT_NAME}_gmo_files ${lang}.gmo)
-  endforeach()
-  add_custom_target(message_objects ALL DEPENDS ${img2brl_gmo_files})
+  endforeach(lang)
+  add_custom_target(gmo ALL DEPENDS ${${CMAKE_PROJECT_NAME}_gmo_files})
 endif(GETTEXT_FOUND)
-find_package(PkgConfig REQUIRED)
 
+find_package(PkgConfig REQUIRED)
 pkg_search_module(CGICC REQUIRED cgicc)
 pkg_search_module(CURL REQUIRED libcurl>7.10.7)
 pkg_search_module(MAGICKPP REQUIRED Magick++)
+
 include_directories(${CGICC_INCLUDE_DIRS})
 include_directories(${CURL_INCLUDE_DIRS})
 include_directories(${MAGICKPP_INCLUDE_DIRS})

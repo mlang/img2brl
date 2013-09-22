@@ -272,7 +272,7 @@ int main()
 {
   clock_type::time_point start_time = clock_type::now();
   boost::locale::generator locale_gen;
-  locale_gen.add_messages_path(".");
+  locale_gen.add_messages_path("./locale");
   locale_gen.add_messages_domain("img2brl");
 
   output_mode mode{output_mode::html};
