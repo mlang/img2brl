@@ -153,10 +153,10 @@ print_form(cgicc::Cgicc const &cgi)
     columns = cgi.getElement("cols")->getValue();
 
   input columns_input;
-  columns_input.set("type", "text")
+  columns_input.set("type", "number")
                .set("name", "cols")
                .set("id", "cols_img")
-               .set("size", "4").set("value", columns);
+               .set("size", "3").set("value", columns);
 
   cout << form().set("method", "post")
                 .set("action", cgi.getEnvironment().getScriptName())
