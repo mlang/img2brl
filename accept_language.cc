@@ -7,7 +7,6 @@
 #include <boost/spirit/include/qi_eoi.hpp>
 #include <boost/spirit/include/qi_eps.hpp>
 #include <boost/spirit/include/qi_expect.hpp>
-#include <boost/spirit/include/qi_kleene.hpp>
 #include <boost/spirit/include/qi_list.hpp>
 #include <boost/spirit/include/qi_lit.hpp>
 #include <boost/spirit/include/qi_optional.hpp>
