@@ -66,7 +66,10 @@ print_header(output_mode mode, std::string const &title, std::string const &lang
   static char const *text_html_utf8 = "text/html; charset=UTF-8";
   switch (mode) {
     case output_mode::html:
-      cout << HTTPContentHeader(text_html_utf8)
+      cout << "Content-Type: " << text_html_utf8 << endl
+           << "Content-Language: " << lang << endl
+           << "Vary: " << "Content-Language" << endl
+           << endl
            << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
            << html().set("xmlns", "http://www.w3.org/1999/xhtml")
                     .set("lang", lang).set("dir", "ltr") << endl
