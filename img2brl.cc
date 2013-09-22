@@ -19,6 +19,7 @@
 #include <chrono>
 #include <iostream>
 #include <map>
+#include <set>
 #include <string>
 #include <stdexcept>
 
@@ -56,7 +57,6 @@ curl_append_to_string(char *data, size_t size, size_t nmemb, std::string *buffer
 }
 
 using namespace std;
-using namespace cgicc;
 
 enum class output_mode { html, json, text };
 
@@ -290,7 +290,16 @@ int main()
     }
     cerr << msg.str();
   }
+  if (cgi.getElement("lang") != cgi.getElements().end()) {
+    std::set<std::string> const available_languages{"en", "de"};
+    if (available_languages.find(cgi("lang")) != available_languages.end()) {
+      locale::global(locale_gen(cgi("lang")+".UTF-8"));
+      html_lang = cgi("lang");
+    }
+  }
+
   cout.imbue(locale());
+
   try {
     if (cgi.getElement("mode") != cgi.getElements().end()) {
       std::map<std::string, output_mode> const modes = {
