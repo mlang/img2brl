@@ -22,6 +22,19 @@ BOOST_AUTO_TEST_CASE(accept_language_2) {
 };
 
 BOOST_AUTO_TEST_CASE(accept_language_3) {
+  accept_language accept("*; q=0.1");
+
+  BOOST_REQUIRE_EQUAL(accept.languages().size(), 1);
+  BOOST_REQUIRE(std::all_of(accept.languages().begin(), accept.languages().end(),
+                            [](accept_language::entry const &language) -> bool {
+                              return language.q;
+                            }));
+  BOOST_REQUIRE_EQUAL(accept.languages()[0].subtags.size(), 1);
+  BOOST_CHECK_EQUAL(accept.languages()[0].subtags[0], "*");
+  BOOST_CHECK_CLOSE(*accept.languages()[0].q, 0.1, 0.0001);
+};
+
+BOOST_AUTO_TEST_CASE(accept_language_4) {
   accept_language accept("de-at, de, en");
 
   BOOST_REQUIRE_EQUAL(accept.languages().size(), 3);
@@ -41,7 +54,7 @@ BOOST_AUTO_TEST_CASE(accept_language_3) {
   BOOST_CHECK(not accept.accepts_language("fr"));
 }
 
-BOOST_AUTO_TEST_CASE(accept_language_4) {
+BOOST_AUTO_TEST_CASE(accept_language_5) {
   accept_language accept("de-at;q=1.0, de;q=0.9, en;q=0.7, es;q=0.1");
   float epsilon = 0.00001;
 
@@ -65,7 +78,7 @@ BOOST_AUTO_TEST_CASE(accept_language_4) {
   BOOST_CHECK_CLOSE(*accept.languages()[3].q, 0.1, epsilon);
 }
 
-BOOST_AUTO_TEST_CASE(accept_language_5) {
+BOOST_AUTO_TEST_CASE(accept_language_6) {
   accept_language accept("de-AT; q=1.0");
   float epsilon = 0.00001;
 

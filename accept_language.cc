@@ -35,10 +35,10 @@ accept_language::accept_language(std::string const &input)
   real_parser<float, ureal_policies<float>> qvalue;
   repeat_type repeat;
   string_type string;
-  rule<std::string::const_iterator, entry(), space_type> all
-  = repeat(1)[string("*")] >> attr(boost::optional<float>());
+  rule<std::string::const_iterator, std::vector<std::string>(), space_type> range
+  = +alpha % '-' | repeat(1)[string("*")];
   rule<std::string::const_iterator, entry(), space_type> entry_
-  = (+alpha % '-' >> -(lit(";") > "q" > "=" > qvalue)) | all;
+  = range >> -(lit(";") > "q" > "=" > qvalue);
   if (not input.empty())
     phrase_parse( input.begin(), input.end()
                 , eps > entry_ % ',' > eoi, space_type()
