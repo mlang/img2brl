@@ -22,24 +22,27 @@ BOOST_FUSION_ADAPT_STRUCT(
   (boost::optional<float>, q)
 )
 
-accept_language::accept_language(std::string const &input)
-{
-  using namespace boost::spirit::qi;
+using namespace boost::spirit::qi;
+
+namespace {
   alpha_type alpha;
-  char_type char_;
   eoi_type eoi;
   eps_type eps;
   lit_type lit;
   real_parser<float, ureal_policies<float>> qvalue;
   repeat_type repeat;
+  space_type space;
   string_type string;
   rule<std::string::const_iterator, std::vector<std::string>(), space_type> range
   = +alpha % '-' | repeat(1)[string("*")];
-  rule<std::string::const_iterator, entry(), space_type> entry_
-  = range >> -(lit(";") > "q" > "=" > qvalue);
+  rule<std::string::const_iterator, float(), space_type> q
+  = lit(";") > "q" > "=" > qvalue;
+}
+
+accept_language::accept_language(std::string const &input)
+{
   if (not input.empty())
     phrase_parse( input.begin(), input.end()
-                , eps > entry_ % ',' > eoi, space_type()
-                , entries
+                , eps > (range >> -q) % ',' > eoi, space, entries
                 );
 }
