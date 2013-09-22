@@ -283,8 +283,9 @@ int main()
     std::stringstream msg;
     msg << "Accept-Language: " << value << endl;
     try {
-      accept_language client(value);
-      if (client.accepts_language("de")) {
+      accept_language spec(value);
+      spec.normalize();
+      if (spec.accepts_language("de")) {
         locale::global(locale_gen("de.UTF-8"));
         html_lang = "de";
       }
