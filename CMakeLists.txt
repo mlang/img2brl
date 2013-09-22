@@ -4,16 +4,17 @@ project(img2brl CXX)
 find_package(Boost 1.49.0 REQUIRED COMPONENTS locale)
 find_package(Gettext)
 if(GETTEXT_FOUND)
-  gettext_process_pot_file(${CMAKE_PROJECT_NAME}.pot ALL
-                           INSTALL_DESTINATION "${CMAKE_INSTALL_PREFIX}"
-                           LANGUAGES de)
-  add_custom_command(OUTPUT ${CMAKE_PROJECT_NAME}.pot
-                     COMMAND xgettext -o ${CMAKE_PROJECT_NAME}.pot
-                             -k -ktranslate
-                             --package-name=${CMAKE_PROJECT_NAME}
-                             --package-version=0.1
-                             img2brl.cc
-                     DEPENDS img2brl.cc)
+  set(img2brl_LANGUAGES de)
+  set(img2brl_gmo_files)
+  foreach(lang ${img2brl_LANGUAGES})
+    add_custom_command(OUTPUT ${lang}.gmo
+                       COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} -o ${lang}.gmo ${lang}.po
+                       DEPENDS ${lang}.po
+    )
+    install(FILES ${lang}.gmo DESTINATION ${CMAKE_INSTALL_PREFIX}/${lang}/LC_MESSAGES RENAME ${CMAKE_PROJECT_NAME}.mo)
+    list(APPEND img2brl_gmo_files ${lang}.gmo)
+  endforeach()
+  add_custom_target(message_objects ALL DEPENDS ${img2brl_gmo_files})
 endif(GETTEXT_FOUND)
 find_package(PkgConfig REQUIRED)
 

@@ -68,7 +68,7 @@ print_header(output_mode mode, std::string const &title, std::string const &lang
     case output_mode::html:
       cout << "Content-Type: " << text_html_utf8 << endl
            << "Content-Language: " << lang << endl
-           << "Vary: " << "Content-Language" << endl
+           << "Vary: " << "Accept-Language" << endl
            << endl
            << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
            << html().set("xmlns", "http://www.w3.org/1999/xhtml")

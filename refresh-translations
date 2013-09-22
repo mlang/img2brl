@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+xgettext -o img2brl.pot -ktranslate --package-name=img2brl --package-version=0.1 img2brl.cc
+msgmerge --quiet --update --backup=none de.po img2brl.pot
+
