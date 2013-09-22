@@ -2,7 +2,6 @@
 #define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/spirit/include/qi_alternative.hpp>
-#include <boost/spirit/include/qi_attr.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_eoi.hpp>
 #include <boost/spirit/include/qi_eps.hpp>
@@ -27,7 +26,6 @@ accept_language::accept_language(std::string const &input)
 {
   using namespace boost::spirit::qi;
   alpha_type alpha;
-  attr_type attr;
   char_type char_;
   eoi_type eoi;
   eps_type eps;
