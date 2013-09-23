@@ -1,6 +1,7 @@
 #include <vector>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/optional.hpp>
+#include <boost/range/algorithm/stable_sort.hpp>
 class accept_language
 {
 public:
@@ -28,15 +29,6 @@ public:
     return false;
   }
   void normalize() {
-    auto first_q = entries.end();
-    for (auto i = entries.begin(); i != entries.end(); ++i) {
-      if (i->q) {
-        if (first_q == entries.end() and *(i->q) < 0.9999) first_q = i;
-      } else if (first_q != entries.end()) {
-        std::rotate(first_q++, i, std::next(i));
-      }
-    }
-    if (first_q != entries.end())
-      std::stable_sort(first_q, entries.end(), &entry::compare_by_q);
+    boost::stable_sort(entries, &entry::compare_by_q);
   }
 };
