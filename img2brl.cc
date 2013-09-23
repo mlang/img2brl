@@ -281,10 +281,11 @@ int main()
 
   if (char *value = std::getenv("HTTP_ACCEPT_LANGUAGE")) {
     std::stringstream msg;
-    msg << "Accept-Language: " << value << endl;
+    msg << "Accept-Language: " << value;
     try {
       accept_language spec(value);
       spec.normalize();
+      msg << " -> " << spec;
       if (spec.accepts_language("de")) {
         locale::global(locale_gen("de.UTF-8"));
         html_lang = "de";
@@ -292,6 +293,7 @@ int main()
     } catch (std::runtime_error const &e) {
       msg << e.what() << endl;
     }
+    msg << endl;
     cerr << msg.str();
   }
   if (cgi.getElement("lang") != cgi.getElements().end()) {

@@ -32,3 +32,16 @@ public:
     boost::stable_sort(entries, &entry::compare_by_q);
   }
 };
+
+inline std::ostream &operator<<(std::ostream &stream, accept_language const &spec) {
+  for (auto i = spec.languages().begin(), e = spec.languages().end(); i != e; ++i) {
+    if (i != spec.languages().begin()) stream << ", ";
+    for (auto j = i->subtags.begin(); j != i->subtags.end(); ++j) {
+      if (j != i->subtags.begin()) stream << '-';
+      stream << *j;
+    }
+    if (i->q) stream << "; q=" << *(i->q);
+  }
+  return stream;
+}
+
