@@ -8,7 +8,7 @@ public:
   struct entry {
     std::vector<std::string> subtags;
     boost::optional<float> q;
-    static bool compare_by_q(entry const &lhs, entry const &rhs) {
+    friend bool operator>(entry const &lhs, entry const &rhs) {
       return lhs.q? (rhs.q? (*lhs.q - *rhs.q) > 0.0001
                           : *lhs.q > 1.0001)
                   : rhs.q and (*rhs.q < 0.9999);
@@ -29,7 +29,7 @@ public:
     return false;
   }
   void normalize() {
-    boost::stable_sort(entries, &entry::compare_by_q);
+    boost::stable_sort(entries, std::greater<entry>());
   }
 };
 
