@@ -1,3 +1,4 @@
+#include <initializer_list>
 #include <vector>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/optional.hpp>
@@ -27,6 +28,14 @@ public:
       }
     }
     return false;
+  }
+  std::string best_match(std::initializer_list<std::string> langs, std::string const &dflt = "en") {
+    for (entry const &language: entries) {
+      for (auto const &lang: langs) {
+        if (boost::iequals(language.subtags.front(), lang)) return lang;
+      }
+    }
+    return dflt;
   }
   void normalize() {
     boost::stable_sort(entries, std::greater<entry>());

@@ -286,13 +286,9 @@ int main()
       accept_language spec(value);
       spec.normalize();
       msg << " -> " << spec;
-      if (spec.accepts_language("hu")) {
-        locale::global(locale_gen("hu.UTF-8"));
-        html_lang = "hu";
-      } else if (spec.accepts_language("de")) {
-        locale::global(locale_gen("de.UTF-8"));
-        html_lang = "de";
-      }
+      std::string selected_lang{spec.best_match({"en", "de", "hu"}, "en")};
+      locale::global(locale_gen(selected_lang+".UTF-8"));
+      html_lang = selected_lang;
     } catch (std::runtime_error const &e) {
       msg << e.what() << endl;
     }
