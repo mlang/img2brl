@@ -286,7 +286,10 @@ int main()
       accept_language spec(value);
       spec.normalize();
       msg << " -> " << spec;
-      if (spec.accepts_language("de")) {
+      if (spec.accepts_language("hu")) {
+        locale::global(locale_gen("hu.UTF-8"));
+        html_lang = "hu";
+      } else if (spec.accepts_language("de")) {
         locale::global(locale_gen("de.UTF-8"));
         html_lang = "de";
       }
