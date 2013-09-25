@@ -65,17 +65,21 @@ static cgicc::a
 link_to_lang(cgicc::Cgicc const &cgi, std::string const &lang, std::string const &name) {
   std::map<std::string, std::string> params;
   for (auto element: cgi.getElements())
-    params.insert(std::make_pair(element.getName(), element.getValue()));
+    if (element.getName() != "img" and element.getName() != "submit")
+      params.insert(std::make_pair(element.getName(), element.getValue()));
   params["lang"] = lang;
   std::stringstream href;
   href << "/";
-  for (auto i = params.begin(); i != params.end(); ++i)
-    href << ((i == params.begin())? '?': '&')
-         << cgicc::form_urlencode(i->first)
+  for (auto param = params.begin(); param != params.end(); ++param)
+    href << ((param == params.begin())? '?': '&')
+         << cgicc::form_urlencode(param->first)
          << '='
-         << cgicc::form_urlencode(i->second);
+         << cgicc::form_urlencode(param->second);
   cgicc::a link(name);
-  link.set("href", href.str()).set("hreflang", lang).set("lang", lang).set("rel", "alternate");
+  link.set("href", href.str())
+      .set("hreflang", lang)
+      .set("lang", lang)
+      .set("rel", "alternate");
   return link;
 }
 
