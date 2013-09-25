@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-09-26 00:12+0200\n"
+"POT-Creation-Date: 2013-09-26 00:38+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: img2brl.cc:201
 msgid ""
-"Amount of characters the resulting braille output is not allowed to exceed."
+"Amount of characters a line of the braille output is not allowed to exceed."
 msgstr ""
 "Die Anzahl der Zeichen die die Breite der Brailleausgabe nicht überschreiten "
 "darf."
@@ -41,8 +41,8 @@ msgid "Options:"
 msgstr "Optionen:"
 
 #: img2brl.cc:225
-msgid "Trim edges that are the background color from the image."
-msgstr "Entferne Ränder die dem Hintergrund gleichen vom Bild."
+msgid "Trims edges that are the background color from the image."
+msgstr "Entfernt Ränder die dem Hintergrund des Bildes gleichen."
 
 #: img2brl.cc:228
 msgid "trim edges"
@@ -50,19 +50,19 @@ msgstr "Ränder trimmen"
 
 #: img2brl.cc:230
 msgid ""
-"Enhance the contrast of a color image by mapping the darkest 2 percent of "
+"Enhances the contrast of a color image by mapping the darkest 2 percent of "
 "all pixels to black and the brightest 1 percent to white."
 msgstr ""
-"Verbessere den Kontrast eines Farbbildes indem die dunkelsten 2 Prozent aller "
-"Pixel schwarz, und die hellsten 1 Prozent weiß gefärbt werden."
+"Verbessert den Kontrast eines Farbbildes indem die dunkelsten 2 Prozent "
+"aller Pixel schwarz, und die hellsten 1 Prozent weiß gefärbt werden."
 
 #: img2brl.cc:233
 msgid "increase contrast"
 msgstr "Kontrast erhöhen"
 
 #: img2brl.cc:235
-msgid "Negate the colors in the reference image."
-msgstr "Invertiert die farben des Bildes."
+msgid "Negates the colors in the reference image."
+msgstr "Invertiert die Farben des Bildes."
 
 #: img2brl.cc:237
 msgid "invert"
@@ -70,10 +70,10 @@ msgstr "invertieren"
 
 #: img2brl.cc:239
 msgid ""
-"Scale image such that it uses at most the specified amount of characters "
+"Scales image such that it uses at most the specified amount of characters "
 "horizontally."
 msgstr ""
-"Skaliere das Bild so, das es die angegebene Zeilenlänge nicht überschreitet."
+"Skalliert das Bild so, das es die angegebene Zeilenlänge nicht überschreitet."
 
 #: img2brl.cc:242
 msgid "{1} max {2} {3}"

@@ -198,7 +198,7 @@ print_form(cgicc::Cgicc const &cgi)
   input columns_input;
   columns_input.set("type", "number")
                .set("name", "cols")
-               .set("title", translate("Amount of characters the resulting "
+               .set("title", translate("Amount of characters a line of the "
                                        "braille output is not allowed to exceed."))
                .set("id", "cols_img")
                .set("size", "3")
@@ -222,21 +222,21 @@ print_form(cgicc::Cgicc const &cgi)
 
        << cgicc::fieldset() << cgicc::legend(translate("Options:")) << endl
        << checkbox(cgi, "trim", "trim_img",
-                   translate("Trim edges that are the background color from "
+                   translate("Trims edges that are the background color from "
                              "the image."))
        << endl
        << label(translate("trim edges")).set("for", "trim_img") << endl
        << checkbox(cgi, "normalize", "normalize_img",
-                   translate("Enhance the contrast of a color image by mapping "
+                   translate("Enhances the contrast of a color image by mapping "
                              "the darkest 2 percent of all pixels to black and "
                              "the brightest 1 percent to white.")) << endl
        << label(translate("increase contrast")).set("for", "normalize_img") << endl
        << checkbox(cgi, "negate", "negate_img",
-                   translate("Negate the colors in the reference image."))
+                   translate("Negates the colors in the reference image."))
        << endl
        << label(translate("invert")).set("for", "negate_img") << endl
        << checkbox(cgi, "resize", "resize_img",
-                   translate("Scale image such that it uses at most the "
+                   translate("Scales image such that it uses at most the "
                              "specified amount of characters horizontally."))
        << endl
        << format(translate("{1} max {2} {3}"))
