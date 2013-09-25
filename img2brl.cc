@@ -402,7 +402,7 @@ int main()
 
     if (cgi.getElement("show") != cgi.getElements().end() and cgi.getElement("show")->getValue() == "formats") {
       if (mode == output_mode::html) {
-        cout << h1(boost::locale::translate("Supported image formats")) << endl;
+        cout << h1(translate("Supported image formats")) << endl;
         print_supported_image_formats();
       }
     }
@@ -518,8 +518,11 @@ int main()
       }
     } else {
       if (mode == output_mode::html) {
+        bool const explicit_language = cgi.getElement("lang") != cgi.getElements().end();
+        std::string href("?show=formats");
+        if (explicit_language) href += "&lang="+cgi("lang");
         a formats{a{gettext("formats")}.set("class", "internal")
-			      .set("href", "?show=formats")};
+                              .set("href", href)};
         a unicode_braille(translate("Unicode braille"));
         unicode_braille.set("href",
                             "http://en.wikipedia.org/wiki/Unicode_braille");
