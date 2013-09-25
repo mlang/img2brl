@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-09-25 19:47+0200\n"
+"POT-Creation-Date: 2013-09-25 21:36+0200\n"
 "PO-Revision-Date: 2013-09-23 21:41+0200\n"
 "Last-Translator: Zsolt Pataky <zsolt.pataky@tugraz.at>\n"
 "Language-Team: Hungarian\n"
@@ -80,6 +80,10 @@ msgstr "Támogatott kép formátumok"
 #: img2brl.cc:547
 msgid "Unicode braille"
 msgstr "Unicode brailleba"
+
+#: img2brl.cc:549
+msgid "http://en.wikipedia.org/wiki/Unicode_braille"
+msgstr ""
 
 #: img2brl.cc:550
 msgid "img2brl &mdash; Convert images to Braille"

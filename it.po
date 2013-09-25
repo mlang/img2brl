@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-09-25 19:47+0200\n"
+"POT-Creation-Date: 2013-09-25 21:36+0200\n"
 "PO-Revision-Date: 2013-09-25 19:30+0200\n"
 "Last-Translator: Enrico Zini <enrico@debian.org>\n"
 "Language-Team: Italian\n"
@@ -79,6 +79,10 @@ msgstr "Formati supportati"
 #: img2brl.cc:547
 msgid "Unicode braille"
 msgstr "Unicode braille"
+
+#: img2brl.cc:549
+msgid "http://en.wikipedia.org/wiki/Unicode_braille"
+msgstr ""
 
 #: img2brl.cc:550
 msgid "img2brl &mdash; Convert images to Braille"

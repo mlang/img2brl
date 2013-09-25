@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-09-25 19:47+0200\n"
+"POT-Creation-Date: 2013-09-25 21:36+0200\n"
 "PO-Revision-Date: 2013-09-24 20:54+0200\n"
 "Last-Translator: Samuel Thibault <samuel.thibault@ens-lyon.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -79,6 +79,10 @@ msgstr "Formats d'images supportés"
 #: img2brl.cc:547
 msgid "Unicode braille"
 msgstr "le Braille Unicode"
+
+#: img2brl.cc:549
+msgid "http://en.wikipedia.org/wiki/Unicode_braille"
+msgstr "http://fr.wikipedia.org/wiki/Table_des_caract%C3%A8res_Unicode/U2800"
 
 #: img2brl.cc:550
 msgid "img2brl &mdash; Convert images to Braille"

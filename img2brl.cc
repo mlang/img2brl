@@ -66,12 +66,12 @@ link_to_lang(cgicc::Cgicc const &cgi, std::string const &lang, std::string const
   std::map<std::string, std::string> params;
   for (auto element: cgi.getElements())
     if (element.getName() != "img" and element.getName() != "submit")
-      params.insert(std::make_pair(element.getName(), element.getValue()));
+      params.insert({element.getName(), element.getValue()});
   params["lang"] = lang;
   std::stringstream href;
   href << "/";
   for (auto param = params.begin(); param != params.end(); ++param)
-    href << ((param == params.begin())? '?': '&')
+    href << (param == params.begin()? '?': '&')
          << cgicc::form_urlencode(param->first)
          << '='
          << cgicc::form_urlencode(param->second);
@@ -546,7 +546,7 @@ int main()
         if (not cgi("lang").empty()) href += "&lang="+cgi("lang");
         a unicode_braille(translate("Unicode braille"));
         unicode_braille.set("href",
-                            "http://en.wikipedia.org/wiki/Unicode_braille");
+                            translate("http://en.wikipedia.org/wiki/Unicode_braille"));
         cout << h1(translate("img2brl &mdash; Convert images to Braille")) << endl
              << p() << format(translate("Translate images from various {1} to {2}.")) 
                        % a(translate("formats")).set("class", "internal").set("href", href)

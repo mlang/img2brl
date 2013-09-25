@@ -1,8 +1,10 @@
 /CMakeCache.txt
+/CTestTestfile.cmake
 /cmake_install.cmake
 /CMakeFiles
 /config.h
 /Makefile
+/Testing
 /img2brl.cgi
 /img2brl.xpi
 /img2brl_test
