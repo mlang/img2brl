@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-09-23 21:41+0200\n"
+"POT-Creation-Date: 2013-09-25 11:50+0200\n"
 "PO-Revision-Date: 2013-09-23 21:41+0200\n"
 "Last-Translator: Zsolt Pataky <zsolt.pataky@tugraz.at>\n"
 "Language-Team: Hungarian\n"
@@ -69,42 +69,46 @@ msgstr "mikromásodperc"
 msgid "seconds"
 msgstr "másodperc"
 
-#: img2brl.cc:383
+#: img2brl.cc:382
 msgid "Tactile Image Viewer"
 msgstr "Tapintható Kép Megtekintö"
 
-#: img2brl.cc:387
+#: img2brl.cc:386
 msgid "Supported image formats"
 msgstr "Támogatott kép formátumok"
 
-#: img2brl.cc:503 img2brl.cc:511
+#: img2brl.cc:502 img2brl.cc:509
 msgid "formats"
 msgstr "formátumok"
 
-#: img2brl.cc:509
+#: img2brl.cc:504
+msgid "Unicode braille"
+msgstr "Unicode brailleba"
+
+#: img2brl.cc:507
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr "img2brl &mdash; Képeket Brailleba fordítani"
 
-#: img2brl.cc:510
+#: img2brl.cc:508
 msgid "Translate images from various {1} to {2}."
-msgstr "Külömböző {1} képeit fordítja {2}ba."
+msgstr "Külömböző {1} képeit fordítja {2}."
 
-#: img2brl.cc:540
+#: img2brl.cc:538
 msgid "Install Firefox Add-on"
 msgstr "Firefox kiegészítőt telepíteni"
 
-#: img2brl.cc:547
+#: img2brl.cc:545
 msgid "There is an {1}."
 msgstr "Létezik egy {1}."
 
-#: img2brl.cc:549
+#: img2brl.cc:547
 msgid "Source code? {1} or {2}."
 msgstr "Forráskód? {1} vagy {2}."
 
-#: img2brl.cc:556
+#: img2brl.cc:554
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 
-#: img2brl.cc:558 img2brl.cc:560 img2brl.cc:565 img2brl.cc:568 img2brl.cc:573
+#: img2brl.cc:556 img2brl.cc:558 img2brl.cc:563 img2brl.cc:566 img2brl.cc:571
 msgid "version"
 msgstr "verzió"

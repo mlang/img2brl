@@ -296,7 +296,7 @@ int main()
     cerr << msg.str();
   }
   if (cgi.getElement("lang") != cgi.getElements().end()) {
-    std::set<std::string> const available_languages{"en", "de"};
+    std::set<std::string> const available_languages{"en", "de", "hu"};
     if (available_languages.find(cgi("lang")) != available_languages.end()) {
       locale::global(locale_gen(cgi("lang")+".UTF-8"));
       html_lang = cgi("lang");
@@ -501,10 +501,9 @@ int main()
       if (mode == output_mode::html) {
         a formats{a{gettext("formats")}.set("class", "internal")
 			      .set("href", "?show=formats")};
-        a unicode_braille("Unicode braille");
+        a unicode_braille(translate("Unicode braille"));
         unicode_braille.set("href",
                             "http://en.wikipedia.org/wiki/Unicode_braille");
-        unicode_braille.set("lang", "en");
         cout << h1(translate("img2brl &mdash; Convert images to Braille")) << endl
              << p() << format(translate("Translate images from various {1} to {2}.")) 
                        % a(translate("formats")).set("class", "internal").set("href", "?show=formats")
