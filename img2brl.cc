@@ -120,6 +120,8 @@ print_header(output_mode mode, std::string const &title, std::string const &lang
                            .set("href", "favicon.png") << endl
            << cgicc::link().set("rel", "stylesheet").set("type", "text/css")
                            .set("href", "img2brl.css") << endl
+           << cgicc::link().set("rel", "author")
+                           .set("href", "http://delysid.org/") << endl
            << head() << endl
            << body() << endl;
       break;
@@ -156,11 +158,12 @@ print_supported_image_formats()
 
 static cgicc::input
 checkbox( cgicc::Cgicc const &cgi
-        , std::string const &name, std::string const &id
+        , std::string const &name, std::string const &id, std::string const &title
         )
 {
   cgicc::input input;
   input.set("type", "checkbox").set("name", name).set("id", id);
+  if (not title.empty()) input.set("title", title);
   if (cgi.queryCheckbox(name)) input.set("checked", "checked");
   return input;
 }
@@ -215,13 +218,13 @@ print_form(cgicc::Cgicc const &cgi)
        << cgicc::div() << endl
 
        << cgicc::div() << endl
-       << checkbox(cgi, "trim", "trim_img") << endl
+       << checkbox(cgi, "trim", "trim_img", "Trim edges that are the background color from the image") << endl
        << label(translate("trim edges")).set("for", "trim_img") << endl
-       << checkbox(cgi, "normalize", "normalize_img") << endl
+       << checkbox(cgi, "normalize", "normalize_img", "Enhance the contrast of a color image by mapping the darkest 2 percent of all pixel to black and the brightest 1 percent to white.") << endl
        << label(translate("increase contrast")).set("for", "normalize_img") << endl
-       << checkbox(cgi, "negate", "negate_img") << endl
+       << checkbox(cgi, "negate", "negate_img", "") << endl
        << label(translate("invert")).set("for", "negate_img") << endl
-       << checkbox(cgi, "resize", "resize_img") << endl
+       << checkbox(cgi, "resize", "resize_img", "") << endl
        << format(translate("{1} max {2} {3}"))
           % label(translate("resize to")).set("for", "resize_img")
           % columns_input
