@@ -400,7 +400,7 @@ int main()
 
     print_header(mode, translate("Tactile Image Viewer"), html_lang);
 
-    if (cgi.getElement("show") != cgi.getElements().end() and cgi.getElement("show")->getValue() == "formats") {
+    if (cgi("show") == "formats") {
       if (mode == output_mode::html) {
         cout << h1(translate("Supported image formats")) << endl;
         print_supported_image_formats();
@@ -409,9 +409,9 @@ int main()
 
     if (not data.get_data().empty()) {
       try {
-	Magick::Blob blob(data.get_data().data(), data.get_data().length());
-	Magick::Image image(blob);
-	if (cgi.queryCheckbox("trim")) image.trim();
+        Magick::Blob blob(data.get_data().data(), data.get_data().length());
+        Magick::Image image(blob);
+        if (cgi.queryCheckbox("trim")) image.trim();
 	if (cgi.queryCheckbox("normalize")) image.normalize();
 	if (cgi.queryCheckbox("negate")) {
 	  //  image.threshold(50.0);
@@ -518,7 +518,7 @@ int main()
       }
     } else {
       if (mode == output_mode::html) {
-        bool const explicit_language = cgi.getElement("lang") != cgi.getElements().end();
+        bool const explicit_language = not cgi("lang").empty();
         std::string href("?show=formats");
         if (explicit_language) href += "&lang="+cgi("lang");
         a formats{a{gettext("formats")}.set("class", "internal")
