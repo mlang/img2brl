@@ -44,8 +44,8 @@
 using namespace boost::locale;
 using namespace cgicc;
 
-static code git_clone{"git <span lang=\"en\">clone</span> http://img2brl.delysid.org"};
-static a api_link{a{"API"}.set("href", "https://github.com/mlang/img2brl/#api")};
+static code git_clone{"git&nbsp;<span lang=\"en\">clone</span>&nbsp;"
+                      "http://img2brl.delysid.org"};
 
 static int
 curl_append_to_string(char *data, size_t size, size_t nmemb, std::string *buffer)
@@ -601,8 +601,9 @@ int main()
 
       a github_link("github.com/mlang/img2brl");
       github_link.set("href", "https://github.com/mlang/img2brl");
+      github_link.set("hreflang", "en");
       cout << cgicc::div().set("class", "center") << endl
-           << format(translate("There is an {1}.")) % api_link
+           << format(translate("There is an {1}.")) % a{"API"}.set("href", "https://github.com/mlang/img2brl/#api").set("hreflang", "en")
            << endl
            << format(translate("Source code? {1} or {2}."))
               % git_clone % github_link
