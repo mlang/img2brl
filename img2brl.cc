@@ -60,6 +60,19 @@ using namespace std;
 
 enum class output_mode { html, json, text };
 
+static void print_languages(std::string const &current_lang) {
+  std::map<std::string, std::string> const languages {
+    { "de", "Deutsch" },
+    { "en", "English" },
+    { "fr", "fran&ccedil;ais" },
+    { "hu", "magyar" }
+  };
+  for (auto lang: languages) {
+    if (lang.first != current_lang)
+      cout << a(lang.second).set("href", "?=lang="+lang.first).set("lang", lang.first).set("hreflang", lang.first);
+  }
+}
+
 static void
 print_header(output_mode mode, std::string const &title, std::string const &lang)
 {
@@ -573,6 +586,10 @@ int main()
 		 % cgi.getHost())
 	     << cgicc::div() << endl;
     }
+
+    std::cout << cgicc::div().set("id", "languages") << std::endl;
+    print_languages(html_lang);
+    std::cout << cgicc::div() << std::endl;
 
     print_footer(mode, start_time);
 
