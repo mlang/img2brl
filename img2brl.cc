@@ -145,6 +145,7 @@ static void
 print_form(cgicc::Cgicc const &cgi)
 {
   cgicc::const_file_iterator file(cgi.getFile("img"));
+  cgicc::const_form_iterator lang(cgi.getElement("lang"));
   cgicc::const_form_iterator url(cgi.getElement("url"));
 
   static char const *img_file = "img_file";
@@ -173,8 +174,11 @@ print_form(cgicc::Cgicc const &cgi)
                .set("id", "cols_img")
                .set("size", "3").set("value", columns);
 
+  std::string action("/");
+  if (lang != cgi.getElements().end()) action += "?lang=" + lang->getValue();
+
   cout << form().set("method", "post")
-                .set("action", cgi.getEnvironment().getScriptName())
+                .set("action", action)
                 .set("enctype", "multipart/form-data") << endl
        << cgicc::div()
        << label(translate("Send an image file: ")).set("for", img_file) << endl
