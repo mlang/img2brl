@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-09-25 21:36+0200\n"
+"POT-Creation-Date: 2013-09-26 00:12+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -17,103 +17,137 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: img2brl.cc:208
+#: img2brl.cc:201
+msgid ""
+"Amount of characters the resulting braille output is not allowed to exceed."
+msgstr ""
+"Die Anzahl der Zeichen die die Breite der Brailleausgabe nicht überschreiten "
+"darf."
+
+#: img2brl.cc:214
 msgid "Send an image file: "
 msgstr "Sende eine Bilddatei: "
 
-#: img2brl.cc:211
+#: img2brl.cc:217
 msgid "or"
 msgstr "oder"
 
-#: img2brl.cc:213
+#: img2brl.cc:219
 msgid "Enter URL to image: "
 msgstr "URL zum Bild eingeben: "
 
-#: img2brl.cc:219
+#: img2brl.cc:223
+msgid "Options:"
+msgstr "Optionen:"
+
+#: img2brl.cc:225
+msgid "Trim edges that are the background color from the image."
+msgstr "Entferne Ränder die dem Hintergrund gleichen vom Bild."
+
+#: img2brl.cc:228
 msgid "trim edges"
 msgstr "Ränder trimmen"
 
-#: img2brl.cc:221
+#: img2brl.cc:230
+msgid ""
+"Enhance the contrast of a color image by mapping the darkest 2 percent of "
+"all pixels to black and the brightest 1 percent to white."
+msgstr ""
+"Verbessere den Kontrast eines Farbbildes indem die dunkelsten 2 Prozent aller "
+"Pixel schwarz, und die hellsten 1 Prozent weiß gefärbt werden."
+
+#: img2brl.cc:233
 msgid "increase contrast"
 msgstr "Kontrast erhöhen"
 
-#: img2brl.cc:223
+#: img2brl.cc:235
+msgid "Negate the colors in the reference image."
+msgstr "Invertiert die farben des Bildes."
+
+#: img2brl.cc:237
 msgid "invert"
 msgstr "invertieren"
 
-#: img2brl.cc:225
+#: img2brl.cc:239
+msgid ""
+"Scale image such that it uses at most the specified amount of characters "
+"horizontally."
+msgstr ""
+"Skaliere das Bild so, das es die angegebene Zeilenlänge nicht überschreitet."
+
+#: img2brl.cc:242
 msgid "{1} max {2} {3}"
 msgstr "{1} maximal {2} {3}"
 
-#: img2brl.cc:226
+#: img2brl.cc:243
 msgid "resize to"
 msgstr "verkleinern auf"
 
-#: img2brl.cc:228
+#: img2brl.cc:245
 msgid "columns"
 msgstr "Zeichen"
 
-#: img2brl.cc:241
+#: img2brl.cc:258
 msgid "Translate to Braille"
 msgstr "In Braille übersetzen"
 
-#: img2brl.cc:254
+#: img2brl.cc:271
 msgid "Processing time was {3} {4} ({1} {2})"
 msgstr "Die Verarbeitungszeit betrug {3} {4} ({1} {2})"
 
-#: img2brl.cc:259
+#: img2brl.cc:276
 msgid "microseconds"
 msgstr "Mikrosekunden"
 
-#: img2brl.cc:264
+#: img2brl.cc:281
 msgid "seconds"
 msgstr "Sekunden"
 
-#: img2brl.cc:425
+#: img2brl.cc:442
 msgid "Tactile Image Viewer"
 msgstr "Taktiler Bildbetrachter"
 
-#: img2brl.cc:429
+#: img2brl.cc:446
 msgid "Supported image formats"
 msgstr "Unterstützte Bildformate"
 
-#: img2brl.cc:547
+#: img2brl.cc:564
 msgid "Unicode braille"
 msgstr "Unicode Braille-Zeichen"
 
-#: img2brl.cc:549
+#: img2brl.cc:566
 msgid "http://en.wikipedia.org/wiki/Unicode_braille"
 msgstr "http://de.wikipedia.org/wiki/Unicode-Block_Braille-Zeichen"
 
-#: img2brl.cc:550
+#: img2brl.cc:567
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr "img2brl &mdash; Bilder tastbar machen"
 
-#: img2brl.cc:551
+#: img2brl.cc:568
 msgid "Translate images from various {1} to {2}."
 msgstr "Übersetzt Bilder verschiedenster {1} in {2}."
 
-#: img2brl.cc:552
+#: img2brl.cc:569
 msgid "formats"
 msgstr "Formate"
 
-#: img2brl.cc:581
+#: img2brl.cc:598
 msgid "Install Firefox Add-on"
 msgstr "Firefox-Erweiterung installieren"
 
-#: img2brl.cc:588
+#: img2brl.cc:605
 msgid "There is an {1}."
 msgstr "Es gibt eine {1}."
 
-#: img2brl.cc:590
+#: img2brl.cc:607
 msgid "Source code? {1} or {2}."
 msgstr "Quellcode? {1} oder {2}."
 
-#: img2brl.cc:599
+#: img2brl.cc:616
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr ""
 "Erstellt mit {1}, {2}, {3}, {4}, {5} und präsentiert mit {6} auf {7} ({8})."
 
-#: img2brl.cc:601 img2brl.cc:603 img2brl.cc:608 img2brl.cc:611 img2brl.cc:616
+#: img2brl.cc:618 img2brl.cc:620 img2brl.cc:625 img2brl.cc:628 img2brl.cc:633
 msgid "version"
 msgstr "Version"
