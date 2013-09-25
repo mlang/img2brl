@@ -198,8 +198,11 @@ print_form(cgicc::Cgicc const &cgi)
   input columns_input;
   columns_input.set("type", "number")
                .set("name", "cols")
+               .set("title", "Amount of characters the resulting braille "
+                             "output is not allowed to exceed.")
                .set("id", "cols_img")
-               .set("size", "3").set("value", columns);
+               .set("size", "3")
+               .set("value", columns);
 
   std::string action("/");
   if (lang != cgi.getElements().end()) action += "?lang=" + lang->getValue();
@@ -218,13 +221,21 @@ print_form(cgicc::Cgicc const &cgi)
        << cgicc::div() << endl
 
        << cgicc::fieldset() << cgicc::legend("Options: ") << endl
-       << checkbox(cgi, "trim", "trim_img", "Trim edges that are the background color from the image") << endl
+       << checkbox(cgi, "trim", "trim_img",
+                   "Trim edges that are the background color from the image.")
+       << endl
        << label(translate("trim edges")).set("for", "trim_img") << endl
-       << checkbox(cgi, "normalize", "normalize_img", "Enhance the contrast of a color image by mapping the darkest 2 percent of all pixel to black and the brightest 1 percent to white.") << endl
+       << checkbox(cgi, "normalize", "normalize_img",
+                   "Enhance the contrast of a color image by mapping the "
+                   "darkest 2 percent of all pixels to black and the brightest "
+                   "1 percent to white.") << endl
        << label(translate("increase contrast")).set("for", "normalize_img") << endl
-       << checkbox(cgi, "negate", "negate_img", "") << endl
+       << checkbox(cgi, "negate", "negate_img",
+                   "Negate the colors in the reference image.") << endl
        << label(translate("invert")).set("for", "negate_img") << endl
-       << checkbox(cgi, "resize", "resize_img", "") << endl
+       << checkbox(cgi, "resize", "resize_img",
+                   "Scale image such that it uses at most the specified amount "
+                   "of characters horizontally.") << endl
        << format(translate("{1} max {2} {3}"))
           % label(translate("resize to")).set("for", "resize_img")
           % columns_input
