@@ -217,7 +217,7 @@ print_form(cgicc::Cgicc const &cgi)
        << url_input << endl
        << cgicc::div() << endl
 
-       << cgicc::div() << endl
+       << cgicc::fieldset() << cgicc::legend("Options: ") << endl
        << checkbox(cgi, "trim", "trim_img", "Trim edges that are the background color from the image") << endl
        << label(translate("trim edges")).set("for", "trim_img") << endl
        << checkbox(cgi, "normalize", "normalize_img", "Enhance the contrast of a color image by mapping the darkest 2 percent of all pixel to black and the brightest 1 percent to white.") << endl
@@ -229,7 +229,7 @@ print_form(cgicc::Cgicc const &cgi)
           % label(translate("resize to")).set("for", "resize_img")
           % columns_input
           % label(translate("columns")).set("for", "cols_img")
-       << cgicc::div() << endl
+       << cgicc::fieldset() << endl
 
        << script().set("type", "application/javascript")
        << "document.getElementById('cols_img').disabled = !document.getElementById('resize_img').checked;" << endl
