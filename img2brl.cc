@@ -518,17 +518,14 @@ int main()
       }
     } else {
       if (mode == output_mode::html) {
-        bool const explicit_language = not cgi("lang").empty();
         std::string href("?show=formats");
-        if (explicit_language) href += "&lang="+cgi("lang");
-        a formats{a{gettext("formats")}.set("class", "internal")
-                              .set("href", href)};
+        if (not cgi("lang").empty()) href += "&lang="+cgi("lang");
         a unicode_braille(translate("Unicode braille"));
         unicode_braille.set("href",
                             "http://en.wikipedia.org/wiki/Unicode_braille");
         cout << h1(translate("img2brl &mdash; Convert images to Braille")) << endl
              << p() << format(translate("Translate images from various {1} to {2}.")) 
-                       % a(translate("formats")).set("class", "internal").set("href", "?show=formats")
+                       % a(translate("formats")).set("class", "internal").set("href", href)
                        % unicode_braille
              << p() << endl;
       }
