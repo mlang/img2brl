@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-09-25 13:25+0200\n"
+"POT-Creation-Date: 2013-09-25 19:47+0200\n"
 "PO-Revision-Date: 2013-09-24 20:54+0200\n"
 "Last-Translator: Samuel Thibault <samuel.thibault@ens-lyon.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -16,98 +16,98 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: img2brl.cc:180
+#: img2brl.cc:208
 msgid "Send an image file: "
 msgstr "Envoyer un fichier image : "
 
-#: img2brl.cc:183
+#: img2brl.cc:211
 msgid "or"
 msgstr "ou"
 
-#: img2brl.cc:185
+#: img2brl.cc:213
 msgid "Enter URL to image: "
 msgstr "Entrer une URL pointant sur une image : "
 
-#: img2brl.cc:191
+#: img2brl.cc:219
 msgid "trim edges"
 msgstr "supprimer les bords"
 
-#: img2brl.cc:193
+#: img2brl.cc:221
 msgid "increase contrast"
 msgstr "augmenter le contraste"
 
-#: img2brl.cc:195
+#: img2brl.cc:223
 msgid "invert"
 msgstr "inverser"
 
-#: img2brl.cc:197
+#: img2brl.cc:225
 msgid "{1} max {2} {3}"
 msgstr "{1} max {2} {3}"
 
-#: img2brl.cc:198
+#: img2brl.cc:226
 msgid "resize to"
 msgstr "retailler avec"
 
-#: img2brl.cc:200
+#: img2brl.cc:228
 msgid "columns"
 msgstr "colonnes"
 
-#: img2brl.cc:213
+#: img2brl.cc:241
 msgid "Translate to Braille"
 msgstr "Traduire en Braille"
 
-#: img2brl.cc:226
+#: img2brl.cc:254
 msgid "Processing time was {3} {4} ({1} {2})"
 msgstr "Le temp de traitement a été de {3} {4} ({1} {2})"
 
-#: img2brl.cc:231
+#: img2brl.cc:259
 msgid "microseconds"
 msgstr "microsecondes"
 
-#: img2brl.cc:236
+#: img2brl.cc:264
 msgid "seconds"
 msgstr "secondes"
 
-#: img2brl.cc:397
+#: img2brl.cc:425
 msgid "Tactile Image Viewer"
 msgstr "Visionneur d'image tactile"
 
-#: img2brl.cc:401
+#: img2brl.cc:429
 msgid "Supported image formats"
 msgstr "Formats d'images supportés"
 
-#: img2brl.cc:517 img2brl.cc:524
-msgid "formats"
-msgstr "formats"
-
-#: img2brl.cc:519
+#: img2brl.cc:547
 msgid "Unicode braille"
 msgstr "le Braille Unicode"
 
-#: img2brl.cc:522
+#: img2brl.cc:550
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr "img2brl &mdash; Convertit des images en Braille"
 
-#: img2brl.cc:523
+#: img2brl.cc:551
 msgid "Translate images from various {1} to {2}."
 msgstr "Traduire des images de divers {1} vers {2}."
 
-#: img2brl.cc:553
+#: img2brl.cc:552
+msgid "formats"
+msgstr "formats"
+
+#: img2brl.cc:581
 msgid "Install Firefox Add-on"
 msgstr "Installer le greffon Firefox"
 
-#: img2brl.cc:560
+#: img2brl.cc:588
 msgid "There is an {1}."
 msgstr "Il y a une {1}."
 
-#: img2brl.cc:562
+#: img2brl.cc:590
 msgid "Source code? {1} or {2}."
 msgstr "Code source ? {1} ou {2}."
 
-#: img2brl.cc:569
+#: img2brl.cc:599
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr "Propulsé par {1}, {2}, {3}, {4}, {5} et {6} tournant sur {7} ({8})."
 
-#: img2brl.cc:571 img2brl.cc:573 img2brl.cc:578 img2brl.cc:581 img2brl.cc:586
+#: img2brl.cc:601 img2brl.cc:603 img2brl.cc:608 img2brl.cc:611 img2brl.cc:616
 msgid "version"
 msgstr "version"

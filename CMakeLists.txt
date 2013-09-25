@@ -5,7 +5,7 @@ find_package(Boost 1.49.0 REQUIRED COMPONENTS locale)
 
 find_package(Gettext)
 if(GETTEXT_FOUND)
-  set(${CMAKE_PROJECT_NAME}_TRANSLATIONS de fr hu)
+  set(${CMAKE_PROJECT_NAME}_TRANSLATIONS de fr hu it)
   set(${CMAKE_PROJECT_NAME}_LANGUAGES en ${${CMAKE_PROJECT_NAME}_TRANSLATIONS})
   set(${CMAKE_PROJECT_NAME}_gmo_files)
   foreach(lang ${${CMAKE_PROJECT_NAME}_TRANSLATIONS})

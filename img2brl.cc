@@ -89,7 +89,8 @@ print_languages(cgicc::Cgicc const &cgi, std::string const &current_lang) {
     { "de", "Deutsch" },
     { "en", "English" },
     { "fr", "fran&ccedil;ais" },
-    { "hu", "magyar" }
+    { "hu", "magyar" },
+    { "it", "Italiano" }
   };
   std::cout << cgicc::div().set("id", "languages") << std::endl;
   for (auto lang: languages)
@@ -328,7 +329,7 @@ int main()
       accept_language spec(value);
       spec.normalize();
       msg << " -> " << spec;
-      std::string selected_lang{spec.best_match({"en", "de", "fr", "hu"}, "en")};
+      std::string selected_lang{spec.best_match({"en", "de", "fr", "hu", "it"}, "en")};
       locale::global(locale_gen(selected_lang+".UTF-8"));
       html_lang = selected_lang;
     } catch (std::runtime_error const &e) {
@@ -338,7 +339,7 @@ int main()
     cerr << msg.str();
   }
   if (cgi.getElement("lang") != cgi.getElements().end()) {
-    std::set<std::string> const available_languages{"en", "de", "fr", "hu"};
+    std::set<std::string> const available_languages{"en", "de", "fr", "hu", "it"};
     if (available_languages.find(cgi("lang")) != available_languages.end()) {
       locale::global(locale_gen(cgi("lang")+".UTF-8"));
       html_lang = cgi("lang");

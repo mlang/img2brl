@@ -1,45 +1,44 @@
-# Hungarian translations for img2brl package.
+# Italian translations for img2brl package.
 # Copyright (C) 2013 THE img2brl'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the img2brl package.
-# Zsolt Pataky <zsolt.pataky@tugraz.at>, 2013.
+# Enrico Zini <enrico@debian.org>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
 "POT-Creation-Date: 2013-09-25 19:47+0200\n"
-"PO-Revision-Date: 2013-09-23 21:41+0200\n"
-"Last-Translator: Zsolt Pataky <zsolt.pataky@tugraz.at>\n"
-"Language-Team: Hungarian\n"
-"Language: hu\n"
+"PO-Revision-Date: 2013-09-25 19:30+0200\n"
+"Last-Translator: Enrico Zini <enrico@debian.org>\n"
+"Language-Team: Italian\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: img2brl.cc:208
 msgid "Send an image file: "
-msgstr "Küldj egy képfájlt: "
+msgstr "Invia un'immagine su file: "
 
 #: img2brl.cc:211
 msgid "or"
-msgstr "vagy"
+msgstr "oppure"
 
 #: img2brl.cc:213
 msgid "Enter URL to image: "
-msgstr "Add meg az URLt a képhez: "
+msgstr "Inserisci l'URL di un'immagine: "
 
 #: img2brl.cc:219
 msgid "trim edges"
-msgstr "széleket levágni"
+msgstr "taglia i bordi"
 
 #: img2brl.cc:221
 msgid "increase contrast"
-msgstr "kontrasztot emelni"
+msgstr "aumenta il contrasto"
 
 #: img2brl.cc:223
 msgid "invert"
-msgstr "invertálni"
+msgstr "inverti"
 
 #: img2brl.cc:225
 msgid "{1} max {2} {3}"
@@ -47,68 +46,68 @@ msgstr "{1} max {2} {3}"
 
 #: img2brl.cc:226
 msgid "resize to"
-msgstr "méretet változtatni"
+msgstr "ridimensiona"
 
 #: img2brl.cc:228
 msgid "columns"
-msgstr "oszlopok"
+msgstr "colonne"
 
 #: img2brl.cc:241
 msgid "Translate to Braille"
-msgstr "Forditás Brailleba"
+msgstr "Trasforma in Braille"
 
 #: img2brl.cc:254
 msgid "Processing time was {3} {4} ({1} {2})"
-msgstr "A feldolgozáshoz szükséges idö {3} {4} ({1} {2}) volt"
+msgstr "Il tempo di esecuzione è stato {3} {4} ({1} {2})"
 
 #: img2brl.cc:259
 msgid "microseconds"
-msgstr "mikromásodperc"
+msgstr "microsecondi"
 
 #: img2brl.cc:264
 msgid "seconds"
-msgstr "másodperc"
+msgstr "secondi"
 
 #: img2brl.cc:425
 msgid "Tactile Image Viewer"
-msgstr "Tapintható Kép Megtekintö"
+msgstr "Visualizzatore Tattile di Immagini"
 
 #: img2brl.cc:429
 msgid "Supported image formats"
-msgstr "Támogatott kép formátumok"
+msgstr "Formati supportati"
 
 #: img2brl.cc:547
 msgid "Unicode braille"
-msgstr "Unicode brailleba"
+msgstr "Unicode braille"
 
 #: img2brl.cc:550
 msgid "img2brl &mdash; Convert images to Braille"
-msgstr "img2brl &mdash; Képeket Brailleba fordítani"
+msgstr "img2brl &mdash; Trasforma immagini in Braille"
 
 #: img2brl.cc:551
 msgid "Translate images from various {1} to {2}."
-msgstr "Külömböző {1} képeit fordítja {2}."
+msgstr "Trasforma immagini da vari {1} a {2}."
 
 #: img2brl.cc:552
 msgid "formats"
-msgstr "formátumok"
+msgstr "formati"
 
 #: img2brl.cc:581
 msgid "Install Firefox Add-on"
-msgstr "Firefox kiegészítőt telepíteni"
+msgstr "Installa plugin per Firefox"
 
 #: img2brl.cc:588
 msgid "There is an {1}."
-msgstr "Létezik egy {1}."
+msgstr "C'è un {1}."
 
 #: img2brl.cc:590
 msgid "Source code? {1} or {2}."
-msgstr "Forráskód? {1} vagy {2}."
+msgstr "Codice sorgente? {1} o {2}."
 
 #: img2brl.cc:599
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
-msgstr "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
+msgstr "Fatto con {1}, {2}, {3}, {4}, {5} e {6} eseguiti su {7} ({8})."
 
 #: img2brl.cc:601 img2brl.cc:603 img2brl.cc:608 img2brl.cc:611 img2brl.cc:616
 msgid "version"
-msgstr "verzió"
+msgstr "versione"

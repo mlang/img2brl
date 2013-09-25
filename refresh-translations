@@ -2,6 +2,6 @@
 
 xgettext -o img2brl.pot -ktranslate \
 --package-name=img2brl --package-version=0.1 --msgid-bugs-address=mlang@delysid.org img2brl.cc
-for lang in de fr hu
+for lang in de fr hu it
 do msgmerge --quiet --update --backup=none $lang.po img2brl.pot
 done
