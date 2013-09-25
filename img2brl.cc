@@ -286,7 +286,7 @@ int main()
       accept_language spec(value);
       spec.normalize();
       msg << " -> " << spec;
-      std::string selected_lang{spec.best_match({"en", "de", "hu"}, "en")};
+      std::string selected_lang{spec.best_match({"en", "de", "fr", "hu"}, "en")};
       locale::global(locale_gen(selected_lang+".UTF-8"));
       html_lang = selected_lang;
     } catch (std::runtime_error const &e) {
@@ -296,7 +296,7 @@ int main()
     cerr << msg.str();
   }
   if (cgi.getElement("lang") != cgi.getElements().end()) {
-    std::set<std::string> const available_languages{"en", "de", "hu"};
+    std::set<std::string> const available_languages{"en", "de", "fr", "hu"};
     if (available_languages.find(cgi("lang")) != available_languages.end()) {
       locale::global(locale_gen(cgi("lang")+".UTF-8"));
       html_lang = cgi("lang");
