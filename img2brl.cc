@@ -69,7 +69,9 @@ static void print_languages(std::string const &current_lang) {
   };
   for (auto lang: languages) {
     if (lang.first != current_lang)
-      cout << a(lang.second).set("href", "?=lang="+lang.first).set("lang", lang.first).set("hreflang", lang.first);
+      std::cout << a(lang.second).set("href", "?lang="+lang.first)
+                                 .set("lang", lang.first)
+                                 .set("hreflang", lang.first) << std::endl;
   }
 }
 
