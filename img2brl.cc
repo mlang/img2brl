@@ -24,6 +24,7 @@
 #include <stdexcept>
 
 #include <cgicc/Cgicc.h>
+#include <cgicc/CgiUtils.h>
 #include <cgicc/HTMLClasses.h>
 #include <cgicc/HTTPContentHeader.h>
 #include <cgicc/XHTMLDoctype.h>
@@ -60,19 +61,37 @@ using namespace std;
 
 enum class output_mode { html, json, text };
 
-static void print_languages(std::string const &current_lang) {
-  std::map<std::string, std::string> const languages {
+static cgicc::a
+link_to_lang(cgicc::Cgicc const &cgi, std::string const &lang, std::string const &name) {
+  std::map<std::string, std::string> params;
+  for (auto element: cgi.getElements())
+    params.insert(std::make_pair(element.getName(), element.getValue()));
+  params["lang"] = lang;
+  std::stringstream href;
+  href << "/";
+  for (auto i = params.begin(); i != params.end(); ++i)
+    href << ((i == params.begin())? '?': '&')
+         << cgicc::form_urlencode(i->first)
+         << '='
+         << cgicc::form_urlencode(i->second);
+  cgicc::a link(name);
+  link.set("href", href.str()).set("hreflang", lang).set("lang", lang).set("rel", "alternate");
+  return link;
+}
+
+static void
+print_languages(cgicc::Cgicc const &cgi, std::string const &current_lang) {
+  static std::map<std::string, std::string> const languages {
     { "de", "Deutsch" },
     { "en", "English" },
     { "fr", "fran&ccedil;ais" },
     { "hu", "magyar" }
   };
-  for (auto lang: languages) {
+  std::cout << cgicc::div().set("id", "languages") << std::endl;
+  for (auto lang: languages)
     if (lang.first != current_lang)
-      std::cout << a(lang.second).set("href", "?lang="+lang.first)
-                                 .set("lang", lang.first)
-                                 .set("hreflang", lang.first) << std::endl;
-  }
+      std::cout << link_to_lang(cgi, lang.first, lang.second) << std::endl;
+  std::cout << cgicc::div();
 }
 
 static void
@@ -562,10 +581,12 @@ int main()
       github_link.set("href", "https://github.com/mlang/img2brl");
       cout << cgicc::div().set("class", "center") << endl
            << format(translate("There is an {1}.")) % api_link
-           << ' '
+           << endl
            << format(translate("Source code? {1} or {2}."))
               % git_clone % github_link
            << cgicc::div() << endl;
+
+      print_languages(cgi, html_lang);
 
       struct utsname info;
       if (uname(&info) != -1)
@@ -592,10 +613,6 @@ int main()
 		 % cgi.getHost())
 	     << cgicc::div() << endl;
     }
-
-    std::cout << cgicc::div().set("id", "languages") << std::endl;
-    print_languages(html_lang);
-    std::cout << cgicc::div() << std::endl;
 
     print_footer(mode, start_time);
 
