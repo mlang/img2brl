@@ -26,7 +26,7 @@ msgstr "Inglese"
 
 #: img2brl.cc:89
 msgid "French"
-msgstr "Franicese"
+msgstr "Francese"
 
 #: img2brl.cc:90
 msgid "Hungarian"
