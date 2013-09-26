@@ -277,7 +277,7 @@ print_form(cgicc::Cgicc const &cgi)
        << "};" << endl
        << script() << endl
 
-       << cgicc::div().set("class", "center") << endl
+       << cgicc::div().set("class", "right topmargin") << endl
        << input().set("type", "submit")
                  .set("name", "submit")
                  .set("value", translate("Translate to Braille")) << endl

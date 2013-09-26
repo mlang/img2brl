@@ -1,9 +1,31 @@
+body {
+  font-family: arial, verdana, sans-serif;
+}
+div {
+  margin-bottom: 15px;
+}
 .center {
   text-align: center;
+}
+.right {
+  text-align: right;
+}
+.topmargin {
+  margin-top: 30px;
+}
+input {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 #footer {
   position: fixed;
   width: 100%;
   bottom: 0;
 }
-
+dt {
+  float: left;
+  width: 100px;
+}
+dd {
+  margin-bottom: 15px;  
+}
