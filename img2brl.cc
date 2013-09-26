@@ -541,7 +541,7 @@ int main()
 	}
 
 	clock_type::duration duration = clock_type::now() - start_time;
-	cout << cgicc::div().set("class", "center").set("id", "footer") << endl
+	cout << cgicc::div().set("class", "center").set("id", "timings") << endl
 	     << format(translate("Processing time was {3} {4} ({1} {2})"))
 	        % span((format("{1}")
 			% std::chrono::duration_cast<std::chrono::microseconds>
