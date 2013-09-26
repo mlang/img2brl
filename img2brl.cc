@@ -83,24 +83,48 @@ link_to_lang(cgicc::Cgicc const &cgi, std::string const &lang, std::string const
   return link;
 }
 
+static std::map<std::string, std::tuple<boost::locale::message, std::string>> const languages {
+  { "de", std::make_tuple(translate("German"), "Deutsch") },
+  { "en", std::make_tuple(translate("English"), "English") },
+  { "fr", std::make_tuple(translate("French"), "fran&ccedil;ais") },
+  { "hu", std::make_tuple(translate("Hungarian"), "magyar") },
+  { "it", std::make_tuple(translate("Italian"), "Italiano") }
+};
+
 static void
 print_languages(cgicc::Cgicc const &cgi, std::string const &current_lang) {
-  static std::map<std::string, std::string> const languages {
-    { "de", "Deutsch" },
-    { "en", "English" },
-    { "fr", "fran&ccedil;ais" },
-    { "hu", "magyar" },
-    { "it", "Italiano" }
-  };
   std::cout << cgicc::div().set("id", "languages") << std::endl;
   for (auto lang: languages)
     if (lang.first != current_lang)
-      std::cout << link_to_lang(cgi, lang.first, lang.second) << std::endl;
+      std::cout << link_to_lang(cgi, lang.first, std::get<1>(lang.second)) << std::endl;
   std::cout << cgicc::div();
 }
 
 static void
-print_header(output_mode mode, std::string const &title, std::string const &lang)
+print_alternate(cgicc::Cgicc const &cgi, std::string const &current_lang) {
+  std::map<std::string, std::string> params;
+  for (auto element: cgi.getElements())
+    if (element.getName() != "img" and element.getName() != "submit")
+      params.insert({element.getName(), element.getValue()});
+  for (auto lang: languages)
+    if (lang.first != current_lang) {
+      params["lang"] = lang.first;
+      std::stringstream href;
+      href << "/";
+      for (auto param = params.begin(); param != params.end(); ++param)
+        href << (param == params.begin()? '?': '&')
+             << cgicc::form_urlencode(param->first)
+             << '='
+             << cgicc::form_urlencode(param->second);
+      std::cout << cgicc::link().set("rel", "alternate")
+                                .set("title", std::get<0>(lang.second))
+                                .set("href", href.str())
+                                .set("hreflang", lang.first) << std::endl;;
+    }
+}
+
+static void
+print_header(cgicc::Cgicc const &cgi, output_mode mode, std::string const &title, std::string const &lang)
 {
   static char const *text_html_utf8 = "text/html; charset=UTF-8";
   switch (mode) {
@@ -121,8 +145,9 @@ print_header(output_mode mode, std::string const &title, std::string const &lang
            << cgicc::link().set("rel", "stylesheet").set("type", "text/css")
                            .set("href", "img2brl.css") << endl
            << cgicc::link().set("rel", "author")
-                           .set("href", "http://delysid.org/") << endl
-           << head() << endl
+                           .set("href", "http://delysid.org/") << endl;
+      print_alternate(cgi, lang);
+      cout << head() << endl
            << body() << endl;
       break;
 
@@ -439,7 +464,7 @@ int main()
       curl_global_cleanup();
     }
 
-    print_header(mode, translate("Tactile Image Viewer"), html_lang);
+    print_header(cgi, mode, translate("Tactile Image Viewer"), html_lang);
 
     if (cgi("show") == "formats") {
       if (mode == output_mode::html) {
@@ -651,7 +676,7 @@ int main()
       { 405, "Method Not Allowed" }
     };
     cout << "Status: " << e.code << ' ' << messages.at(e.code) << endl;
-    print_header(mode, "Error while fetching URL", html_lang);
+    print_header(cgi, mode, "Error while fetching URL", html_lang);
 
     if (mode == output_mode::html) {
       cout << h1("An error occured while fetching URL") << endl
