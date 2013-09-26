@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-09-25 21:36+0200\n"
+"POT-Creation-Date: 2013-09-26 14:17+0200\n"
 "PO-Revision-Date: 2013-09-23 21:41+0200\n"
 "Last-Translator: Zsolt Pataky <zsolt.pataky@tugraz.at>\n"
 "Language-Team: Hungarian\n"
@@ -17,102 +17,151 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: img2brl.cc:208
+#: img2brl.cc:87
+msgid "German"
+msgstr "Német"
+
+#: img2brl.cc:88
+msgid "English"
+msgstr "Angol"
+
+#: img2brl.cc:89
+msgid "French"
+msgstr "Francia"
+
+#: img2brl.cc:90
+msgid "Hungarian"
+msgstr ""
+
+#: img2brl.cc:91
+msgid "Italian"
+msgstr "Olasz"
+
+#: img2brl.cc:226
+msgid ""
+"Amount of characters a line of the braille output is not allowed to exceed."
+msgstr ""
+
+#: img2brl.cc:239
 msgid "Send an image file: "
 msgstr "Küldj egy képfájlt: "
 
-#: img2brl.cc:211
+#: img2brl.cc:242
 msgid "or"
 msgstr "vagy"
 
-#: img2brl.cc:213
+#: img2brl.cc:244
 msgid "Enter URL to image: "
 msgstr "Add meg az URLt a képhez: "
 
-#: img2brl.cc:219
+#: img2brl.cc:248
+msgid "Options:"
+msgstr "Beállítások:"
+
+#: img2brl.cc:250
+msgid "Trims edges that are the background color from the image."
+msgstr ""
+
+#: img2brl.cc:253
 msgid "trim edges"
 msgstr "széleket levágni"
 
-#: img2brl.cc:221
+#: img2brl.cc:255
+msgid ""
+"Enhances the contrast of a color image by mapping the darkest 2 percent of "
+"all pixels to black and the brightest 1 percent to white."
+msgstr ""
+
+#: img2brl.cc:258
 msgid "increase contrast"
 msgstr "kontrasztot emelni"
 
-#: img2brl.cc:223
+#: img2brl.cc:260
+msgid "Negates the colors in the reference image."
+msgstr ""
+
+#: img2brl.cc:262
 msgid "invert"
 msgstr "invertálni"
 
-#: img2brl.cc:225
+#: img2brl.cc:264
+msgid ""
+"Scales image such that it uses at most the specified amount of characters "
+"horizontally."
+msgstr ""
+
+#: img2brl.cc:267
 msgid "{1} max {2} {3}"
 msgstr "{1} max {2} {3}"
 
-#: img2brl.cc:226
+#: img2brl.cc:268
 msgid "resize to"
 msgstr "méretet változtatni"
 
-#: img2brl.cc:228
+#: img2brl.cc:270
 msgid "columns"
 msgstr "oszlopok"
 
-#: img2brl.cc:241
+#: img2brl.cc:283
 msgid "Translate to Braille"
 msgstr "Forditás Brailleba"
 
-#: img2brl.cc:254
+#: img2brl.cc:296
 msgid "Processing time was {3} {4} ({1} {2})"
 msgstr "A feldolgozáshoz szükséges idö {3} {4} ({1} {2}) volt"
 
-#: img2brl.cc:259
+#: img2brl.cc:301
 msgid "microseconds"
 msgstr "mikromásodperc"
 
-#: img2brl.cc:264
+#: img2brl.cc:306
 msgid "seconds"
 msgstr "másodperc"
 
-#: img2brl.cc:425
+#: img2brl.cc:467
 msgid "Tactile Image Viewer"
 msgstr "Tapintható Kép Megtekintö"
 
-#: img2brl.cc:429
+#: img2brl.cc:471
 msgid "Supported image formats"
 msgstr "Támogatott kép formátumok"
 
-#: img2brl.cc:547
+#: img2brl.cc:589
 msgid "Unicode braille"
 msgstr "Unicode brailleba"
 
-#: img2brl.cc:549
+#: img2brl.cc:591
 msgid "http://en.wikipedia.org/wiki/Unicode_braille"
 msgstr ""
 
-#: img2brl.cc:550
+#: img2brl.cc:592
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr "img2brl &mdash; Képeket Brailleba fordítani"
 
-#: img2brl.cc:551
+#: img2brl.cc:593
 msgid "Translate images from various {1} to {2}."
 msgstr "Külömböző {1} képeit fordítja {2}."
 
-#: img2brl.cc:552
+#: img2brl.cc:594
 msgid "formats"
 msgstr "formátumok"
 
-#: img2brl.cc:581
+#: img2brl.cc:623
 msgid "Install Firefox Add-on"
 msgstr "Firefox kiegészítőt telepíteni"
 
-#: img2brl.cc:588
+#: img2brl.cc:631
 msgid "There is an {1}."
 msgstr "Létezik egy {1}."
 
-#: img2brl.cc:590
+#: img2brl.cc:633
 msgid "Source code? {1} or {2}."
 msgstr "Forráskód? {1} vagy {2}."
 
-#: img2brl.cc:599
+#: img2brl.cc:642
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 
-#: img2brl.cc:601 img2brl.cc:603 img2brl.cc:608 img2brl.cc:611 img2brl.cc:616
+#: img2brl.cc:644 img2brl.cc:646 img2brl.cc:651 img2brl.cc:654 img2brl.cc:659
 msgid "version"
 msgstr "verzió"
