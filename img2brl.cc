@@ -50,11 +50,11 @@ static code git_clone{"git&nbsp;<span lang=\"en\">clone</span>&nbsp;"
 static int
 curl_append_to_string(char *data, size_t size, size_t nmemb, std::string *buffer)
 {
-  if (not buffer) return 0;
+  int count = 0;
 
-  buffer->append(data, size*nmemb);
+  if (buffer) buffer->append(data, count = size * nmemb);
 
-  return size * nmemb;
+  return count;
 }
 
 using namespace std;
@@ -86,8 +86,8 @@ link_to_lang(cgicc::Cgicc const &cgi, std::string const &lang, std::string const
 static std::map<std::string, std::tuple<boost::locale::message, std::string>> const languages {
   { "de", std::make_tuple(translate("German"), "Deutsch") },
   { "en", std::make_tuple(translate("English"), "English") },
-  { "fa", std::make_tuple(translate("Farsi"), "&#x0641;&#x0627;&#x0631;&#x0633;&#x06cc;&nbsp;") },
-  { "fr", std::make_tuple(translate("French"), "fran&ccedil;ais") },
+  { "fa", std::make_tuple(translate("Farsi"), "\u0641\u0627\u0631\u0633\u06cc") },
+  { "fr", std::make_tuple(translate("French"), "fran\u00E7ais") },
   { "hu", std::make_tuple(translate("Hungarian"), "magyar") },
   { "it", std::make_tuple(translate("Italian"), "Italiano") }
 };
