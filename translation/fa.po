@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-10-01 12:26+0200\n"
+"POT-Creation-Date: 2013-10-01 16:12+0200\n"
 "PO-Revision-Date: 2013-09-30 19:14+0100\n"
 "Last-Translator: Behnam Taraghi <b.taraghi@TUGraz.at>\n"
 "Language-Team: Persian\n"
@@ -17,60 +17,60 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
-#: img2brl.cc:87
+#: ../src/img2brl.cc:87
 msgid "German"
 msgstr "آلمانی"
 
-#: img2brl.cc:88
+#: ../src/img2brl.cc:88
 msgid "English"
 msgstr "انگلیسی"
 
-#: img2brl.cc:89
+#: ../src/img2brl.cc:89
 msgid "Farsi"
 msgstr ""
 
-#: img2brl.cc:90
+#: ../src/img2brl.cc:90
 msgid "French"
 msgstr "فرانسوی"
 
-#: img2brl.cc:91
+#: ../src/img2brl.cc:91
 msgid "Hungarian"
 msgstr "مجاری"
 
-#: img2brl.cc:92
+#: ../src/img2brl.cc:92
 msgid "Italian"
 msgstr "ایتالیایی"
 
-#: img2brl.cc:227
+#: ../src/img2brl.cc:227
 msgid ""
 "Amount of characters a line of the braille output is not allowed to exceed."
 msgstr "تعداد حروف یک خط خروجی بریل نباید از حد مجاز تجاوز کند."
 
-#: img2brl.cc:240
+#: ../src/img2brl.cc:240
 msgid "Send an image file: "
 msgstr "یک فایل تصویری بفرستید:"
 
-#: img2brl.cc:243
+#: ../src/img2brl.cc:243
 msgid "or"
 msgstr "یا"
 
-#: img2brl.cc:245
+#: ../src/img2brl.cc:245
 msgid "Enter URL to image: "
 msgstr "آدرس اینترنتی تصویر را وارد کنید:"
 
-#: img2brl.cc:249
+#: ../src/img2brl.cc:249
 msgid "Options:"
 msgstr "گزینه ها:   "
 
-#: img2brl.cc:251
+#: ../src/img2brl.cc:251
 msgid "Trims edges that are the background color from the image."
 msgstr "لبه های تصویر را که رنگ پس زمینه هستند برش میدهد."
 
-#: img2brl.cc:254
+#: ../src/img2brl.cc:254
 msgid "trim edges"
 msgstr "لبه ها را برش بدهید"
 
-#: img2brl.cc:256
+#: ../src/img2brl.cc:256
 msgid ""
 "Enhances the contrast of a color image by mapping the darkest 2 percent of "
 "all pixels to black and the brightest 1 percent to white."
@@ -78,19 +78,19 @@ msgstr ""
 "کنتراست تصویر رنگی را از طریق اختصاص دادن تاريكترين ٢ درصد از تمام پیکسل ها "
 "به سیاه و روشن ترین ١ درصد به سفید بهتر میکند."
 
-#: img2brl.cc:259
+#: ../src/img2brl.cc:259
 msgid "increase contrast"
 msgstr "کنتراست را افزایش دهید"
 
-#: img2brl.cc:261
+#: ../src/img2brl.cc:261
 msgid "Negates the colors in the reference image."
 msgstr "در تصویر مرجع رنگ ها را معکوس میکند."
 
-#: img2brl.cc:263
+#: ../src/img2brl.cc:263
 msgid "invert"
 msgstr "معکوس کنید"
 
-#: img2brl.cc:265
+#: ../src/img2brl.cc:265
 msgid ""
 "Scales image such that it uses at most the specified amount of characters "
 "horizontally."
@@ -98,79 +98,80 @@ msgstr ""
 "مقیاس و اندازه تصویر را به قدری تغییر میدهد که حد اکثر تعداد تعیین شده حروف "
 "به طور افقی استفاده شود."
 
-#: img2brl.cc:268
+#: ../src/img2brl.cc:268
 msgid "{1} max {2} {3}"
 msgstr "{1} حد اکثر {2} {3}"
 
-#: img2brl.cc:269
+#: ../src/img2brl.cc:269
 msgid "resize to"
 msgstr "تغییر اندازه به"
 
-#: img2brl.cc:271
+#: ../src/img2brl.cc:271
 msgid "columns"
 msgstr "ستون ها"
 
-#: img2brl.cc:284
+#: ../src/img2brl.cc:284
 msgid "Translate to Braille"
 msgstr "به بریل ترجمه کنید"
 
-#: img2brl.cc:445
+#: ../src/img2brl.cc:445
 msgid "Tactile Image Viewer"
 msgstr "نمایشگر تصویر لمس کردنی"
 
-#: img2brl.cc:449
+#: ../src/img2brl.cc:449
 msgid "Supported image formats"
 msgstr "فرمت های تصویر پشتیبانی شده"
 
-#: img2brl.cc:546
+#: ../src/img2brl.cc:546
 msgid "Processing time was {3} {4} ({1} {2})"
 msgstr "زمان پردازش عبارت بود از {3} {4} ({1} {2})"
 
-#: img2brl.cc:551
+#: ../src/img2brl.cc:551
 msgid "microseconds"
 msgstr "میکروثانیه"
 
-#: img2brl.cc:556
+#: ../src/img2brl.cc:556
 msgid "seconds"
 msgstr "ثانیه"
 
-#: img2brl.cc:582
+#: ../src/img2brl.cc:582
 msgid "Unicode braille"
 msgstr "یونیکد بریل"
 
-#: img2brl.cc:584
+#: ../src/img2brl.cc:584
 msgid "http://en.wikipedia.org/wiki/Unicode_braille"
 msgstr ""
 
-#: img2brl.cc:585
+#: ../src/img2brl.cc:585
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr "img2brl &mdash; تبدیل تصاویر به خط بریل"
 
-#: img2brl.cc:586
+#: ../src/img2brl.cc:586
 msgid "Translate images from various {1} to {2}."
 msgstr "تصویر را از {1} متنوع به {2} ترجمه کنید."
 
-#: img2brl.cc:587
+#: ../src/img2brl.cc:587
 msgid "formats"
 msgstr "فرمت ها"
 
-#: img2brl.cc:616
+#: ../src/img2brl.cc:616
 msgid "Install Firefox Add-on"
 msgstr "افزودنی فایرفاکس را نصب کنید"
 
-#: img2brl.cc:624
+#: ../src/img2brl.cc:624
 msgid "There is an {1}."
 msgstr "یک {1} وجود دارد."
 
-#: img2brl.cc:626
+#: ../src/img2brl.cc:626
 msgid "Source code? {1} or {2}."
 msgstr "کد منبع؟ {1} یا {2}."
 
-#: img2brl.cc:635
+#: ../src/img2brl.cc:635
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr ""
 "طراحی شده توسط {1}, {2}, {3}, {4}, {5} و {6} قابل کار بر روی {7} ({8})."
 
-#: img2brl.cc:637 img2brl.cc:639 img2brl.cc:644 img2brl.cc:647 img2brl.cc:652
+#: ../src/img2brl.cc:637 ../src/img2brl.cc:639 ../src/img2brl.cc:644
+#: ../src/img2brl.cc:647 ../src/img2brl.cc:652
 msgid "version"
 msgstr "نسخه"
