@@ -31,8 +31,9 @@ You need
 * A C++ compiler like [GCC](http://gcc.gnu.org/) or
   [Clang](http://clang.llvm.org/)
 * [GNU cgicc](http://www.gnu.org/software/cgicc/)
+* [Boost](http://boost.org/) (locale and Spirit)
 * [ImageMagick](http://imagemagick.org/)
-* [curl](http://curl.haxx.se/)
+* [libcurl](http://curl.haxx.se/)
 
 ## Clone
 
