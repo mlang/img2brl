@@ -120,7 +120,7 @@ print_alternate(cgicc::Cgicc const &cgi, std::string const &current_lang) {
       std::cout << cgicc::link().set("rel", "alternate")
                                 .set("title", std::get<0>(lang.second))
                                 .set("href", href.str())
-                                .set("hreflang", lang.first) << std::endl;;
+                                .set("hreflang", lang.first) << std::endl;
     }
 }
 

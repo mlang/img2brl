@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../src/img2brl.cc:87
 msgid "German"
-msgstr ""
+msgstr "Deutsch"
 
 #: ../src/img2brl.cc:88
 msgid "English"
@@ -27,7 +27,7 @@ msgstr "Englisch"
 
 #: ../src/img2brl.cc:89
 msgid "Farsi"
-msgstr ""
+msgstr "Persisch"
 
 #: ../src/img2brl.cc:90
 msgid "French"
