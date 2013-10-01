@@ -278,7 +278,7 @@ print_form(cgicc::Cgicc const &cgi)
        << "};" << endl
        << script() << endl
 
-       << cgicc::div().set("class", "center") << endl
+       << cgicc::div().set("class", "right topmargin") << endl
        << input().set("type", "submit")
                  .set("name", "submit")
                  .set("value", translate("Translate to Braille")) << endl
@@ -291,33 +291,10 @@ typedef std::chrono::steady_clock clock_type;
 static void
 print_footer(output_mode mode, clock_type::time_point const &start)
 {
-  clock_type::duration duration = clock_type::now() - start;
   if (mode == output_mode::html) {
-    cout << cgicc::div().set("class", "center").set("id", "footer") << endl
-         << format(translate("Processing time was {3} {4} ({1} {2})"))
-            % span((format("{1}")
-                    % std::chrono::duration_cast<std::chrono::microseconds>
-                      (duration).count()
-                   ).str()).set("class", "timing").set("id", "microseconds")
-            % translate("microseconds")
-            % span((format("{1,p=2}")
-                    % std::chrono::duration_cast<std::chrono::duration<double>>
-                      (duration).count()
-                   ).str()).set("class", "timing").set("id", "seconds")
-            % translate("seconds")
-         << cgicc::div() << endl;
     cout << body() << endl
          << html() << endl;
   } else if (mode == output_mode::json) {
-    cout << ','
-	 << '"' << "runtime" << '"'
-	 << ':'
-	 << '{'
-	 << '"' << "seconds" << '"'
-	 << ':'
-         << std::chrono::duration_cast<std::chrono::duration<double>>(duration).count()
-         << '}';
-
     cout << '}';
   }
 }
@@ -563,6 +540,21 @@ int main()
 	case output_mode::json: cout << '"'; break;
 	default: break;
 	}
+
+	clock_type::duration duration = clock_type::now() - start_time;
+	cout << cgicc::div().set("class", "center").set("id", "timings") << endl
+	     << format(translate("Processing time was {3} {4} ({1} {2})"))
+	        % span((format("{1}")
+			% std::chrono::duration_cast<std::chrono::microseconds>
+  			  (duration).count()
+			).str()).set("class", "timing").set("id", "microseconds")
+	        % translate("microseconds")
+	        % span((format("{1,p=2}")
+			% std::chrono::duration_cast<std::chrono::duration<double>>
+			(duration).count()
+			).str()).set("class", "timing").set("id", "seconds")
+    	        % translate("seconds")
+	     << cgicc::div() << endl;
       } catch (Magick::ErrorMissingDelegate const &missing_delegate_exception) {
 	switch (mode) {
 	case output_mode::html:
