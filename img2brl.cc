@@ -86,7 +86,7 @@ link_to_lang(cgicc::Cgicc const &cgi, std::string const &lang, std::string const
 static std::map<std::string, std::tuple<boost::locale::message, std::string>> const languages {
   { "de", std::make_tuple(translate("German"), "Deutsch") },
   { "en", std::make_tuple(translate("English"), "English") },
-  { "fa", std::make_tuple(translate("Farsi"), "UNFILLED") },
+  { "fa", std::make_tuple(translate("Farsi"), "&#x0641;&#x0627;&#x0631;&#x0633;&#x06cc;&nbsp;") },
   { "fr", std::make_tuple(translate("French"), "fran&ccedil;ais") },
   { "hu", std::make_tuple(translate("Hungarian"), "magyar") },
   { "it", std::make_tuple(translate("Italian"), "Italiano") }
