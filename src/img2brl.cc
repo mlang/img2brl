@@ -136,7 +136,9 @@ print_header(cgicc::Cgicc const &cgi, output_mode mode, std::string const &title
            << endl
            << XHTMLDoctype(XHTMLDoctype::eStrict) << endl
            << html().set("xmlns", "http://www.w3.org/1999/xhtml")
-                    .set("lang", lang).set("dir", "ltr") << endl
+                    .set("lang", lang)
+//                  .set("dir", "ltr")
+           << endl
            << head() << endl
            << cgicc::title() << title << cgicc::title() << endl
            << meta().set("http-equiv", "Content-Type")
