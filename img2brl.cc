@@ -86,6 +86,7 @@ link_to_lang(cgicc::Cgicc const &cgi, std::string const &lang, std::string const
 static std::map<std::string, std::tuple<boost::locale::message, std::string>> const languages {
   { "de", std::make_tuple(translate("German"), "Deutsch") },
   { "en", std::make_tuple(translate("English"), "English") },
+  { "fa", std::make_tuple(translate("Farsi", "UNFILLED") },
   { "fr", std::make_tuple(translate("French"), "fran&ccedil;ais") },
   { "hu", std::make_tuple(translate("Hungarian"), "magyar") },
   { "it", std::make_tuple(translate("Italian"), "Italiano") }
@@ -371,7 +372,7 @@ int main()
       accept_language spec(value);
       spec.normalize();
       msg << " -> " << spec;
-      std::string selected_lang{spec.best_match({"en", "de", "fr", "hu", "it"}, "en")};
+      std::string selected_lang{spec.best_match({"en", "de", "fa", "fr", "hu", "it"}, "en")};
       locale::global(locale_gen(selected_lang+".UTF-8"));
       html_lang = selected_lang;
     } catch (std::runtime_error const &e) {
@@ -381,7 +382,7 @@ int main()
     cerr << msg.str();
   }
   if (cgi.getElement("lang") != cgi.getElements().end()) {
-    std::set<std::string> const available_languages{"en", "de", "fr", "hu", "it"};
+    std::set<std::string> const available_languages{"en", "de", "fa", "fr", "hu", "it"};
     if (available_languages.find(cgi("lang")) != available_languages.end()) {
       locale::global(locale_gen(cgi("lang")+".UTF-8"));
       html_lang = cgi("lang");

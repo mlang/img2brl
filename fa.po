@@ -1,0 +1,172 @@
+# Persian translations for img2brl package.
+# Copyright (C) 2013 THE img2brl'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the img2brl package.
+# Behnam Taraghi <b.taraghi@TUGraz.at>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: img2brl 0.1\n"
+"Report-Msgid-Bugs-To: mlang@delysid.org\n"
+"POT-Creation-Date: 2013-09-26 14:27+0200\n"
+"PO-Revision-Date: 2013-09-30 19:14+0100\n"
+"Last-Translator: Behnam Taraghi <b.taraghi@TUGraz.at>\n"
+"Language-Team: Persian\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+
+#: img2brl.cc:87
+msgid "German"
+msgstr "آلمانی"
+
+#: img2brl.cc:88
+msgid "English"
+msgstr "انگلیسی"
+
+#: img2brl.cc:89
+msgid "French"
+msgstr "فرانسوی"
+
+#: img2brl.cc:90
+msgid "Hungarian"
+msgstr "مجاری"
+
+#: img2brl.cc:91
+msgid "Italian"
+msgstr "ایتالیایی"
+
+#: img2brl.cc:226
+msgid ""
+"Amount of characters a line of the braille output is not allowed to exceed."
+msgstr "تعداد حروف یک خط خروجی بریل نباید از حد مجاز تجاوز کند."
+
+#: img2brl.cc:239
+msgid "Send an image file: "
+msgstr "یک فایل تصویری بفرستید:"
+
+#: img2brl.cc:242
+msgid "or"
+msgstr "یا"
+
+#: img2brl.cc:244
+msgid "Enter URL to image: "
+msgstr "آدرس اینترنتی تصویر را وارد کنید:"
+
+#: img2brl.cc:248
+msgid "Options:"
+msgstr "گزینه ها:   "
+
+#: img2brl.cc:250
+msgid "Trims edges that are the background color from the image."
+msgstr "لبه های تصویر را که رنگ پس زمینه هستند برش میدهد."
+
+#: img2brl.cc:253
+msgid "trim edges"
+msgstr "لبه ها را برش بدهید"
+
+#: img2brl.cc:255
+msgid ""
+"Enhances the contrast of a color image by mapping the darkest 2 percent of "
+"all pixels to black and the brightest 1 percent to white."
+msgstr ""
+"کنتراست تصویر رنگی را از طریق اختصاص دادن تاريكترين ٢ درصد از تمام پیکسل ها "
+"به سیاه و روشن ترین ١ درصد به سفید بهتر میکند."
+
+#: img2brl.cc:258
+msgid "increase contrast"
+msgstr "کنتراست را افزایش دهید"
+
+#: img2brl.cc:260
+msgid "Negates the colors in the reference image."
+msgstr "در تصویر مرجع رنگ ها را معکوس میکند."
+
+#: img2brl.cc:262
+msgid "invert"
+msgstr "معکوس کنید"
+
+#: img2brl.cc:264
+msgid ""
+"Scales image such that it uses at most the specified amount of characters "
+"horizontally."
+msgstr ""
+"مقیاس و اندازه تصویر را به قدری تغییر میدهد که حد اکثر تعداد تعیین شده حروف "
+"به طور افقی استفاده شود."
+
+#: img2brl.cc:267
+msgid "{1} max {2} {3}"
+msgstr "{1} حد اکثر {2} {3}"
+
+#: img2brl.cc:268
+msgid "resize to"
+msgstr "تغییر اندازه به"
+
+#: img2brl.cc:270
+msgid "columns"
+msgstr "ستون ها"
+
+#: img2brl.cc:283
+msgid "Translate to Braille"
+msgstr "به بریل ترجمه کنید"
+
+#: img2brl.cc:296
+msgid "Processing time was {3} {4} ({1} {2})"
+msgstr "زمان پردازش عبارت بود از {3} {4} ({1} {2})"
+
+#: img2brl.cc:301
+msgid "microseconds"
+msgstr "میکروثانیه"
+
+#: img2brl.cc:306
+msgid "seconds"
+msgstr "ثانیه"
+
+#: img2brl.cc:467
+msgid "Tactile Image Viewer"
+msgstr "نمایشگر تصویر لمس کردنی"
+
+#: img2brl.cc:471
+msgid "Supported image formats"
+msgstr "فرمت های تصویر پشتیبانی شده"
+
+#: img2brl.cc:589
+msgid "Unicode braille"
+msgstr "یونیکد بریل"
+
+#: img2brl.cc:591
+msgid "http://en.wikipedia.org/wiki/Unicode_braille"
+msgstr ""
+
+#: img2brl.cc:592
+msgid "img2brl &mdash; Convert images to Braille"
+msgstr "img2brl &mdash; تبدیل تصاویر به خط بریل"
+
+#: img2brl.cc:593
+msgid "Translate images from various {1} to {2}."
+msgstr "تصویر را از {1} متنوع به {2} ترجمه کنید."
+
+#: img2brl.cc:594
+msgid "formats"
+msgstr "فرمت ها"
+
+#: img2brl.cc:623
+msgid "Install Firefox Add-on"
+msgstr "افزودنی فایرفاکس را نصب کنید"
+
+#: img2brl.cc:631
+msgid "There is an {1}."
+msgstr "یک {1} وجود دارد."
+
+#: img2brl.cc:633
+msgid "Source code? {1} or {2}."
+msgstr "کد منبع؟ {1} یا {2}."
+
+#: img2brl.cc:642
+msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
+msgstr ""
+"طراحی شده توسط {1}, {2}, {3}, {4}, {5} و {6} قابل کار بر روی {7} ({8})."
+
+#: img2brl.cc:644 img2brl.cc:646 img2brl.cc:651 img2brl.cc:654 img2brl.cc:659
+msgid "version"
+msgstr "نسخه"
