@@ -36,15 +36,17 @@ endif()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/src/config.h)
 include_directories("{CMAKE_CURRENT_BINARY_DIR}/src")
-add_executable(img2brl.cgi src/img2brl.cc src/accept_language.cc src/ubrl.cc
+add_library(img2brl STATIC src/accept_language.cc src/ubrl.cc)
+add_executable(img2brl.cgi src/img2brl.cc
                            ${CMAKE_CURRENT_BINARY_DIR}/src/config.h)
-target_link_libraries(img2brl.cgi ${Boost_LIBRARIES} ${CGICC_LIBRARIES}
+target_link_libraries(img2brl.cgi img2brl ${Boost_LIBRARIES} ${CGICC_LIBRARIES}
                                   ${CURL_LIBRARIES} ${MAGICKPP_LIBRARIES})
 
 install(TARGETS img2brl.cgi DESTINATION "${CMAKE_INSTALL_PREFIX}")
 install(FILES favicon.png img2brl.css DESTINATION "${CMAKE_INSTALL_PREFIX}")
 
-add_executable(${CMAKE_PROJECT_NAME}_test src/test.cc src/accept_language.cc)
+add_executable(${CMAKE_PROJECT_NAME}_test src/test.cc)
+target_link_libraries(${CMAKE_PROJECT_NAME}_test img2brl)
 enable_testing()
 foreach(test_name accept_language_1 accept_language_2 accept_language_3
                   accept_language_4 accept_language_5 accept_language_6
