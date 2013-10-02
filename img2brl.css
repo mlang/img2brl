@@ -29,3 +29,7 @@ dt {
 dd {
   margin-bottom: 2em;  
 }
+div:lang(fa) {
+  text-align: right;
+}
+
