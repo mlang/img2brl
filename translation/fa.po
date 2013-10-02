@@ -159,12 +159,12 @@ msgid "Install Firefox Add-on"
 msgstr "افزودنی فایرفاکس را نصب کنید"
 
 #: ../src/img2brl.cc:624
-msgid "There is an {1}."
-msgstr "یک {1} وجود دارد."
+msgid "There is an {1}. Source code? {2} or {3}."
+msgstr "یک {1} وجود دارد. کد منبع؟ {2} یا {3}."
 
 #: ../src/img2brl.cc:626
 msgid "Source code? {1} or {2}."
-msgstr "کد منبع؟ {1} یا {2}."
+msgstr ""
 
 #: ../src/img2brl.cc:635
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
