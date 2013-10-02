@@ -623,10 +623,10 @@ int main()
       github_link.set("href", "https://github.com/mlang/img2brl");
       github_link.set("hreflang", "en");
       cout << cgicc::div().set("class", "center") << endl
-           << format(translate("There is an {1}. Source code? {2} or {3}."))
-              % a{translate("API")}.set("href", "https://github.com/mlang/img2brl/#api").set("hreflang", "en")
-              % git_clone
-              % github_link
+           << format(translate("There is an {1}.")) % a{"API"}.set("href", "https://github.com/mlang/img2brl/#api").set("hreflang", "en")
+           << endl
+           << format(translate("Source code? {1} or {2}."))
+              % git_clone % github_link
            << cgicc::div() << endl;
 
       print_languages(cgi, html_lang);
