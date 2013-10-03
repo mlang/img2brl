@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-10-01 16:13+0200\n"
+"POT-Creation-Date: 2013-10-03 21:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,147 +26,151 @@ msgid "English"
 msgstr ""
 
 #: ../src/img2brl.cc:89
-msgid "Farsi"
+msgid "Spanish"
 msgstr ""
 
 #: ../src/img2brl.cc:90
-msgid "French"
+msgid "Farsi"
 msgstr ""
 
 #: ../src/img2brl.cc:91
-msgid "Hungarian"
+msgid "French"
 msgstr ""
 
 #: ../src/img2brl.cc:92
+msgid "Hungarian"
+msgstr ""
+
+#: ../src/img2brl.cc:93
 msgid "Italian"
 msgstr ""
 
-#: ../src/img2brl.cc:227
+#: ../src/img2brl.cc:230
 msgid ""
 "Amount of characters a line of the braille output is not allowed to exceed."
 msgstr ""
 
-#: ../src/img2brl.cc:240
+#: ../src/img2brl.cc:243
 msgid "Send an image file: "
 msgstr ""
 
-#: ../src/img2brl.cc:243
+#: ../src/img2brl.cc:246
 msgid "or"
 msgstr ""
 
-#: ../src/img2brl.cc:245
+#: ../src/img2brl.cc:248
 msgid "Enter URL to image: "
 msgstr ""
 
-#: ../src/img2brl.cc:249
+#: ../src/img2brl.cc:252
 msgid "Options:"
 msgstr ""
 
-#: ../src/img2brl.cc:251
+#: ../src/img2brl.cc:254
 msgid "Trims edges that are the background color from the image."
 msgstr ""
 
-#: ../src/img2brl.cc:254
+#: ../src/img2brl.cc:257
 msgid "trim edges"
 msgstr ""
 
-#: ../src/img2brl.cc:256
+#: ../src/img2brl.cc:259
 msgid ""
 "Enhances the contrast of a color image by mapping the darkest 2 percent of "
 "all pixels to black and the brightest 1 percent to white."
 msgstr ""
 
-#: ../src/img2brl.cc:259
+#: ../src/img2brl.cc:262
 msgid "increase contrast"
 msgstr ""
 
-#: ../src/img2brl.cc:261
+#: ../src/img2brl.cc:264
 msgid "Negates the colors in the reference image."
 msgstr ""
 
-#: ../src/img2brl.cc:263
+#: ../src/img2brl.cc:266
 msgid "invert"
 msgstr ""
 
-#: ../src/img2brl.cc:265
+#: ../src/img2brl.cc:268
 msgid ""
 "Scales image such that it uses at most the specified amount of characters "
 "horizontally."
 msgstr ""
 
-#: ../src/img2brl.cc:268
+#: ../src/img2brl.cc:271
 msgid "{1} max {2} {3}"
 msgstr ""
 
-#: ../src/img2brl.cc:269
+#: ../src/img2brl.cc:272
 msgid "resize to"
 msgstr ""
 
-#: ../src/img2brl.cc:271
+#: ../src/img2brl.cc:274
 msgid "columns"
 msgstr ""
 
-#: ../src/img2brl.cc:284
+#: ../src/img2brl.cc:287
 msgid "Translate to Braille"
 msgstr ""
 
-#: ../src/img2brl.cc:445
+#: ../src/img2brl.cc:448
 msgid "Tactile Image Viewer"
 msgstr ""
 
-#: ../src/img2brl.cc:449
+#: ../src/img2brl.cc:452
 msgid "Supported image formats"
 msgstr ""
 
-#: ../src/img2brl.cc:546
+#: ../src/img2brl.cc:549
 msgid "Processing time was {3} {4} ({1} {2})"
 msgstr ""
 
-#: ../src/img2brl.cc:551
+#: ../src/img2brl.cc:554
 msgid "microseconds"
 msgstr ""
 
-#: ../src/img2brl.cc:556
+#: ../src/img2brl.cc:559
 msgid "seconds"
 msgstr ""
 
-#: ../src/img2brl.cc:582
+#: ../src/img2brl.cc:585
 msgid "Unicode braille"
 msgstr ""
 
-#: ../src/img2brl.cc:584
+#: ../src/img2brl.cc:587
 msgid "http://en.wikipedia.org/wiki/Unicode_braille"
 msgstr ""
 
-#: ../src/img2brl.cc:585
+#: ../src/img2brl.cc:588
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr ""
 
-#: ../src/img2brl.cc:586
+#: ../src/img2brl.cc:589
 msgid "Translate images from various {1} to {2}."
 msgstr ""
 
-#: ../src/img2brl.cc:587
+#: ../src/img2brl.cc:590
 msgid "formats"
 msgstr ""
 
-#: ../src/img2brl.cc:616
+#: ../src/img2brl.cc:619
 msgid "Install Firefox Add-on"
 msgstr ""
 
-#: ../src/img2brl.cc:624
+#: ../src/img2brl.cc:627
 msgid "There is an {1}."
 msgstr ""
 
-#: ../src/img2brl.cc:626
+#: ../src/img2brl.cc:629
 msgid "Source code? {1} or {2}."
 msgstr ""
 
-#: ../src/img2brl.cc:635
+#: ../src/img2brl.cc:638
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr ""
 
-#: ../src/img2brl.cc:637 ../src/img2brl.cc:639 ../src/img2brl.cc:644
-#: ../src/img2brl.cc:647 ../src/img2brl.cc:652
+#: ../src/img2brl.cc:640 ../src/img2brl.cc:642 ../src/img2brl.cc:647
+#: ../src/img2brl.cc:650 ../src/img2brl.cc:655
 msgid "version"
 msgstr ""

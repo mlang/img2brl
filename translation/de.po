@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: img2brl 0.1\n"
 "Report-Msgid-Bugs-To: mlang@delysid.org\n"
-"POT-Creation-Date: 2013-10-01 16:12+0200\n"
+"POT-Creation-Date: 2013-10-03 21:52+0200\n"
 "PO-Revision-Date: 2013-09-21 02:21+0200\n"
 "Last-Translator: Mario Lang <mlang@delysid.org>\n"
 "Language-Team: German\n"
@@ -26,53 +26,57 @@ msgid "English"
 msgstr "Englisch"
 
 #: ../src/img2brl.cc:89
+msgid "Spanish"
+msgstr "Spanisch"
+
+#: ../src/img2brl.cc:90
 msgid "Farsi"
 msgstr "Persisch"
 
-#: ../src/img2brl.cc:90
+#: ../src/img2brl.cc:91
 msgid "French"
 msgstr "Französisch"
 
-#: ../src/img2brl.cc:91
+#: ../src/img2brl.cc:92
 msgid "Hungarian"
 msgstr "Ungarisch"
 
-#: ../src/img2brl.cc:92
+#: ../src/img2brl.cc:93
 msgid "Italian"
 msgstr "Italienisch"
 
-#: ../src/img2brl.cc:227
+#: ../src/img2brl.cc:230
 msgid ""
 "Amount of characters a line of the braille output is not allowed to exceed."
 msgstr ""
 "Die Anzahl der Zeichen die die Breite der Brailleausgabe nicht überschreiten "
 "darf."
 
-#: ../src/img2brl.cc:240
+#: ../src/img2brl.cc:243
 msgid "Send an image file: "
 msgstr "Sende eine Bilddatei: "
 
-#: ../src/img2brl.cc:243
+#: ../src/img2brl.cc:246
 msgid "or"
 msgstr "oder"
 
-#: ../src/img2brl.cc:245
+#: ../src/img2brl.cc:248
 msgid "Enter URL to image: "
 msgstr "URL zum Bild eingeben: "
 
-#: ../src/img2brl.cc:249
+#: ../src/img2brl.cc:252
 msgid "Options:"
 msgstr "Optionen:"
 
-#: ../src/img2brl.cc:251
+#: ../src/img2brl.cc:254
 msgid "Trims edges that are the background color from the image."
 msgstr "Entfernt Ränder die dem Hintergrund des Bildes gleichen."
 
-#: ../src/img2brl.cc:254
+#: ../src/img2brl.cc:257
 msgid "trim edges"
 msgstr "Ränder trimmen"
 
-#: ../src/img2brl.cc:256
+#: ../src/img2brl.cc:259
 msgid ""
 "Enhances the contrast of a color image by mapping the darkest 2 percent of "
 "all pixels to black and the brightest 1 percent to white."
@@ -80,99 +84,99 @@ msgstr ""
 "Verbessert den Kontrast eines Farbbildes indem die dunkelsten 2 Prozent "
 "aller Pixel schwarz, und die hellsten 1 Prozent weiß gefärbt werden."
 
-#: ../src/img2brl.cc:259
+#: ../src/img2brl.cc:262
 msgid "increase contrast"
 msgstr "Kontrast erhöhen"
 
-#: ../src/img2brl.cc:261
+#: ../src/img2brl.cc:264
 msgid "Negates the colors in the reference image."
 msgstr "Invertiert die Farben des Bildes."
 
-#: ../src/img2brl.cc:263
+#: ../src/img2brl.cc:266
 msgid "invert"
 msgstr "invertieren"
 
-#: ../src/img2brl.cc:265
+#: ../src/img2brl.cc:268
 msgid ""
 "Scales image such that it uses at most the specified amount of characters "
 "horizontally."
 msgstr ""
 "Skalliert das Bild so, das es die angegebene Zeilenlänge nicht überschreitet."
 
-#: ../src/img2brl.cc:268
+#: ../src/img2brl.cc:271
 msgid "{1} max {2} {3}"
 msgstr "{1} maximal {2} {3}"
 
-#: ../src/img2brl.cc:269
+#: ../src/img2brl.cc:272
 msgid "resize to"
 msgstr "verkleinern auf"
 
-#: ../src/img2brl.cc:271
+#: ../src/img2brl.cc:274
 msgid "columns"
 msgstr "Zeichen"
 
-#: ../src/img2brl.cc:284
+#: ../src/img2brl.cc:287
 msgid "Translate to Braille"
 msgstr "In Braille übersetzen"
 
-#: ../src/img2brl.cc:445
+#: ../src/img2brl.cc:448
 msgid "Tactile Image Viewer"
 msgstr "Taktiler Bildbetrachter"
 
-#: ../src/img2brl.cc:449
+#: ../src/img2brl.cc:452
 msgid "Supported image formats"
 msgstr "Unterstützte Bildformate"
 
-#: ../src/img2brl.cc:546
+#: ../src/img2brl.cc:549
 msgid "Processing time was {3} {4} ({1} {2})"
 msgstr "Die Verarbeitungszeit betrug {3} {4} ({1} {2})"
 
-#: ../src/img2brl.cc:551
+#: ../src/img2brl.cc:554
 msgid "microseconds"
 msgstr "Mikrosekunden"
 
-#: ../src/img2brl.cc:556
+#: ../src/img2brl.cc:559
 msgid "seconds"
 msgstr "Sekunden"
 
-#: ../src/img2brl.cc:582
+#: ../src/img2brl.cc:585
 msgid "Unicode braille"
 msgstr "Unicode Braille-Zeichen"
 
-#: ../src/img2brl.cc:584
+#: ../src/img2brl.cc:587
 msgid "http://en.wikipedia.org/wiki/Unicode_braille"
 msgstr "http://de.wikipedia.org/wiki/Unicode-Block_Braille-Zeichen"
 
-#: ../src/img2brl.cc:585
+#: ../src/img2brl.cc:588
 msgid "img2brl &mdash; Convert images to Braille"
 msgstr "img2brl &mdash; Bilder tastbar machen"
 
-#: ../src/img2brl.cc:586
+#: ../src/img2brl.cc:589
 msgid "Translate images from various {1} to {2}."
 msgstr "Übersetzt Bilder verschiedenster {1} in {2}."
 
-#: ../src/img2brl.cc:587
+#: ../src/img2brl.cc:590
 msgid "formats"
 msgstr "Formate"
 
-#: ../src/img2brl.cc:616
+#: ../src/img2brl.cc:619
 msgid "Install Firefox Add-on"
 msgstr "Firefox-Erweiterung installieren"
 
-#: ../src/img2brl.cc:624
+#: ../src/img2brl.cc:627
 msgid "There is an {1}."
 msgstr "Es gibt eine {1}."
 
-#: ../src/img2brl.cc:626
+#: ../src/img2brl.cc:629
 msgid "Source code? {1} or {2}."
 msgstr "Quellcode? {1} oder {2}."
 
-#: ../src/img2brl.cc:635
+#: ../src/img2brl.cc:638
 msgid "Powered by {1}, {2}, {3}, {4}, {5} and {6} running on {7} ({8})."
 msgstr ""
 "Erstellt mit {1}, {2}, {3}, {4}, {5} und präsentiert mit {6} auf {7} ({8})."
 
-#: ../src/img2brl.cc:637 ../src/img2brl.cc:639 ../src/img2brl.cc:644
-#: ../src/img2brl.cc:647 ../src/img2brl.cc:652
+#: ../src/img2brl.cc:640 ../src/img2brl.cc:642 ../src/img2brl.cc:647
+#: ../src/img2brl.cc:650 ../src/img2brl.cc:655
 msgid "version"
 msgstr "Version"
