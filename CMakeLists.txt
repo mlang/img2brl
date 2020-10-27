@@ -1,17 +1,12 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.13)
 project(img2brl CXX)
-
+set(CMAKE_CXX_STANDARD 11)
 find_package(Boost 1.49.0 REQUIRED COMPONENTS locale)
 find_package(PkgConfig REQUIRED)
-pkg_search_module(CGICC REQUIRED cgicc)
-pkg_search_module(CURL REQUIRED libcurl>=7.10.7)
-pkg_search_module(MAGICKPP REQUIRED Magick++)
-
+pkg_search_module(CGICC REQUIRED IMPORTED_TARGET cgicc)
+pkg_search_module(CURL REQUIRED IMPORTED_TARGET libcurl>=7.10.7)
+pkg_search_module(MAGICKPP REQUIRED IMPORTED_TARGET Magick++)
 add_subdirectory(translation)
-include_directories(${CGICC_INCLUDE_DIRS})
-include_directories(${CURL_INCLUDE_DIRS})
-include_directories(${MAGICKPP_INCLUDE_DIRS})
-add_definitions(-std=c++11)
 find_package(Git)
 if(GIT_FOUND)
   install(PROGRAMS git-post-update.hook
@@ -35,12 +30,12 @@ if(ZIP_EXECUTABLE)
 endif()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/src/config.h)
-include_directories("{CMAKE_CURRENT_BINARY_DIR}/src")
 add_library(img2brl STATIC src/accept_language.cc src/ubrl.cc)
+target_link_libraries(img2brl PkgConfig::MAGICKPP)
 add_executable(img2brl.cgi src/img2brl.cc
                            ${CMAKE_CURRENT_BINARY_DIR}/src/config.h)
-target_link_libraries(img2brl.cgi img2brl ${Boost_LIBRARIES} ${CGICC_LIBRARIES}
-                                  ${CURL_LIBRARIES} ${MAGICKPP_LIBRARIES})
+target_link_libraries(img2brl.cgi img2brl ${Boost_LIBRARIES} PkgConfig::CGICC
+                                  PkgConfig::CURL PkgConfig::MAGICKPP)
 
 install(TARGETS img2brl.cgi DESTINATION "${CMAKE_INSTALL_PREFIX}")
 install(FILES favicon.png img2brl.css DESTINATION "${CMAKE_INSTALL_PREFIX}")
@@ -54,4 +49,3 @@ foreach(test_name accept_language_1 accept_language_2 accept_language_3
   add_test(NAME ${test_name}
            COMMAND ${CMAKE_PROJECT_NAME}_test --run_test=${test_name})
 endforeach(test_name)
-

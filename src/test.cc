@@ -15,7 +15,7 @@ BOOST_AUTO_TEST_CASE(accept_language_2) {
   BOOST_REQUIRE_EQUAL(accept.languages().size(), 1);
   BOOST_CHECK(std::none_of(accept.languages().begin(), accept.languages().end(),
                            [](accept_language::entry const &language) -> bool {
-                             return language.q;
+                             return bool(language.q);
                            }));
   BOOST_REQUIRE_EQUAL(accept.languages()[0].subtags.size(), 1);
   BOOST_CHECK_EQUAL(accept.languages()[0].subtags[0], "*");
@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(accept_language_3) {
   BOOST_REQUIRE_EQUAL(accept.languages().size(), 1);
   BOOST_REQUIRE(std::all_of(accept.languages().begin(), accept.languages().end(),
                             [](accept_language::entry const &language) -> bool {
-                              return language.q;
+                              return bool(language.q);
                             }));
   BOOST_REQUIRE_EQUAL(accept.languages()[0].subtags.size(), 1);
   BOOST_CHECK_EQUAL(accept.languages()[0].subtags[0], "*");
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(accept_language_4) {
   BOOST_REQUIRE_EQUAL(accept.languages().size(), 3);
   BOOST_CHECK(std::none_of(accept.languages().begin(), accept.languages().end(),
                            [](accept_language::entry const &language) -> bool {
-                             return language.q;
+                             return bool(language.q);
                            }));
   BOOST_REQUIRE_EQUAL(accept.languages()[0].subtags.size(), 2);
   BOOST_CHECK_EQUAL(accept.languages()[0].subtags[0], "de");
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(accept_language_5) {
   BOOST_REQUIRE_EQUAL(accept.languages().size(), 4);
   BOOST_CHECK(std::all_of(accept.languages().begin(), accept.languages().end(),
                           [](accept_language::entry const &language) -> bool {
-                            return language.q;
+                            return bool(language.q);
                           }));
   BOOST_REQUIRE_EQUAL(accept.languages()[0].subtags.size(), 2);
   BOOST_CHECK_EQUAL(accept.languages()[0].subtags[0], "de");
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(accept_language_6) {
   BOOST_REQUIRE_EQUAL(accept.languages().size(), 1);
   BOOST_CHECK(std::all_of(accept.languages().begin(), accept.languages().end(),
                           [](accept_language::entry const &language) -> bool {
-                            return language.q;
+                            return bool(language.q);
                           }));
   BOOST_REQUIRE_EQUAL(accept.languages()[0].subtags.size(), 2);
   BOOST_CHECK_EQUAL(accept.languages()[0].subtags[0], "de");
@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE(accept_language_7) {
   BOOST_REQUIRE_EQUAL(accept.languages().size(), 6);
   BOOST_CHECK(std::any_of(accept.languages().begin(), accept.languages().end(),
                           [](accept_language::entry const &language) -> bool {
-                            return language.q;
+                            return bool(language.q);
                           }));
   BOOST_REQUIRE_EQUAL(accept.languages()[0].subtags.size(), 2);
   BOOST_CHECK_EQUAL(accept.languages()[0].subtags[0], "de");
